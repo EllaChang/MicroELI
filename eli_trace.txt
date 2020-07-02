@@ -1,0 +1,98 @@
+
+0] (process-text kite-text)
+
+
+Input is (JACK WENT TO THE STORE)
+
+
+Processing word *START*
+
+Processing word JACK
+  *CD-FORM* = (PERSON (NAME (JACK)))
+  *PART-OF-SPEECH* = NOUN-PHRASE
+  *SUBJECT* = (PERSON (NAME (JACK)))
+
+
+Processing word WENT
+  *PART-OF-SPEECH* = VERB
+  *CD-FORM* = (PTRANS (ACTOR ?GO-VAR1) (OBJECT ?GO-VAR1) (TO ?GO-VAR2)
+               (FROM ?GO-VAR3))
+  GO-VAR1 = (PERSON (NAME (JACK)))
+  *CONCEPT* = (PTRANS (ACTOR ?GO-VAR1) (OBJECT ?GO-VAR1) (TO ?GO-VAR2)
+               (FROM ?GO-VAR3))
+
+
+Processing word TO - not in dictionary
+
+
+Processing word THE
+
+Processing word STORE
+  *PART-OF-SPEECH* = NOUN
+  *CD-FORM* = (STORE)
+  *PART-OF-SPEECH* = NOUN-PHRASE
+  *CD-FORM* = (STORE)
+  GO-VAR2 = (STORE)
+
+
+CD form is (PTRANS (ACTOR (PERSON (NAME (JACK))))
+            (OBJECT (PERSON (NAME (JACK)))) (TO (STORE)))
+
+Input is (HE GOT A KITE)
+
+
+Processing word *START*
+
+Processing word HE
+  *PART-OF-SPEECH* = NOUN-PHRASE
+  *CD-FORM* = (PERSON)
+  *SUBJECT* = (PERSON)
+
+
+Processing word GOT
+  *PART-OF-SPEECH* = VERB
+  *CD-FORM* = (ATRANS (ACTOR ?GET-VAR3) (OBJECT ?GET-VAR2) (TO ?GET-VAR1)
+               (FROM ?GET-VAR3))
+  GET-VAR1 = (PERSON)
+  *CONCEPT* = (ATRANS (ACTOR ?GET-VAR3) (OBJECT ?GET-VAR2) (TO ?GET-VAR1)
+               (FROM ?GET-VAR3))
+
+
+Processing word A
+
+Processing word KITE
+  *PART-OF-SPEECH* = NOUN
+  *CD-FORM* = (KITE)
+  *PART-OF-SPEECH* = NOUN-PHRASE
+  *CD-FORM* = (KITE)
+  GET-VAR2 = (KITE)
+
+
+CD form is (ATRANS (OBJECT (KITE)) (TO (PERSON)))
+
+Input is (HE WENT HOME)
+
+
+Processing word *START*
+
+Processing word HE
+  *PART-OF-SPEECH* = NOUN-PHRASE
+  *CD-FORM* = (PERSON)
+  *SUBJECT* = (PERSON)
+
+
+Processing word WENT
+  *PART-OF-SPEECH* = VERB
+  *CD-FORM* = (PTRANS (ACTOR ?GO-VAR1) (OBJECT ?GO-VAR1) (TO ?GO-VAR2)
+               (FROM ?GO-VAR3))
+  GO-VAR1 = (PERSON)
+  *CONCEPT* = (PTRANS (ACTOR ?GO-VAR1) (OBJECT ?GO-VAR1) (TO ?GO-VAR2)
+               (FROM ?GO-VAR3))
+
+
+Processing word HOME - not in dictionary
+  GO-VAR2 = (HOUSE)
+
+
+CD form is (PTRANS (ACTOR (PERSON)) (OBJECT (PERSON)) (TO (HOUSE)))
+

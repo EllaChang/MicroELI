@@ -1,0 +1,5 @@
+To run Micro ELI, run clisp, and once in the interpreter, run these lines (press return after each...
+
+(load 'micro-eli)
+
+(process-text kite-text)
