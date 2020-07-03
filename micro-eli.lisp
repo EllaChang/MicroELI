@@ -64,8 +64,8 @@ DEFINITION."
 ;;;
 
 (defun process-text (text)
-  "Process a list of sentences, parsing each one, and
-printing the result."
+  "Process a list of sentences, parsing each one,
+and printing the result."
   (dolist (sentence text)
     (user-trace "~2%Input is ~s~%" sentence)
     (let ((cd (parse sentence)))
@@ -137,6 +137,16 @@ to the stack."
 (defun feature (cd-form predicate)
   "Tests whether the CD is of the form (predicate...)."
   (equal predicate (header-cd cd-form)))
+
+(defun get-np-prediction ()
+  "Looks for a request in the top packet of the stack with a test
+looks for a noun phrase generating a particular type of CD. If it
+finds one, it returns the predicate that FEATURE is looking for."
+  (unless (empty-stack-p)
+    (dolist (request (top-stack))
+      (when (req-clause 'test request)
+	(let ((t (req-clause 'test request)))
+	  (search 'noun-phrase t))))))
 
 ;; NOTE: 
 ;;   This function has been modified to handle a list of CD forms
@@ -306,11 +316,14 @@ rather than binding lists."
 	   get-var2 nil
 	   get-var3 nil)
    (next-packet
-    ((test (equal *word* 'with))
+    ((test (and (equal *part-of-speech* 'noun-phrase)
+		(feature *cd-form* '(cost-form)))
      (next-packet
-      ((test (and (equal *part-of-speech* 'noun-phrase)
-		  (feature *cd-form* '(money)))
-       (assign get-var2 *cd-form*))))))))
+      ((test (equal *word* 'with))
+       (next-packet
+        ((test (and (equal *part-of-speech* 'noun-phrase)
+		    (feature *cd-form* '(money)))
+         (assign get-var2 *cd-form*)))))))))))
 
 (defword bill
   ((assign *part-of-speech* 'noun
@@ -321,6 +334,8 @@ rather than binding lists."
   ((assign *part-of-speech* 'preposition)))
 
 (defword check
+  ((assign *part-of-speech* 'noun
+	   *cd-form* '(cost-form)))
   ((assign *part-of-speech* 'noun
 	   *cd-form* '(money))))
 
