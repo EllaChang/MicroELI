@@ -144,9 +144,12 @@ looks for a noun phrase generating a particular type of CD. If it
 finds one, it returns the predicate that FEATURE is looking for."
   (unless (empty-stack-p)
     (dolist (request (top-stack))
-      (when (req-clause 'test request)
-	(let ((t (req-clause 'test request)))
-	  (search 'noun-phrase t))))))
+      (when (and (req-clause 'test request)
+		 (find 'feature (req-clause 'test request)
+				     :key (lambda (part)
+					    (when (listp part)
+					      (car part)))))
+	    (return (nth 2 feature-request))))))
 
 ;; NOTE: 
 ;;   This function has been modified to handle a list of CD forms
@@ -291,7 +294,8 @@ rather than binding lists."
 (defword the
   ((assign *part-of-speech* nil
            *cd-form* (append *cd-form* *predicates*)
-           *predicates* nil)))
+           *predicates* nil
+	   *predicted* (get-np-prediction))))
 
 (defword red
   ((test (equal *part-of-speech* 'noun))
@@ -352,6 +356,6 @@ rather than binding lists."
        (assign *concept* *cd-form*)))))))
 
 (setq text
-      '((jack paid the bill with a check)))
+      '((jack paid the bill)))
 
 (provide :micro-eli)
