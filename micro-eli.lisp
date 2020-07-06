@@ -138,6 +138,16 @@ to the stack."
   "Tests whether the CD is of the form (predicate...)."
   (equal predicate (header-cd cd-form)))
 
+(defun rec-search (lst elt)
+  "Recursively searches for a list starting with elt."
+  (cond ((null lst) nil)
+	((atom (car lst))
+	 (if (equal (car lst) elt)
+	     lst
+	   (rec-search (cdr lst) elt)))
+	(t (or (rec-search (car lst) elt)
+	       (rec-search (cdr lst) elt)))))
+
 (defun get-np-prediction ()
   "Looks for a request in the top packet of the stack with a test
 looks for a noun phrase generating a particular type of CD. If it
@@ -145,11 +155,9 @@ finds one, it returns the predicate that FEATURE is looking for."
   (unless (empty-stack-p)
     (dolist (request (top-stack))
       (when (and (req-clause 'test request)
-		 (find 'feature (req-clause 'test request)
-				     :key (lambda (part)
-					    (when (listp part)
-					      (car part)))))
-	    (return (nth 2 feature-request))))))
+		 (rec-search (req-clause 'test request) 'feature))
+	(return
+	 (nth 2 (rec-search (req-clause 'test request) 'feature)))))))
 
 ;; NOTE: 
 ;;   This function has been modified to handle a list of CD forms
