@@ -26,6 +26,7 @@
 (defvar *cd-form*)
 (defvar *word*)
 (defvar *part-of-speech*)
+(defvar *predicted*)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -144,7 +145,7 @@ to the stack."
 	((atom (car lst))
 	 (if (equal (car lst) elt)
 	     lst
-	   (rec-search (cdr lst) elt)))
+	     (rec-search (cdr lst) elt)))
 	(t (or (rec-search (car lst) elt)
 	       (rec-search (cdr lst) elt)))))
 
@@ -158,6 +159,19 @@ finds one, it returns the predicate that FEATURE is looking for."
 		 (rec-search (req-clause 'test request) 'feature))
 	(return
 	 (nth 2 (rec-search (req-clause 'test request) 'feature)))))))
+
+(defun get-cd-form (request)
+  "Takes a request and returns the structure the request would
+assign to *CD-FORM* if executed."
+  (let ((assign-clause (req-clause 'assign request)))
+    (last assign-clause)))
+
+(defun resolve-conflict (req-list)
+  "Applies GET-CD-FORM to a list of requests, picking the first one
+that assigns to *CD-FORM* a structure matching *PREDICTED*."
+  (loop for req in req-list
+	(when (equal (get-cd-form req) (eval *predicted*))
+	  (req))))
 
 ;; NOTE: 
 ;;   This function has been modified to handle a list of CD forms
@@ -235,11 +249,13 @@ rather than binding lists."
   ((test (equal *part-of-speech* 'noun))
    (assign *part-of-speech* 'noun-phrase
            *cd-form* (append *cd-form* *predicates*)
-           *predicates* nil))
+           *predicates* nil
+	   *predicted* get-np-prediction))
   ((test (equal *part-of-speech* 'adjective))
    (assign *part-of-speech* 'noun-phrase
 	   *cd-form* (append *cd-form* *predicates*)
-           *predicates* nil)))
+           *predicates* nil
+	   *predicted* get-np-prediction)))
 
 (defword restaurant
  ((assign *part-of-speech* 'noun
