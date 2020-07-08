@@ -101,13 +101,17 @@ stack."
     (push request triggered)))
 
 (defun check-top ()
-  "Returns the first request with a true test from the
-top packet in the stack."
+  "Looks through all requests on top of stack and picks
+the ones that can be triggered. If more than one can be
+triggered, use RESOLVE-CONFLICT to pick one."
   (unless (empty-stack-p)
-    (dolist (request (top-stack))
-       (when (or (null request)
-                 (is-triggered request))
-         (return request)))))
+    (let ((ls (list 'dummy)))
+      (dolist (request (top-stack))
+	(when (is-triggered request)
+	  (push request (cdr (last ls)))))
+      (let ((reqs (cdr ls)))
+	(when (> (list-length reqs) 1)
+	  (return (resolve-conflict reqs)))))))
 
 (defun is-triggered (request)
   "Returns T if a request has no test or if the test
@@ -170,8 +174,8 @@ assign to *CD-FORM* if executed."
   "Applies GET-CD-FORM to a list of requests, picking the first one
 that assigns to *CD-FORM* a structure matching *PREDICTED*."
   (loop for req in req-list
-	(when (equal (get-cd-form req) (eval *predicted*))
-	  (req))))
+	when (equal (get-cd-form req) (eval *predicted*))
+	   return req))
 
 ;; NOTE: 
 ;;   This function has been modified to handle a list of CD forms
