@@ -111,7 +111,8 @@ triggered, use RESOLVE-CONFLICT to pick one."
 	  (push request (cdr (last ls)))))
       (let ((reqs (cdr ls)))
 	(when (> (list-length reqs) 1)
-	  (return (resolve-conflict reqs)))))))
+	  (resolve-conflict reqs)))
+      (nth 1 ls))))
 
 (defun is-triggered (request)
   "Returns T if a request has no test or if the test
@@ -162,20 +163,21 @@ finds one, it returns the predicate that FEATURE is looking for."
       (when (and (req-clause 'test request)
 		 (rec-search (req-clause 'test request) 'feature))
 	(return
-	 (nth 2 (rec-search (req-clause 'test request) 'feature)))))))
+	 (list (nth 2 (rec-search (req-clause 'test request) 'feature))))))))
 
 (defun get-cd-form (request)
   "Takes a request and returns the structure the request would
 assign to *CD-FORM* if executed."
   (let ((assign-clause (req-clause 'assign request)))
-    (last assign-clause)))
+    (let ((n (position '*CD-FORM* assign-clause)))
+      (nth (+ n 1) assign-clause))))
 
 (defun resolve-conflict (req-list)
   "Applies GET-CD-FORM to a list of requests, picking the first one
 that assigns to *CD-FORM* a structure matching *PREDICTED*."
+  (write "Resolving conflict.")
   (loop for req in req-list
-	when (equal (get-cd-form req) (eval *predicted*))
-	   return req))
+	do (when (equal (get-cd-form req) (eval *predicted*)) (req))))
 
 ;; NOTE: 
 ;;   This function has been modified to handle a list of CD forms
@@ -349,12 +351,12 @@ rather than binding lists."
 	   get-var3 nil)
    (next-packet
     ((test (and (equal *part-of-speech* 'noun-phrase)
-		(feature *cd-form* '(cost-form)))
+		(feature *cd-form* 'cost-form))
      (next-packet
       ((test (equal *word* 'with))
        (next-packet
         ((test (and (equal *part-of-speech* 'noun-phrase)
-		    (feature *cd-form* '(money)))
+		    (feature *cd-form* 'money))
          (assign get-var2 *cd-form*)))))))))))
 
 (defword bill
