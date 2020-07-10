@@ -162,8 +162,8 @@ finds one, it returns the predicate that FEATURE is looking for."
     (dolist (request (top-stack))
       (when (and (req-clause 'test request)
 		 (rec-search (req-clause 'test request) 'feature))
-	(return
-	 (list (nth 2 (rec-search (req-clause 'test request) 'feature))))))))
+	(write (rec-search (req-clause 'test request) 'feature))
+	(return (list (nth 2 (rec-search (req-clause 'test request) 'feature))))))))
 
 (defun get-cd-form (request)
   "Takes a request and returns the structure the request would
@@ -177,7 +177,7 @@ assign to *CD-FORM* if executed."
 that assigns to *CD-FORM* a structure matching *PREDICTED*."
   (write "Resolving conflict.")
   (loop for req in req-list
-	do (when (equal (get-cd-form req) (eval *predicted*)) (req))))
+	do (when (equal *predicted* (get-cd-form req)) req)))
 
 ;; NOTE: 
 ;;   This function has been modified to handle a list of CD forms
@@ -256,12 +256,13 @@ rather than binding lists."
    (assign *part-of-speech* 'noun-phrase
            *cd-form* (append *cd-form* *predicates*)
            *predicates* nil
-	   *predicted* get-np-prediction))
-  ((test (equal *part-of-speech* 'adjective))
-   (assign *part-of-speech* 'noun-phrase
-	   *cd-form* (append *cd-form* *predicates*)
+	   *predicted* (get-np-prediction))))
+
+(defword aaa
+  ((assign *part-of-speech* nil
+           *cd-form* (append *cd-form* *predicates*)
            *predicates* nil
-	   *predicted* get-np-prediction)))
+	   *predicted* (get-np-prediction))))
 
 (defword restaurant
  ((assign *part-of-speech* 'noun
@@ -321,8 +322,15 @@ rather than binding lists."
     ((test (eq *part-of-speech* 'noun-phrase))
      (assign get-var2 *cd-form*)))))
 
-(defword the
+(defword thea
   ((assign *part-of-speech* nil
+           *cd-form* (append *cd-form* *predicates*)
+           *predicates* nil
+	   *predicted* (get-np-prediction))))
+
+(defword the
+  ((test (equal *part-of-speech* 'noun))
+   (assign *part-of-speech* 'noun-phrase
            *cd-form* (append *cd-form* *predicates*)
            *predicates* nil
 	   *predicted* (get-np-prediction))))
@@ -369,9 +377,9 @@ rather than binding lists."
 
 (defword check
   ((assign *part-of-speech* 'noun
-	   *cd-form* '(cost-form)))
+	   *cd-form* '(money)))
   ((assign *part-of-speech* 'noun
-	   *cd-form* '(money))))
+	   *cd-form* '(cost-form))))
 
 (defword *start*
   ((assign *part-of-speech* nil
@@ -386,6 +394,6 @@ rather than binding lists."
        (assign *concept* *cd-form*)))))))
 
 (setq text
-      '((jack paid the bill)))
+      '((jack paid the check with a check)))
 
 (provide :micro-eli)
