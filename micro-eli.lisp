@@ -26,7 +26,6 @@
 (defvar *cd-form*)
 (defvar *word*)
 (defvar *part-of-speech*)
-(defvar *predicted*)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -110,9 +109,10 @@ triggered, use RESOLVE-CONFLICT to pick one."
 	(when (is-triggered request)
 	  (push request (cdr (last ls)))))
       (let ((reqs (cdr ls)))
-	(when (> (list-length reqs) 1)
-	  (resolve-conflict reqs)))
-      (nth 1 ls))))
+	(cond
+	  ((> (list-length reqs) 1)
+	   (resolve-conflict reqs))
+	  (t (nth 1 ls)))))))
 
 (defun is-triggered (request)
   "Returns T if a request has no test or if the test
@@ -162,7 +162,6 @@ finds one, it returns the predicate that FEATURE is looking for."
     (dolist (request (top-stack))
       (when (and (req-clause 'test request)
 		 (rec-search (req-clause 'test request) 'feature))
-	(write (rec-search (req-clause 'test request) 'feature))
 	(return (list (nth 2 (rec-search (req-clause 'test request) 'feature))))))))
 
 (defun get-cd-form (request)
@@ -172,12 +171,17 @@ assign to *CD-FORM* if executed."
     (let ((n (position '*CD-FORM* assign-clause)))
       (nth (+ n 1) assign-clause))))
 
+(defun stringify (obj)
+  "Remove single quotes from the string form of an object."
+  (let ((s (prin1-to-string obj)))
+    (remove-if (lambda (ch) (find ch "'")) s)))
+
 (defun resolve-conflict (req-list)
   "Applies GET-CD-FORM to a list of requests, picking the first one
 that assigns to *CD-FORM* a structure matching *PREDICTED*."
-  (write "Resolving conflict.")
   (loop for req in req-list
-	do (when (equal *predicted* (get-cd-form req)) req)))
+	do (when (equal (stringify *predicted*) (stringify (get-cd-form req)))
+	     (return-from resolve-conflict req))))
 
 ;; NOTE: 
 ;;   This function has been modified to handle a list of CD forms
@@ -251,14 +255,14 @@ rather than binding lists."
  ((assign *part-of-speech* 'preposition
           *cd-form* '(to))))
 
-(defword a
+(defword aaa
   ((test (equal *part-of-speech* 'noun))
    (assign *part-of-speech* 'noun-phrase
            *cd-form* (append *cd-form* *predicates*)
            *predicates* nil
 	   *predicted* (get-np-prediction))))
 
-(defword aaa
+(defword a
   ((assign *part-of-speech* nil
            *cd-form* (append *cd-form* *predicates*)
            *predicates* nil
@@ -322,13 +326,13 @@ rather than binding lists."
     ((test (eq *part-of-speech* 'noun-phrase))
      (assign get-var2 *cd-form*)))))
 
-(defword thea
+(defword the
   ((assign *part-of-speech* nil
            *cd-form* (append *cd-form* *predicates*)
            *predicates* nil
 	   *predicted* (get-np-prediction))))
 
-(defword the
+(defword thea
   ((test (equal *part-of-speech* 'noun))
    (assign *part-of-speech* 'noun-phrase
            *cd-form* (append *cd-form* *predicates*)
@@ -358,14 +362,35 @@ rather than binding lists."
 	   get-var2 nil
 	   get-var3 nil)
    (next-packet
+    ((test (and (equal *part-of-speech* 'noun)
+		(feature *cd-form* 'cost-form)))
+     (assign *predicates* '((amount (cost-form))))
+     (next-packet
+      ((test (equal *word* 'with))
+       (next-packet
+        ((test (and (equal *part-of-speech* 'noun)
+		    (feature *cd-form* 'money)))
+         (assign get-var2 *cd-form*)))))))))
+
+(defword paided
+  ((assign *part-of-speech* 'verb
+	   *cd-form* '(atrans (actor ?get-var1)
+				(object ?get-var2)
+				(to ?get-var3)
+				(from ?get-var1))
+	   get-var1 *subject*
+	   get-var2 nil
+	   get-var3 nil)
+   (next-packet
     ((test (and (equal *part-of-speech* 'noun-phrase)
-		(feature *cd-form* 'cost-form))
+		(feature *cd-form* 'cost-form)))
+     (assign *predicates* '((amount (cost-form))))
      (next-packet
       ((test (equal *word* 'with))
        (next-packet
         ((test (and (equal *part-of-speech* 'noun-phrase)
-		    (feature *cd-form* 'money))
-         (assign get-var2 *cd-form*)))))))))))
+		    (feature *cd-form* 'money)))
+         (assign get-var2 *cd-form*)))))))))
 
 (defword bill
   ((assign *part-of-speech* 'noun
