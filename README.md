@@ -10,6 +10,10 @@ Install clisp. To run Micro ELI, run clisp, and once in the interpreter, run the
 
 (process-text text)
 
+## Current Issues
+
+To successfully parse "jack paid the check with a check", articles "the" and "a" must take on a different form of definition where they don't look for a noun to form a noun phrase. Otherwise, the control flow of the stack will not have given *predicted* a value by the time the program gets to the first "check". However, these alternative definitions will not correctly parse "jack got a red kite". In this scenario, "a" must look for an adjective to form a noun phrase so that the predicates defined in "red" can be appended to the final CD form.
+
 ## Conceptual Dependency Predicates
 
 **ATRANS** - the transfer of an abstract relationship such as possession, ownership or control.

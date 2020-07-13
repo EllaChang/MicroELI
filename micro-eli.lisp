@@ -255,14 +255,17 @@ rather than binding lists."
  ((assign *part-of-speech* 'preposition
           *cd-form* '(to))))
 
-(defword aaa
+(defword a
   ((test (equal *part-of-speech* 'noun))
    (assign *part-of-speech* 'noun-phrase
            *cd-form* (append *cd-form* *predicates*)
-           *predicates* nil
-	   *predicted* (get-np-prediction))))
+           *predicates* nil))
+  ((test (equal *part-of-speech* 'adjective))
+   (assign *part-of-speech* 'noun-phrase
+	   *cd-form* (append *cd-form* *predicates*)
+           *predicates* nil)))
 
-(defword a
+(defword a2
   ((assign *part-of-speech* nil
            *cd-form* (append *cd-form* *predicates*)
            *predicates* nil
@@ -332,7 +335,7 @@ rather than binding lists."
            *predicates* nil
 	   *predicted* (get-np-prediction))))
 
-(defword thea
+(defword the2
   ((test (equal *part-of-speech* 'noun))
    (assign *part-of-speech* 'noun-phrase
            *cd-form* (append *cd-form* *predicates*)
@@ -372,26 +375,6 @@ rather than binding lists."
 		    (feature *cd-form* 'money)))
          (assign get-var2 *cd-form*)))))))))
 
-(defword paided
-  ((assign *part-of-speech* 'verb
-	   *cd-form* '(atrans (actor ?get-var1)
-				(object ?get-var2)
-				(to ?get-var3)
-				(from ?get-var1))
-	   get-var1 *subject*
-	   get-var2 nil
-	   get-var3 nil)
-   (next-packet
-    ((test (and (equal *part-of-speech* 'noun-phrase)
-		(feature *cd-form* 'cost-form)))
-     (assign *predicates* '((amount (cost-form))))
-     (next-packet
-      ((test (equal *word* 'with))
-       (next-packet
-        ((test (and (equal *part-of-speech* 'noun-phrase)
-		    (feature *cd-form* 'money)))
-         (assign get-var2 *cd-form*)))))))))
-
 (defword bill
   ((assign *part-of-speech* 'noun
 	   *cd-form* '(cost-form)
@@ -419,6 +402,6 @@ rather than binding lists."
        (assign *concept* *cd-form*)))))))
 
 (setq text
-      '((jack paid the check with a check)))
+      '((jack got a red kite)))
 
 (provide :micro-eli)
