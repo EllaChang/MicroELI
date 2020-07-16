@@ -69,7 +69,7 @@ and printing the result."
   (dolist (sentence text)
     (user-trace "~2%Input is ~s~%" sentence)
     (let ((cd (parse sentence)))
-      (user-trace "~2%CD form is ~s" (cd-translate cd))))
+      (user-trace "~2%CD form is ~s" cd)))
   (values))
 
 (defun parse (sentence)
@@ -318,7 +318,7 @@ rather than binding lists."
 
 (defword got
   ((assign *part-of-speech* 'verb
-           *cd-form* '(atrans (actor  ?get-var1)
+           *cd-form* '(*atrans* (actor  ?get-var1)
                               (object ?get-var2)
                               (to     ?get-var1)
                               (from   ?get-var3))
@@ -390,10 +390,8 @@ rather than binding lists."
 	   *cd-form* '(cost-form))))
 
 (defword who
-  ((assign *part-of-speech* 'noun-phrase)
-   (next-packet
-    ((test (equal (header-cd *cd-form*) '*ptrans*))
-     (assign go-var1 '(*?*))))))
+  ((assign *part-of-speech* 'noun-phrase
+	   *cd-form* '(*?*))))
 
 (defword *start*
   ((assign *part-of-speech* nil
@@ -421,7 +419,25 @@ rather than binding lists."
 (setq store
       '((jack went to the store)))
 
-(setq question
-      '((who went to the store)))
+(setq q-went
+      '(who went to the store))
+
+(setq q-got
+      '((who got a kite)))
+
+(defun answer (question story)
+  (let ((ls (list (list 'dummy 'h))))
+    (dolist (sentence story)
+      (let ((sentence-cd (parse sentence)))
+	(when (equal (header-cd sentence-cd) '*ptrans*)
+	  (push (list sentence-cd sentence) (cdr (last ls))))))
+    (dolist (pair (cdr ls))
+      (cond
+       ((equal (filler-role 'to (car pair)) (filler-role 'to question))
+	(cdr pair))
+       (t nil)))))
+
+(write "ANSWER")
+(write (answer q-went story1))
 
 (provide :micro-eli)
