@@ -69,7 +69,7 @@ and printing the result."
   (dolist (sentence text)
     (user-trace "~2%Input is ~s~%" sentence)
     (let ((cd (parse sentence)))
-      (user-trace "~2%CD form is ~s" cd)))
+      (user-trace "~2%CD form is ~s" (cd-translate cd))))
   (values))
 
 (defun parse (sentence)
@@ -231,12 +231,12 @@ rather than binding lists."
 ;; Example vocabulary items...
 
 (defword jack
-  ((assign *cd-form* '(person (name (jack)))
+  ((assign *cd-form* '(jack)
            *part-of-speech* 'noun-phrase)))
 
 (defword went
   ((assign *part-of-speech* 'verb
-           *cd-form* '(ptrans (actor  ?go-var1)
+           *cd-form* '(*ptrans* (actor  ?go-var1)
                               (object ?go-var1)
                               (to     ?go-var2)
                               (from   ?go-var3))
@@ -329,13 +329,13 @@ rather than binding lists."
     ((test (eq *part-of-speech* 'noun-phrase))
      (assign get-var2 *cd-form*)))))
 
-(defword the
+(defword the2
   ((assign *part-of-speech* nil
            *cd-form* (append *cd-form* *predicates*)
            *predicates* nil
 	   *predicted* (get-np-prediction))))
 
-(defword the2
+(defword the
   ((test (equal *part-of-speech* 'noun))
    (assign *part-of-speech* 'noun-phrase
            *cd-form* (append *cd-form* *predicates*)
@@ -389,6 +389,12 @@ rather than binding lists."
   ((assign *part-of-speech* 'noun
 	   *cd-form* '(cost-form))))
 
+(defword who
+  ((assign *part-of-speech* 'noun-phrase)
+   (next-packet
+    ((test (equal (header-cd *cd-form*) '*ptrans*))
+     (assign go-var1 '(*?*))))))
+
 (defword *start*
   ((assign *part-of-speech* nil
            *cd-form* nil
@@ -401,7 +407,21 @@ rather than binding lists."
       ((test (equal *part-of-speech* 'verb))
        (assign *concept* *cd-form*)))))))
 
-(setq text
+(setq story1
+      '((jack went to the store)
+	(jack got a red kite)
+	(jack went home)))
+
+(setq red-kite
       '((jack got a red kite)))
+
+(setq checks
+      '((jack paid the check with a check)))
+
+(setq store
+      '((jack went to the store)))
+
+(setq question
+      '((who went to the store)))
 
 (provide :micro-eli)

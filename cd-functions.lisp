@@ -225,9 +225,13 @@ bindings."
 (defun cd-translate (cd)
   "Translates an ELI CD form into a BABEL CD form."
   (list 'ACTOR
-	(list (filler-role 'ACTOR cd))
+	(filler-role 'ACTOR cd)
 	'<=>
-	(list (header-cd cd))))
+	(list (header-cd cd))
+	'OBJECT
+	(filler-role 'OBJECT cd)
+	'TO
+	(filler-role 'TO cd)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
