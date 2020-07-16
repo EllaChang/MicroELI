@@ -426,18 +426,19 @@ rather than binding lists."
       '((who got a kite)))
 
 (defun answer (question story)
-  (let ((ls (list (list 'dummy 'h))))
+  (let ((ls (list (list 'dummy 'h)))
+	(question-cd (parse question)))
     (dolist (sentence story)
       (let ((sentence-cd (parse sentence)))
 	(when (equal (header-cd sentence-cd) '*ptrans*)
 	  (push (list sentence-cd sentence) (cdr (last ls))))))
     (dolist (pair (cdr ls))
+      (format t "~%The answer to the given question is:~%")
       (cond
-       ((equal (filler-role 'to (car pair)) (filler-role 'to question))
-	(cdr pair))
-       (t nil)))))
+       ((equal (filler-role 'to (nth 0 pair)) (filler-role 'to question-cd))
+	(return-from answer (nth 1 pair)))
+       (t (return-from answer nil))))))
 
-(write "ANSWER")
 (write (answer q-went story1))
 
 (provide :micro-eli)
