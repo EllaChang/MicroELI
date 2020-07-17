@@ -26,6 +26,7 @@
 (defvar *cd-form*)
 (defvar *word*)
 (defvar *part-of-speech*)
+(defvar *mod-cd*)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -69,6 +70,8 @@ and printing the result."
   (dolist (sentence text)
     (user-trace "~2%Input is ~s~%" sentence)
     (let ((cd (parse sentence)))
+      (when *mod-cd*
+	(setq cd (setrole (first *mod-cd*) (second *mod-cd*) cd)))
       (user-trace "~2%CD form is ~s" cd)))
   (values))
 
@@ -80,7 +83,7 @@ conceptual analysis for it."
   (do ((*word* nil)
        (*sentence* (cons '*start* sentence)))
       ((null (setq *word* (pop *sentence*)))
-       (remove-variables *concept*))
+       *concept*)
     (user-trace "~2%Processing word ~s" *word*)
     (load-def)
     (run-stack)))
@@ -307,7 +310,7 @@ rather than binding lists."
            get-var2 nil
            get-var3 nil)
   (next-packet
-   ((test (eq *part-of-speech* 'noun-phrase))
+   ((test (equal *part-of-speech* 'noun-phrase))
     (assign get-var2 *cd-form*)))))
 
 (defword lobster
@@ -334,7 +337,7 @@ rather than binding lists."
            get-var2 nil
            get-var3 nil)
    (next-packet
-    ((test (eq *part-of-speech* 'noun-phrase))
+    ((test (equal *part-of-speech* 'noun-phrase))
      (assign get-var2 *cd-form*)))))
 
 (defword the2
@@ -410,15 +413,39 @@ rather than binding lists."
   ((assign *part-of-speech* 'noun
 	   *cd-form* '(cost-form))))
 
+(defword go
+  ((assign *part-of-speech* 'verb
+           *cd-form* '(*ptrans* (actor  ?go-var1)
+                              (object ?go-var1)
+                              (to     ?go-var2)
+                              (from   ?go-var3))
+           go-var1 *subject*
+           go-var2 nil
+           go-var3 nil)
+   (next-packet
+    ((test (equal *word* 'to))
+     (next-packet
+      ((test (equal *part-of-speech* 'noun-phrase))
+       (assign go-var2 *cd-form*))))
+    ((test (equal *word* 'home))
+     (assign go-var2 '(house))))))
+
 (defword who
   ((assign *part-of-speech* 'noun-phrase
 	   *cd-form* '(*?*))))
+
+(defword where
+  ((assign *part-of-speech 'adverb)
+   (next-packet
+    ((test (equal *word* 'go))
+     (assign *mod-cd* '(to (*?*) *cd-form*))))))
 
 (defword *start*
   ((assign *part-of-speech* nil
            *cd-form* nil
            *subject* nil
-           *predicates* nil)
+           *predicates* nil
+	   *mod-cd* nil)
    (next-packet
     ((test (equal *part-of-speech* 'noun-phrase))
      (assign *subject* *cd-form*)
@@ -449,7 +476,10 @@ rather than binding lists."
       '(who went to the store))
 
 (setq q-got
-      '((who got a kite)))
+      '(who got a kite))
+
+(setq q-where
+      '((where did jack go)))
 
 (defun answer (question story)
   (let ((ls (list (list 'dummy 'h)))
@@ -466,7 +496,9 @@ rather than binding lists."
                (return-from answer (nth 1 pair)))
        (t (return-from answer nil))))))
 
-(write (answer q-went story2))
-(write q-went)
+;; (write (answer q-went story2))
+;; (write q-went)
+
+(process-text q-where)
 
 (provide :micro-eli)
