@@ -234,6 +234,14 @@ rather than binding lists."
   ((assign *cd-form* '(jack)
            *part-of-speech* 'noun-phrase)))
 
+(defword nene
+  ((assign *cd-form* '(nene)
+           *part-of-speech* 'noun-phrase)))
+
+(defword ella
+  ((assign *cd-form* '(ella)
+           *part-of-speech* 'noun-phrase)))
+
 (defword went
   ((assign *part-of-speech* 'verb
            *cd-form* '(*ptrans* (actor  ?go-var1)
@@ -351,6 +359,19 @@ rather than binding lists."
   ((assign *part-of-speech* 'noun
            *cd-form* '(kite))))
 
+(defword hawaii
+  ((assign *part-of-speech* 'noun
+           *cd-form* '(place-us))))
+
+(defword knife
+  ((assign *part-of-speech* 'noun
+           *cd-form* '(knife))))
+
+(defword beach
+  ((assign *part-of-speech* 'noun
+           *cd-form* '(beach))))
+
+
 (defword store
   ((assign *part-of-speech* 'noun
            *cd-form* '(store))))
@@ -407,8 +428,13 @@ rather than binding lists."
 
 (setq story1
       '((jack went to the store)
-	(jack got a red kite)
-	(jack went home)))
+	     (jack got a red kite)
+	     (jack went home)))
+
+(setq story2
+      '((nene went to the beach)
+       (ella got a red knife)
+       (ella went to Hawaii)))
 
 (setq red-kite
       '((jack got a red kite)))
@@ -430,15 +456,17 @@ rather than binding lists."
 	(question-cd (parse question)))
     (dolist (sentence story)
       (let ((sentence-cd (parse sentence)))
-	(when (equal (header-cd sentence-cd) '*ptrans*)
+	(when (equal (header-cd sentence-cd) '*ptrans*)  ;; check cd hearder
 	  (push (list sentence-cd sentence) (cdr (last ls))))))
     (dolist (pair (cdr ls))
       (format t "~%The answer to the given question is:~%")
       (cond
-       ((equal (filler-role 'to (nth 0 pair)) (filler-role 'to question-cd))
-	(return-from answer (nth 1 pair)))
+       ((equal (filler-role 'to (nth 0 pair)) (filler-role 'to question-cd)) 
+               ;; (write (filler-role 'to (nth 0 pair)))
+               (return-from answer (nth 1 pair)))
        (t (return-from answer nil))))))
 
-(write (answer q-went story1))
+(write (answer q-went story2))
+(write q-went)
 
 (provide :micro-eli)
