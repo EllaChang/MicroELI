@@ -83,7 +83,7 @@ conceptual analysis for it."
   (do ((*word* nil)
        (*sentence* (cons '*start* sentence)))
       ((null (setq *word* (pop *sentence*)))
-       *concept*)
+       (remove-variables *concept*))
     (user-trace "~2%Processing word ~s" *word*)
     (load-def)
     (run-stack)))
@@ -266,17 +266,16 @@ rather than binding lists."
  ((assign *part-of-speech* 'preposition
           *cd-form* '(to))))
 
-(defword a
+(defword a2
   ((test (equal *part-of-speech* 'noun))
    (assign *part-of-speech* 'noun-phrase
-           *cd-form* (append *cd-form* *predicates*)
            *predicates* nil))
   ((test (equal *part-of-speech* 'adjective))
    (assign *part-of-speech* 'noun-phrase
 	   *cd-form* (append *cd-form* *predicates*)
            *predicates* nil)))
 
-(defword a2
+(defword a
   ((assign *part-of-speech* nil
            *cd-form* (append *cd-form* *predicates*)
            *predicates* nil
@@ -340,16 +339,15 @@ rather than binding lists."
     ((test (equal *part-of-speech* 'noun-phrase))
      (assign get-var2 *cd-form*)))))
 
-(defword the2
+(defword the
   ((assign *part-of-speech* nil
            *cd-form* (append *cd-form* *predicates*)
            *predicates* nil
 	   *predicted* (get-np-prediction))))
 
-(defword the
+(defword the2
   ((test (equal *part-of-speech* 'noun))
    (assign *part-of-speech* 'noun-phrase
-           *cd-form* (append *cd-form* *predicates*)
            *predicates* nil
 	   *predicted* (get-np-prediction))))
 
@@ -391,7 +389,7 @@ rather than binding lists."
    (next-packet
     ((test (and (equal *part-of-speech* 'noun)
 		(feature *cd-form* 'cost-form)))
-     (assign *predicates* '((amount (cost-form))))
+     (assign *cd-form* '((amount (cost-form))))
      (next-packet
       ((test (equal *word* 'with))
        (next-packet
@@ -411,7 +409,8 @@ rather than binding lists."
   ((assign *part-of-speech* 'noun
 	   *cd-form* '(money)))
   ((assign *part-of-speech* 'noun
-	   *cd-form* '(cost-form))))
+	   *cd-form* '(cost-form)
+	   *predicates* '((amount (cost-form))))))
 
 (defword go
   ((assign *part-of-speech* 'verb
@@ -499,6 +498,6 @@ rather than binding lists."
 ;; (write (answer q-went story2))
 ;; (write q-went)
 
-(process-text q-where)
+(process-text checks)
 
 (provide :micro-eli)
