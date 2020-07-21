@@ -1,0 +1,29 @@
+; names of discrimination trees -- (found of files (name).TRE)
+(MFEEL STAT EKS DO DK GO KAUS EVT AND SC EKC EKE GRASP INGEST PTRANS
+ ATRANS MTRANS BELIEV PROPEL)
+
+;associations between skeletal types and trees
+(
+; skeletons associated with discrimination nets
+(A   AND)
+(S   STAT)
+(L   SCALE)
+(C   SC)
+(EKC EKC KAUS)
+(EKE EKE KAUS)
+(EKS EKS KAUS)
+(D   DK)
+
+; primitive ACTs associated with discrimination nets
+(*MFEEL*    MFEEL)
+(*GRASP*    GRASP)
+(*INGEST*   INGEST)
+(*PTRANS*   PTRANS)
+(*ATRANS*   ATRANS)
+(*MTRANS*   MTRANS)
+(*DO*	    DO)
+(*PROPEL*   PROPEL)
+
+; state markers associated with discrimination nets
+(*MLOC*   BELIEV)
+)

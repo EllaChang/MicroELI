@@ -1,0 +1,17 @@
+;	This net is for *ATRANS* events
+((132)
+	((111)
+		((183)
+			((10)
+				((T (GET4 RECEIVE1)) NIL)
+				((T (GIVE1 GIVE11)) 16)
+			)
+			((T (RETURN2 GIVEB)) 8)
+		)
+		((129 131 81)
+			((G . 4))
+			((T (KEEP2)) 4)
+		)
+	)
+	((T (TAKE1)) NIL)
+)	;END-OF-TREE

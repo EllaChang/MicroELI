@@ -1,0 +1,23 @@
+;	This net is for Double-Causals
+((154)
+	((T (AND2)) NIL)
+	((160)
+		((106 144)
+			NIL
+			((T (PAY-TO)) NIL)
+		)
+		((143 144)
+			((G . 6))
+			((106)
+				((T (TRADE1)) 2)
+				((78)
+					((79)
+						((T (BUY1)) 13)
+						((T (SELL1)) 124)
+					)
+					((T (PAY-FOR)) 125)
+				)
+			)
+		)
+	)
+)	;END-OF-TREE

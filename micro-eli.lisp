@@ -14,7 +14,6 @@
 
 (require :cd-functions)
 (require :dict)
-(require :question-answering)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -71,7 +70,7 @@ and printing the result."
   (dolist (sentence text)
     (user-trace "~2%Input is ~s~%" sentence)
     (let ((cd (parse sentence)))
-      (user-trace "~2%CD form is ~s" cd)))
+      (user-trace "~2%CD form is ~s" (cd-translate cd))))
   (values))
 
 (defun parse (sentence)

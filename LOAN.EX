@@ -1,0 +1,10 @@
+;(: BILL LOANED A BOOK TO MARY)
+(defparameter *LOAN.EX* 
+
+'(
+
+  ((CON ((ACTOR (BILL1) <=> (*ATRANS*) TO (MARY1) FROM (BILL1) OBJECT (BOOK1 REF (*A*))) TIME (T-2) FOCUS ((ACTOR))) ∧ ((CON ((ACTOR (MARY1) <=> (*ATRANS*) TO (BILL1) FROM (MARY1) OBJECT (BOOK1 REF (*A*))) TIME (T-1)) <≡> (*MLOC* VAL (*LTM* PART (BILL1)))) FOCUS ((<≡> VAL PART)) TIME (T-2))))
+  
+ )
+ 
+)

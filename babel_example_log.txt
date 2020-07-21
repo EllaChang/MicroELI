@@ -1,0 +1,223 @@
+(progn (load "/Users/jmacbeth/.emacs.d/elpa/slime-20170820.1946/swank-loader.lisp" :verbose t) (funcall (read-from-string "swank-loader:init")) (funcall (read-from-string "swank:start-server") "/var/folders/wk/vcwlth4514q0_bq_d83kd5c00000gn/T/slime.933"))
+
+  i i i i i i i       ooooo    o        ooooooo   ooooo   ooooo
+  I I I I I I I      8     8   8           8     8     o  8    8
+  I  \ `+' /  I      8         8           8     8        8    8
+   \  `-+-'  /       8         8           8      ooooo   8oooo
+    `-__|__-'        8         8           8           8  8
+        |            8     o   8           8     o     8  8
+  ------+------       ooooo    8oooooo  ooo8ooo   ooooo   8
+
+Welcome to GNU CLISP 2.49 (2010-07-07) <http://clisp.cons.org/>
+
+Copyright (c) Bruno Haible, Michael Stoll 1992, 1993
+Copyright (c) Bruno Haible, Marcus Daniels 1994-1997
+Copyright (c) Bruno Haible, Pierpaolo Bernardi, Sam Steingold 1998
+Copyright (c) Bruno Haible, Sam Steingold 1999-2000
+Copyright (c) Sam Steingold, Bruno Haible 2001-2010
+
+Type :h and hit Enter for context help.
+
+[1]> 
+;; Loading file /Users/jmacbeth/.emacs.d/elpa/slime-20170820.1946/swank-loader.lisp ...
+WARNING: No architecture feature found in
+         (POWERPC PPC X86 X86-64 X86_64 AMD64 I686 I586 I486 PC386 IAPX386
+         SPARC64 SPARC
+         HPPA64 HPPA ARM ARMV5L ARMV6L ARMV7L ARM64 PENTIUM3 PENTIUM4 MIPS
+         MIPSEL
+         JAVA-1.4 JAVA-1.5 JAVA-1.6 JAVA-1.7).
+;; Loaded file /Users/jmacbeth/.emacs.d/elpa/slime-20170820.1946/swank-loader.lisp
+;; Loading file /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/packages.fas ...
+;; Loaded file /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/packages.fas
+;; Loading file /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/backend.fas ...
+;; Loaded file /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/backend.fas
+;; Loading file /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/xref.fas ...
+;; Loaded file /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/xref.fas
+;; Loading file /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/metering.fas ...
+;; Loaded file /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/metering.fas
+;; Loading file /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/clisp.fas ...
+WARNING: DEFUN/DEFMACRO: redefining function BREAK in
+         /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/clisp.fas,
+         was defined in
+         /private/tmp/clisp-20190112-7407-1lzhb5f/clisp-2.49/src/condition.fas
+WARNING: Replacing method #<STANDARD-METHOD (#<BUILT-IN-CLASS T>)> in
+         #<STANDARD-GENERIC-FUNCTION EMACS-INSPECT>
+;; Loaded file /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/clisp.fas
+;; Loading file /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/gray.fas ...
+WARNING: The generic function #<STANDARD-GENERIC-FUNCTION STREAM-WRITE-CHAR>
+         is being modified, but has already been called.
+WARNING: The generic function #<STANDARD-GENERIC-FUNCTION STREAM-LINE-COLUMN>
+         is being modified, but has already been called.
+WARNING: The generic function #<STANDARD-GENERIC-FUNCTION STREAM-FORCE-OUTPUT>
+         is being modified, but has already been called.
+WARNING: The generic function #<STANDARD-GENERIC-FUNCTION STREAM-LINE-COLUMN>
+         is being modified, but has already been called.
+;; Loaded file /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/gray.fas
+;; Loading file /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/match.fas ...
+;; Loaded file /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/match.fas
+;; Loading file /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/rpc.fas ...
+;; Loaded file /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/rpc.fas
+;; Loading file /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/swank.fas ...
+;; Loaded file /Users/jmacbeth/.slime/fasl/2.19/clisp-2.49-unix-unknown/swank.fas
+0 errors, 6 warnings
+;; Swank started at port: 63269.
+CL-USER> 
+;; Loading file /Users/jmacbeth/Desktop/Projects/MARGIE rebuild/neil_goldman_files/common_lisp/prph.lisp ...
+LOADING 	FMSTDS
+LOADING 	SCALES
+LOADING 	ALLPS
+LOADING 	(TREES . NAM)
+LOADING 	(MFEEL . TRE)
+LOADING 	(STAT . TRE)
+LOADING 	(EKS . TRE)
+LOADING 	(DO . TRE)
+LOADING 	(DK . TRE)
+LOADING 	(GO . TRE)
+LOADING 	(KAUS . TRE)
+LOADING 	(EVT . TRE)
+LOADING 	(AND . TRE)
+LOADING 	(SC . TRE)
+LOADING 	(EKC . TRE)
+LOADING 	(EKE . TRE)
+LOADING 	(GRASP . TRE)
+LOADING 	(INGEST . TRE)
+LOADING 	(PTRANS . TRE)
+LOADING 	(ATRANS . TRE)
+LOADING 	(MTRANS . TRE)
+LOADING 	(BELIEV . TRE)
+LOADING 	(PROPEL . TRE)
+LOADING 	CPRPS
+LOADING 	CXCN
+LOADING 	DEFCHS
+;; Loaded file /Users/jmacbeth/Desktop/Projects/MARGIE rebuild/neil_goldman_files/common_lisp/prph.lisp
+;; Loading file /Users/jmacbeth/Desktop/Projects/MARGIE rebuild/neil_goldman_files/common_lisp/surf.lisp ...
+WARNING: DEFUN/DEFMACRO: redefining function DEFLIST in
+         /Users/jmacbeth/Desktop/Projects/MARGIE
+         rebuild/neil_goldman_files/common_lisp/surf.lisp, was defined in
+         /Users/jmacbeth/Desktop/Projects/MARGIE
+         rebuild/neil_goldman_files/common_lisp/prph.lisp
+WARNING: DEFUN/DEFMACRO: redefining function PUTPROP in
+         /Users/jmacbeth/Desktop/Projects/MARGIE
+         rebuild/neil_goldman_files/common_lisp/surf.lisp, was defined in
+         /Users/jmacbeth/Desktop/Projects/MARGIE
+         rebuild/neil_goldman_files/common_lisp/prph.lisp
+WARNING: DEFUN/DEFMACRO: redefining function NCONS in
+         /Users/jmacbeth/Desktop/Projects/MARGIE
+         rebuild/neil_goldman_files/common_lisp/surf.lisp, was defined in
+         /Users/jmacbeth/Desktop/Projects/MARGIE
+         rebuild/neil_goldman_files/common_lisp/prph.lisp
+WARNING: DEFUN/DEFMACRO: redefining function EXPLODE in
+         /Users/jmacbeth/Desktop/Projects/MARGIE
+         rebuild/neil_goldman_files/common_lisp/surf.lisp, was defined in
+         /Users/jmacbeth/Desktop/Projects/MARGIE
+         rebuild/neil_goldman_files/common_lisp/prph.lisp
+;; Loaded file /Users/jmacbeth/Desktop/Projects/MARGIE rebuild/neil_goldman_files/common_lisp/surf.lisp
+
+(MARY CHOKED JOHN AND HE DIED BECAUSE HE WAS UNABLE TO BREATHE) 
+(MARY CHOKED JOHN AND HE DIED BECAUSE HE WAS UNABLE TO INHALE AIR) 
+(MARY CHOKED JOHN AND HE DIED BECAUSE HE COULD NOT BREATHE) 
+(MARY CHOKED JOHN AND HE DIED BECAUSE HE COULD NOT INHALE AIR) 
+(MARY CHOKED JOHN AND HE BECAME DEAD BECAUSE HE WAS UNABLE TO BREATHE) 
+(MARY CHOKED JOHN AND HE BECAME DEAD BECAUSE HE WAS UNABLE TO INHALE AIR) 
+(MARY CHOKED JOHN AND HE BECAME DEAD BECAUSE HE COULD NOT BREATHE) 
+(MARY CHOKED JOHN AND HE BECAME DEAD BECAUSE HE COULD NOT INHALE AIR) 
+(MARY PREVENTED JOHN FROM BREATHING BY GRABBING HIS NECK AND HE DIED BECAUSE HE
+ WAS UNABLE TO BREATHE) 
+(MARY PREVENTED JOHN FROM BREATHING BY GRABBING HIS NECK AND HE DIED BECAUSE HE
+ WAS UNABLE TO INHALE AIR) 
+(MARY PREVENTED JOHN FROM BREATHING BY GRABBING HIS NECK AND HE DIED BECAUSE HE
+ COULD NOT BREATHE) 
+(MARY PREVENTED JOHN FROM BREATHING BY GRABBING HIS NECK AND HE DIED BECAUSE HE
+ COULD NOT INHALE AIR) 
+(MARY PREVENTED JOHN FROM BREATHING BY GRABBING HIS NECK AND HE BECAME DEAD
+ BECAUSE HE WAS UNABLE TO BREATHE) 
+(MARY PREVENTED JOHN FROM BREATHING BY GRABBING HIS NECK AND HE BECAME DEAD
+ BECAUSE HE WAS UNABLE TO INHALE AIR) 
+(MARY PREVENTED JOHN FROM BREATHING BY GRABBING HIS NECK AND HE BECAME DEAD
+ BECAUSE HE COULD NOT BREATHE) 
+(MARY PREVENTED JOHN FROM BREATHING BY GRABBING HIS NECK AND HE BECAME DEAD
+ BECAUSE HE COULD NOT INHALE AIR) 
+(MARY PREVENTED JOHN FROM INHALING AIR BY GRABBING HIS NECK AND HE DIED BECAUSE
+ HE WAS UNABLE TO BREATHE) 
+(MARY PREVENTED JOHN FROM INHALING AIR BY GRABBING HIS NECK AND HE DIED BECAUSE
+ HE WAS UNABLE TO INHALE IT) 
+(MARY PREVENTED JOHN FROM INHALING AIR BY GRABBING HIS NECK AND HE DIED BECAUSE
+ HE COULD NOT BREATHE) 
+(MARY PREVENTED JOHN FROM INHALING AIR BY GRABBING HIS NECK AND HE DIED BECAUSE
+ HE COULD NOT INHALE IT) 
+(MARY PREVENTED JOHN FROM INHALING AIR BY GRABBING HIS NECK AND HE BECAME DEAD
+ BECAUSE HE WAS UNABLE TO BREATHE) 
+(MARY PREVENTED JOHN FROM INHALING AIR BY GRABBING HIS NECK AND HE BECAME DEAD
+ BECAUSE HE WAS UNABLE TO INHALE IT) 
+(MARY PREVENTED JOHN FROM INHALING AIR BY GRABBING HIS NECK AND HE BECAME DEAD
+ BECAUSE HE COULD NOT BREATHE) 
+(MARY PREVENTED JOHN FROM INHALING AIR BY GRABBING HIS NECK AND HE BECAME DEAD
+ BECAUSE HE COULD NOT INHALE IT) 
+(JOHN WAS UNABLE TO BREATHE BECAUSE MARY GRABBED HIS NECK AND HE DIED BECAUSE
+ HE WAS UNABLE TO BREATHE) 
+(JOHN WAS UNABLE TO BREATHE BECAUSE MARY GRABBED HIS NECK AND HE DIED BECAUSE
+ HE WAS UNABLE TO INHALE AIR) 
+(JOHN WAS UNABLE TO BREATHE BECAUSE MARY GRABBED HIS NECK AND HE DIED BECAUSE
+ HE COULD NOT BREATHE) 
+(JOHN WAS UNABLE TO BREATHE BECAUSE MARY GRABBED HIS NECK AND HE DIED BECAUSE
+ HE COULD NOT INHALE AIR) 
+(JOHN WAS UNABLE TO BREATHE BECAUSE MARY GRABBED HIS NECK AND HE BECAME DEAD
+ BECAUSE HE WAS UNABLE TO BREATHE) 
+(JOHN WAS UNABLE TO BREATHE BECAUSE MARY GRABBED HIS NECK AND HE BECAME DEAD
+ BECAUSE HE WAS UNABLE TO INHALE AIR) 
+(JOHN WAS UNABLE TO BREATHE BECAUSE MARY GRABBED HIS NECK AND HE BECAME DEAD
+ BECAUSE HE COULD NOT BREATHE) 
+(JOHN WAS UNABLE TO BREATHE BECAUSE MARY GRABBED HIS NECK AND HE BECAME DEAD
+ BECAUSE HE COULD NOT INHALE AIR) 
+(JOHN WAS UNABLE TO INHALE AIR BECAUSE MARY GRABBED HIS NECK AND HE DIED
+ BECAUSE HE WAS UNABLE TO BREATHE) 
+(JOHN WAS UNABLE TO INHALE AIR BECAUSE MARY GRABBED HIS NECK AND HE DIED
+ BECAUSE HE WAS UNABLE TO INHALE IT) 
+(JOHN WAS UNABLE TO INHALE AIR BECAUSE MARY GRABBED HIS NECK AND HE DIED
+ BECAUSE HE COULD NOT BREATHE) 
+(JOHN WAS UNABLE TO INHALE AIR BECAUSE MARY GRABBED HIS NECK AND HE DIED
+ BECAUSE HE COULD NOT INHALE IT) 
+(JOHN WAS UNABLE TO INHALE AIR BECAUSE MARY GRABBED HIS NECK AND HE BECAME DEAD
+ BECAUSE HE WAS UNABLE TO BREATHE) 
+(JOHN WAS UNABLE TO INHALE AIR BECAUSE MARY GRABBED HIS NECK AND HE BECAME DEAD
+ BECAUSE HE WAS UNABLE TO INHALE IT) 
+(JOHN WAS UNABLE TO INHALE AIR BECAUSE MARY GRABBED HIS NECK AND HE BECAME DEAD
+ BECAUSE HE COULD NOT BREATHE) 
+(JOHN WAS UNABLE TO INHALE AIR BECAUSE MARY GRABBED HIS NECK AND HE BECAME DEAD
+ BECAUSE HE COULD NOT INHALE IT) 
+(JOHN COULD NOT BREATHE BECAUSE MARY GRABBED HIS NECK AND HE DIED BECAUSE HE
+ WAS UNABLE TO BREATHE) 
+(JOHN COULD NOT BREATHE BECAUSE MARY GRABBED HIS NECK AND HE DIED BECAUSE HE
+ WAS UNABLE TO INHALE AIR) 
+(JOHN COULD NOT BREATHE BECAUSE MARY GRABBED HIS NECK AND HE DIED BECAUSE HE
+ COULD NOT BREATHE) 
+(JOHN COULD NOT BREATHE BECAUSE MARY GRABBED HIS NECK AND HE DIED BECAUSE HE
+ COULD NOT INHALE AIR) 
+(JOHN COULD NOT BREATHE BECAUSE MARY GRABBED HIS NECK AND HE BECAME DEAD
+ BECAUSE HE WAS UNABLE TO BREATHE) 
+(JOHN COULD NOT BREATHE BECAUSE MARY GRABBED HIS NECK AND HE BECAME DEAD
+ BECAUSE HE WAS UNABLE TO INHALE AIR) 
+(JOHN COULD NOT BREATHE BECAUSE MARY GRABBED HIS NECK AND HE BECAME DEAD
+ BECAUSE HE COULD NOT BREATHE) 
+(JOHN COULD NOT BREATHE BECAUSE MARY GRABBED HIS NECK AND HE BECAME DEAD
+ BECAUSE HE COULD NOT INHALE AIR) 
+(JOHN COULD NOT INHALE AIR BECAUSE MARY GRABBED HIS NECK AND HE DIED BECAUSE HE
+ WAS UNABLE TO BREATHE) 
+(JOHN COULD NOT INHALE AIR BECAUSE MARY GRABBED HIS NECK AND HE DIED BECAUSE HE
+ WAS UNABLE TO INHALE IT) 
+(JOHN COULD NOT INHALE AIR BECAUSE MARY GRABBED HIS NECK AND HE DIED BECAUSE HE
+ COULD NOT BREATHE) 
+(JOHN COULD NOT INHALE AIR BECAUSE MARY GRABBED HIS NECK AND HE DIED BECAUSE HE
+ COULD NOT INHALE IT) 
+(JOHN COULD NOT INHALE AIR BECAUSE MARY GRABBED HIS NECK AND HE BECAME DEAD
+ BECAUSE HE WAS UNABLE TO BREATHE) 
+(JOHN COULD NOT INHALE AIR BECAUSE MARY GRABBED HIS NECK AND HE BECAME DEAD
+ BECAUSE HE WAS UNABLE TO INHALE IT) 
+(JOHN COULD NOT INHALE AIR BECAUSE MARY GRABBED HIS NECK AND HE BECAME DEAD
+ BECAUSE HE COULD NOT BREATHE) 
+(JOHN COULD NOT INHALE AIR BECAUSE MARY GRABBED HIS NECK AND HE BECAME DEAD
+ BECAUSE HE COULD NOT INHALE IT) 
+
+T
+T
+CL-USER> 

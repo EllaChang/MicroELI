@@ -1,0 +1,16 @@
+; These are the default relationships between syntax cases and
+; conceptual roles.  Each entry has the form:
+; (syntax-relation . conceptual-field-specification
+
+(ACTSBJ ACTOR)
+(OBJ OBJECT)
+(OBJ2 TO)
+(LOC TO)
+(INST2 CON)
+(P_ADJ  <≡>)
+(FIRS CON)
+(SECS ∧)
+(IOBJ TO) 
+(S2 MOBJECT)
+
+

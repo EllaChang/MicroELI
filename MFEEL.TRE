@@ -1,0 +1,11 @@
+;	This net is for *MFEEL* events
+((6)
+     ((2)
+	     ((1)
+		     NIL
+		     ((T (DISLIKE3)) NIL)
+	     )
+	     ((T (LIKE3)) NIL)
+     )
+     ((T (ANGRY1)) NIL)
+)	;END-OF-TREE

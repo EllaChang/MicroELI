@@ -1,0 +1,8 @@
+;	This net is for CONJUNCTIONS (ANDs)
+((189 190)
+	((T (AND1)) NIL)
+	((141 142 158 159)
+		((G . 2))
+		((T (STRANGLE1)) 2)
+	)
+)	;END-OF-TREE

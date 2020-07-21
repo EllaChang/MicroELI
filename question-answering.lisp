@@ -4,21 +4,19 @@
 ;;;
 
 (require :dict)
+(require :cd-functions)
+(require :micro-eli)
 
 (defun answer (question story)
   (let ((ls (list (list 'dummy 'h)))
         (question-cd (parse-question question)))
     (dolist (sentence story)
       (let ((sentence-cd (parse sentence)))
-	(write (filler-role 'object sentence-cd))
-	(write (filler-role 'object question-cd))
-	(write (equal (filler-role 'object sentence-cd) (filler-role 'object question-cd)))
         (when (and (equal (header-cd sentence-cd) (header-cd question-cd))
                    (or (equal (filler-role 'actor sentence-cd) (filler-role 'actor question-cd))
                        (equal (filler-role 'object sentence-cd) (filler-role 'object question-cd))
                        (equal (filler-role 'to sentence-cd) (filler-role 'to question-cd))))
-          (push (list sentence-cd sentence) (cdr (last ls)))
-	  (write ls))))
+          (push (list sentence-cd sentence) (cdr (last ls))))))
     (dolist (pair (cdr ls))
       (format t "~%The answer to the given question is:~%")
       (return-from answer (nth 1 pair)))))
@@ -40,7 +38,7 @@
        (ella went to Hawaii)))
 
 (setq red-kite
-      '((jack got a red kite)))
+      '(jack got a red kite))
 
 (setq checks
       '((jack paid the check with a check)))
@@ -65,5 +63,7 @@
 
 (setq q-do
       '(what did jack do))
+
+(write (cd-translate (parse red-kite)))
 
 (provide :question-answering)

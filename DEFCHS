@@ -1,0 +1,13 @@
+; Each  S-expression is a list: (verb-sense, DEFining-CHarateristicS
+; (the D.C.s are specified by indices of predicates in ALLPS
+(BREATHE1 163 51 105 74) 
+(CHOKE1 166 115 64 139 156 157) 
+(DIE1 168 75 76) 
+(FLY4 163 15 25 128) 
+(GET4 163 16) 
+(GO1 163 15 128) 
+(GRAB1 163 63) 
+(INGEST1 163 51) 
+(LIKE4 188 60 172) 
+(MOVE1 163 15) 
+(TELL1 163 17 19 120 170) 

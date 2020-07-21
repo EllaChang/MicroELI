@@ -1,0 +1,41 @@
+; each entry consists of
+; 1)  scale name (an atom)
+; 2)  lexical pointer for change in positive direction
+; 3)  lexical pointer for change in negative direction
+; 4)  list of alternating lexical pointers, numerical scale positions, beginning and
+;     ending with lexical pointers.  Assigns names to intervals on the scale.
+
+*HEALTH*
+HEALTHY	
+SICK
+(DEAD -9.5 SICK 0 HEALTHY)
+
+*JOY*
+HAPPY
+SAD
+(DEPRESSED -7 SAD 0 HAPPY +8 OVERJOYED)
+
+*ANGER*
+CALM
+ANGRY
+(ANGRY -3.5 UPSET -1.5 NIL +.5 CALM)
+
+*EXCITE*
+CALM
+EXCITED
+(OVERWROUGHT -8.5 AGITATED -5.5 EXCITED -.5 NIL +.5 CALM +4.5 TRANQUIL)
+
+*PSTATE*
+OK
+HURT
+(DEAD -9.5 MAIMED -8. HURT 0 OK)
+
+*SIZE*
+BIG
+SMALL
+(MINUTE -7.5 TINY -4.5 SMALL -.5 NIL +.5 BIG +7.5 GIGANTIC)
+
+CERTAINTY
+NIL
+NIL
+(POSSIBLY +0.84 PROBABLY +0.96 CERTAINLY)

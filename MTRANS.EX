@@ -1,0 +1,54 @@
+
+;; had to fix the third entry to put the TIME (T-1) in the right spot.  Added TIME (T-1)
+;; to others, otherwise it's does present progressive
+(defparameter *MTRANS.EX*
+
+  '(
+
+  ((ACTOR (BILL1) <=> (*MTRANS*) FROM (*CP* PART (BILL1)) TO (*CP* PART (JOHN1)) 
+  MOBJECT ((CON ((ACTOR (JOHN1) <=> (*INGEST*) OBJECT (WINE1)) TIME (T-1)) 
+  <≡ ((ACTOR (JOHN1) <≡>T (*JOY*))INC(2) TIME (T-2) )))) TIME (T-3))
+
+  ((ACTOR (MARY1) <=> (*MTRANS*) FROM (*CP* PART (MARY1)) TO (*CP* PART (JOHN1))
+  MOBJECT ((CON ((ACTOR (JOHN1) <=> (*INGEST*) OBJECT (ALCOHOL1))) <≡> (*BAD*))) ) TIME (T-1))
+
+  ((ACTOR (JOHN1) <=> (*MTRANS*)  FROM (*CP* PART (JOHN1))
+  MOBJECT ((ACTOR (JOHN1) <=> (*INGEST*) OBJECT (WINE1)) MODE ((*NEG*)))) TIME (T-1))
+
+  ((ACTOR (MARY1) <=> (*MTRANS*) FROM (*CP* PART (MARY1)) MOBJECT ((ACTOR (MARY1) <=> (*ALLOW*)
+  MOBJECT ((ACTOR (*∃ONE*) <=> (*ATRANS*) OBJECT (WINE1) TO (MARY1) FROM (*∃ONE*)) TIME (T0003))) MODE ((*NEG*)))) TIME (T-1))
+
+  ((ACTOR (BILL1) <=> (*MTRANS*) MOBJECT ((ACTOR (JOHN1) <≡> (*PSTATE* VAL (*DRUNK*)))) FROM (*CP* PART (BILL1))))
+
+  ((ACTOR (BILL1) <=> (*MTRANS*) MOBJECT ((ACTOR (JOHN1) <≡> (*PSTATE* VAL (*DRUNK*)))) 
+  TO (*CP* PART (MARY1)) FROM (*CP* PART (BILL1))) FOCUS((TO PART)))
+
+  ((ACTOR (BILL1) <=> (*MTRANS*) FROM (*CP* PART (BILL1)) MOBJECT ((CON ((ACTOR (*ONE*) <=> (*ATRANS*) 
+  OBJECT (SCOTCH2) TO (BILL1) FROM (*ONE*))) <≡ ((ACTOR (BILL1) <≡>T (*JOY*)) INC (2) )))))
+
+  ((ACTOR (MARY1) <=> (*MTRANS*) TO (*CP* PART (BILL1)) FROM (*CP* PART (MARY1)) 
+  MOBJECT ((CON ((ACTOR (BILL1) <=> (*PTRANS*) OBJECT (BILL1) TO (STORE1)) )
+  <≡ ((ACTOR (MARY1) <≡>T (*JOY*))INC(2) TIME (T-2) )))) TIME (T-1))
+
+  ((ACTOR (BILL1) <=> (*MTRANS*) FROM (*CP* PART (BILL1)) TO (*CP* PART (MARY1))
+  MOBJECT ((ACTOR (MARY1) <=> (*INGEST*) OBJECT (WINE1)) TIME (T-1))) TIME (T-2))
+
+  ((ACTOR (MARY1) <=> (*MTRANS*) TO (*CP* PART (JOHN1)) FROM (*CP* PART (MARY1))
+  MOBJECT ((CON ((ACTOR (MARY1) <=> (*PROPEL*) OBJECT (ROCK1) TO (JOHN1)) TIME (T-1))
+  <≡ ((ACTOR (JOHN1) <≡>T (*PSTATE* VAL (*PHURT*)))))) ))
+
+  ((ACTOR (MARY1) <=> (*MTRANS*) TO (*CP* PART (MARY1)) FROM (*LTM* PART (MARY1))
+  MOBJECT ((CON ((ACTOR (BILL1) <=> (*INGEST*) OBJECT (WINE1)))
+  <=> ((ACTOR (MARY1) <=> (*MTRANS*) MOBJECT (C001) TO (*LTM* PART (MARY1))) TIME (P))) ) MODE ((*CANNOT*))))
+
+  ((ACTOR (BILL1) <=> (*MTRANS*) FROM (*LTM* PART (BILL1)) TO (*CP* PART (BILL1))
+  MOBJECT ((ACTOR (BOOK1) <≡> (*LOC* VAL (HOUSE1 *POSS* (JOHN1))))) ))
+
+  ((ACTOR (MARY1) <=> (*MTRANS*) FROM (*CP* PART (MARY1)) TO (*LTM* PART (MARY1))
+  MOBJECT ((ACTOR (AUTO1) <≡> (*COLOR* VAL (GREEN1)))) ))
+
+  ((ACTOR (MARY1) <=> (*MTRANS*) FROM (BOOK1) TO (*CP* PART (MARY1)) MOBJECT ( *CON*) ))
+
+  )
+
+)

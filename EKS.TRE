@@ -1,0 +1,17 @@
+; This net is for EVENT-CAUSE-STATE structures
+((77)
+	NIL
+	((161 145 146)
+		NIL
+		((3)
+			((62)
+				((71)
+					((T (HIT2)) NIL)
+					((T (KICK1)) 56)
+				)
+				((T (HIT1)) 56)
+			)
+			((T (BEAT1)) 14)
+		)
+	)
+)	;END-OF-TREE

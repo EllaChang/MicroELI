@@ -1,0 +1,23 @@
+; This net is for EVENT-CAUSE-EVENT structures
+((115)
+	((114)
+		((155)
+			NIL
+			((103)
+				((T (FEED1)) NIL)
+				((T (POISON1)) 18)
+			)
+		)
+		NIL
+	)
+	((157)
+		NIL
+		((64 139 156)
+			((51)
+				NIL
+				((T (CHOKE2)) NIL)
+			)
+			((T (CHOKE1)) NIL)
+		)
+	)
+)	;END-OF-TREE
