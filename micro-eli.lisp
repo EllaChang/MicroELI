@@ -13,6 +13,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (require :cd-functions)
+(require :dict)
+(require :question-answering)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -26,7 +28,6 @@
 (defvar *cd-form*)
 (defvar *word*)
 (defvar *part-of-speech*)
-(defvar *mod-cd*)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -70,8 +71,6 @@ and printing the result."
   (dolist (sentence text)
     (user-trace "~2%Input is ~s~%" sentence)
     (let ((cd (parse sentence)))
-      (when *mod-cd*
-	(setq cd (setrole (first *mod-cd*) (second *mod-cd*) cd)))
       (user-trace "~2%CD form is ~s" cd)))
   (values))
 
@@ -82,6 +81,19 @@ conceptual analysis for it."
   (init-stack)
   (do ((*word* nil)
        (*sentence* (cons '*start* sentence)))
+      ((null (setq *word* (pop *sentence*)))
+       (remove-variables *concept*))
+    (user-trace "~2%Processing word ~s" *word*)
+    (load-def)
+    (run-stack)))
+
+(defun parse-question (sentence)
+  "Takes a sentence in list form and returns the
+conceptual analysis for it."
+  (setq *concept* nil)
+  (init-stack)
+  (do ((*word* nil)
+       (*sentence* (cons '*start-question* sentence)))
       ((null (setq *word* (pop *sentence*)))
        (remove-variables *concept*))
     (user-trace "~2%Processing word ~s" *word*)
@@ -221,283 +233,5 @@ rather than binding lists."
                  (nreverse result))))
         (t (cons (replace-list (car cd-form))
                  (replace-list (cdr cd-form))))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;
-;;;  Dictionary Functions
-;;;
-
-(defmacro defword (&body def)
-  `(progn (setf (get ',(car def) 'defintion) ',(cdr def))
-          ',(car def)))
-
-;; Example vocabulary items...
-
-(defword jack
-  ((assign *cd-form* '(jack)
-           *part-of-speech* 'noun-phrase)))
-
-(defword nene
-  ((assign *cd-form* '(nene)
-           *part-of-speech* 'noun-phrase)))
-
-(defword ella
-  ((assign *cd-form* '(ella)
-           *part-of-speech* 'noun-phrase)))
-
-(defword went
-  ((assign *part-of-speech* 'verb
-           *cd-form* '(*ptrans* (actor  ?go-var1)
-                              (object ?go-var1)
-                              (to     ?go-var2)
-                              (from   ?go-var3))
-           go-var1 *subject*
-           go-var2 nil
-           go-var3 nil)
-   (next-packet
-    ((test (equal *word* 'to))
-     (next-packet
-      ((test (equal *part-of-speech* 'noun-phrase))
-       (assign go-var2 *cd-form*))))
-    ((test (equal *word* 'home))
-     (assign go-var2 '(house))))))
-
-(defword to
- ((assign *part-of-speech* 'preposition
-          *cd-form* '(to))))
-
-(defword a2
-  ((test (equal *part-of-speech* 'noun))
-   (assign *part-of-speech* 'noun-phrase
-           *predicates* nil))
-  ((test (equal *part-of-speech* 'adjective))
-   (assign *part-of-speech* 'noun-phrase
-	   *cd-form* (append *cd-form* *predicates*)
-           *predicates* nil)))
-
-(defword a
-  ((assign *part-of-speech* nil
-           *cd-form* (append *cd-form* *predicates*)
-           *predicates* nil
-	   *predicted* (get-np-prediction))))
-
-(defword restaurant
- ((assign *part-of-speech* 'noun
-          *cd-form '(restaurant))))
-
-(defword he
-  ((assign *part-of-speech* 'noun-phrase
-           *cd-form* '(person))))
-
-(defword ordered
- ((assign *part-of-speech* 'verb
-          *cd-form* '(atrans (actor ?get-var3)
-                             (object ?get-var2)
-                             (to ?get-var1)
-                             (from ?get-var3))
-          get-var1 *subject*
-          get-var2 nil
-          get-var3 nil)))
-
-(defword ate
-  ((assign *part-of-speech* 'verb
-	   *cd-form* '(ingest (actor ?get-var1)
-                              (object ?get-var2)
-                              (to ?get-var3)
-                              (from ?get-var3))
-	   get-var1 *subject*
-           get-var2 nil
-           get-var3 nil)
-  (next-packet
-   ((test (equal *part-of-speech* 'noun-phrase))
-    (assign get-var2 *cd-form*)))))
-
-(defword lobster
- ((assign *part-of-speech* 'noun
-          *cd-form* '(lobster))))
-
-(defword left
- ((assign *part-of-speech* 'verb
-          *cd-form* '(ptrans (actor  ?go-var1)
-                              (object ?go-var1)
-                              (to     ?go-var2)
-                              (from   ?go-var3))
-           go-var1 *subject*
-           go-var2 nil
-           go-var3 nil)))
-
-(defword got
-  ((assign *part-of-speech* 'verb
-           *cd-form* '(*atrans* (actor  ?get-var1)
-                              (object ?get-var2)
-                              (to     ?get-var1)
-                              (from   ?get-var3))
-           get-var1 *subject*
-           get-var2 nil
-           get-var3 nil)
-   (next-packet
-    ((test (equal *part-of-speech* 'noun-phrase))
-     (assign get-var2 *cd-form*)))))
-
-(defword the
-  ((assign *part-of-speech* nil
-           *cd-form* (append *cd-form* *predicates*)
-           *predicates* nil
-	   *predicted* (get-np-prediction))))
-
-(defword the2
-  ((test (equal *part-of-speech* 'noun))
-   (assign *part-of-speech* 'noun-phrase
-           *predicates* nil
-	   *predicted* (get-np-prediction))))
-
-(defword red
-  ((test (equal *part-of-speech* 'noun))
-   (assign *part-of-speech* 'adjective
-	   *predicates* '((color(red))))))
-
-(defword kite
-  ((assign *part-of-speech* 'noun
-           *cd-form* '(kite))))
-
-(defword hawaii
-  ((assign *part-of-speech* 'noun
-           *cd-form* '(place-us))))
-
-(defword knife
-  ((assign *part-of-speech* 'noun
-           *cd-form* '(knife))))
-
-(defword beach
-  ((assign *part-of-speech* 'noun
-           *cd-form* '(beach))))
-
-
-(defword store
-  ((assign *part-of-speech* 'noun
-           *cd-form* '(store))))
-
-(defword paid
-  ((assign *part-of-speech* 'verb
-	   *cd-form* '(atrans (actor ?get-var1)
-				(object ?get-var2)
-				(to ?get-var3)
-				(from ?get-var1))
-	   get-var1 *subject*
-	   get-var2 nil
-	   get-var3 nil)
-   (next-packet
-    ((test (and (equal *part-of-speech* 'noun)
-		(feature *cd-form* 'cost-form)))
-     (assign *cd-form* '((amount (cost-form))))
-     (next-packet
-      ((test (equal *word* 'with))
-       (next-packet
-        ((test (and (equal *part-of-speech* 'noun)
-		    (feature *cd-form* 'money)))
-         (assign get-var2 *cd-form*)))))))))
-
-(defword bill
-  ((assign *part-of-speech* 'noun
-	   *cd-form* '(cost-form)
-	   *predicates* '((amount (cost-form))))))
-
-(defword with
-  ((assign *part-of-speech* 'preposition)))
-
-(defword check
-  ((assign *part-of-speech* 'noun
-	   *cd-form* '(money)))
-  ((assign *part-of-speech* 'noun
-	   *cd-form* '(cost-form)
-	   *predicates* '((amount (cost-form))))))
-
-(defword go
-  ((assign *part-of-speech* 'verb
-           *cd-form* '(*ptrans* (actor  ?go-var1)
-                              (object ?go-var1)
-                              (to     ?go-var2)
-                              (from   ?go-var3))
-           go-var1 *subject*
-           go-var2 nil
-           go-var3 nil)
-   (next-packet
-    ((test (equal *word* 'to))
-     (next-packet
-      ((test (equal *part-of-speech* 'noun-phrase))
-       (assign go-var2 *cd-form*))))
-    ((test (equal *word* 'home))
-     (assign go-var2 '(house))))))
-
-(defword who
-  ((assign *part-of-speech* 'noun-phrase
-	   *cd-form* '(*?*))))
-
-(defword where
-  ((assign *part-of-speech 'adverb)
-   (next-packet
-    ((test (equal *word* 'go))
-     (assign *mod-cd* '(to (*?*) *cd-form*))))))
-
-(defword *start*
-  ((assign *part-of-speech* nil
-           *cd-form* nil
-           *subject* nil
-           *predicates* nil
-	   *mod-cd* nil)
-   (next-packet
-    ((test (equal *part-of-speech* 'noun-phrase))
-     (assign *subject* *cd-form*)
-     (next-packet
-      ((test (equal *part-of-speech* 'verb))
-       (assign *concept* *cd-form*)))))))
-
-(setq story1
-      '((jack went to the store)
-	     (jack got a red kite)
-	     (jack went home)))
-
-(setq story2
-      '((nene went to the beach)
-       (ella got a red knife)
-       (ella went to Hawaii)))
-
-(setq red-kite
-      '((jack got a red kite)))
-
-(setq checks
-      '((jack paid the check with a check)))
-
-(setq store
-      '((jack went to the store)))
-
-(setq q-went
-      '(who went to the store))
-
-(setq q-got
-      '(who got a kite))
-
-(setq q-where
-      '((where did jack go)))
-
-(defun answer (question story)
-  (let ((ls (list (list 'dummy 'h)))
-	(question-cd (parse question)))
-    (dolist (sentence story)
-      (let ((sentence-cd (parse sentence)))
-	(when (equal (header-cd sentence-cd) '*ptrans*)  ;; check cd hearder
-	  (push (list sentence-cd sentence) (cdr (last ls))))))
-    (dolist (pair (cdr ls))
-      (format t "~%The answer to the given question is:~%")
-      (cond
-       ((equal (filler-role 'to (nth 0 pair)) (filler-role 'to question-cd)) 
-               ;; (write (filler-role 'to (nth 0 pair)))
-               (return-from answer (nth 1 pair)))
-       (t (return-from answer nil))))))
-
-;; (write (answer q-went story2))
-;; (write q-went)
-
-(process-text checks)
 
 (provide :micro-eli)
