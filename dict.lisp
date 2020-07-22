@@ -7,7 +7,33 @@
   `(progn (setf (get ',(car def) 'defintion) ',(cdr def))
     ',(car def)))
 
-;; Example vocabulary items...
+;; Vocabulary items.
+
+(defword *start*
+  ((assign *part-of-speech* nil
+           *cd-form* nil
+           *subject* nil
+           *predicates* nil)
+   (next-packet
+    ((test (equal *part-of-speech* 'noun-phrase))
+     (assign *subject* *cd-form*)
+     (next-packet
+      ((test (equal *part-of-speech* 'verb))
+       (assign *concept* *cd-form*)))))))
+
+(defword *start-question*
+  ((assign *part-of-speech* nil
+           *cd-form* nil
+           *subject* nil
+           *predicates* nil)
+   (next-packet
+    ((test (equal *part-of-speech* 'verb))
+     (assign *concept* *cd-form*))
+    ((test (equal *word* 'who))
+     (assign *subject* '(*?*))
+     (next-packet
+      ((test (equal *part-of-speech* 'verb))
+       (assign *concept* *cd-form*)))))))
 
 (defword jack
   ((assign *cd-form* '(jack)
@@ -263,30 +289,45 @@
     ((test (equal *part-of-speech* 'noun-phrase))
      (assign *subject* *cd-form*)))))
 
-(defword *start*
-  ((assign *part-of-speech* nil
-           *cd-form* nil
-           *subject* nil
-           *predicates* nil)
+(defword does
+  ((assign *part-of-speech* 'helping-verb)
    (next-packet
     ((test (equal *part-of-speech* 'noun-phrase))
-     (assign *subject* *cd-form*)
-     (next-packet
-      ((test (equal *part-of-speech* 'verb))
-       (assign *concept* *cd-form*)))))))
+     (assign *subject* *cd-form*)))))
 
-(defword *start-question*
-  ((assign *part-of-speech* nil
-           *cd-form* nil
-           *subject* nil
-           *predicates* nil)
-   (next-packet
-    ((test (equal *part-of-speech* 'verb))
-     (assign *concept* *cd-form*))
-    ((test (equal *word* 'who))
-     (assign *subject* '(*?*))
-     (next-packet
-      ((test (equal *part-of-speech* 'verb))
-       (assign *concept* *cd-form*)))))))
+(defword acid
+  ((test (equal *part-of-speech* 'noun))
+   (assign *part-of-speech* 'noun-phrase
+           *predicates* '((type(acid))))))
 
-(provide :dict)
+(defword rain
+  ((assign *part-of-speech* 'noun
+           *cd-form* '(rain))))
+
+(defword atmosphere
+  ((assign *part-of-speech* 'noun
+           *cd-form* '(atmosphere))))
+
+(defword lands
+  ((assign *part-of-speech* 'noun
+           *cd-form* '(lands))))
+
+  (defword enters
+    ((assign *part-of-speech* 'verb
+             *cd-form* '(*ptrans* (actor  ?go-var1)
+                         (object ?go-var2)
+                         (to     ?go-var2)
+                         (from   ?go-var3))
+             go-var1 *subject*
+             go-var2 nil
+             go-var3 nil)
+     (next-packet
+      ((test (equal *part-of-speech* 'noun-phrase))
+       (assign go-var2 *cd-form*)))))
+
+  (defword and
+    ((next-packet
+      ((test (equal *part-of-speech* 'noun))
+       (assign go-var2 (append (list go-var2) (list *cd-form*)))))))
+
+  (provide :dict)

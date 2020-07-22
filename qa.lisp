@@ -1,8 +1,3 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;
-;;;  Question Answering Task
-;;;
-
 (require :micro-eli)
 
 (defun answer (question story)
@@ -23,6 +18,14 @@
 (defun express-cd (cd)
   "Express a MicroELI CD form."
   (express (list (list cd))))
+
+(defun paraphrase (s)
+  (express-cd (cd-translate (parse s))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;;  Simple Story Question Answering Task
+;;;
 
 (setq story1
       '((jack went to the store)
@@ -75,5 +78,23 @@
   (load 'surf)
   (nonet)
   (express-cd (cd-translate (parse (answer q-where-bob story2)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;;  ProPara Question Answering Task
+;;;
+
+(setq acid-rain
+      '((acid rain enters the atmosphere and lands)
+        (kite enters the atmosphere and lands)))
+
+(setq q-acid-rain
+      '(where does acid rain go))
+
+(write (answer q-acid-rain acid-rain))
+
+;; Acid rain enters the atmosphere and lands.
+;; How do greenhouse gases form?
+;; Decomposition produces methane.
 
 (provide :qa)
