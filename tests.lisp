@@ -87,12 +87,12 @@
 ; 3 Hamlet advised Falstaff to drink the wine.
 (EXPRESS '(((ACTOR (HAM) <=> (*MTRANS*) TO (*CP* PART (FAL)) FROM (*CP* PART (HAM))
                    MOBJECT  ((CON
-                             ((ACTOR (FAL) <=> (*INGEST*) OBJECT (WINE1 REF (DEF))
-                                     TO (*INSIDE* PART (FAL)) FROM (*MOUTH* PART (FAL)))
-                              TIME (T-2) FOCUS ((ACTOR)))
-                             <≡C
-                             ((ACTOR (FAL) <≡>T (*JOY*) <≡>F (*JOY*))
-                              TIME (T-1) FOCUS ((ACTOR)) INC (2)))))
+                              ((ACTOR (FAL) <=> (*INGEST*) OBJECT (WINE1 REF (DEF))
+                                      TO (*INSIDE* PART (FAL)) FROM (*MOUTH* PART (FAL)))
+                               TIME (T-2) FOCUS ((ACTOR)))
+                              <≡C
+                              ((ACTOR (FAL) <≡>T (*JOY*) <≡>F (*JOY*))
+                               TIME (T-1) FOCUS ((ACTOR)) INC (2)))))
             TIME (T-3))))
 
 ; 4 John prevented Mary from reading the book
@@ -223,26 +223,26 @@
             FOCUS ((ACTOR)) TIME (T2))))
 
 (EXPRESS '(((ACTOR  (HAM) <=> (*MTRANS*) TO (*CP* PART (FAL)) FROM (*CP* PART (HAM))
-                   MOBJECT  ((CON
-                             ((ACTOR (FAL) <=> (*INGEST*) OBJECT (WINE1 REF (DEF))
-                                     TO (*INSIDE* PART (FAL)) FROM (*MOUTH* PART (FAL)))
-                              TIME (T-2) FOCUS ((ACTOR)))
-                             <≡C
-                             ((ACTOR (FAL) <≡>T (*JOY*) <≡>F (*JOY*))
-                              TIME (T-1) FOCUS ((ACTOR)) INC (2)))))
+                    MOBJECT  ((CON
+                               ((ACTOR (FAL) <=> (*INGEST*) OBJECT (WINE1 REF (DEF))
+                                       TO (*INSIDE* PART (FAL)) FROM (*MOUTH* PART (FAL)))
+                                TIME (T-2) FOCUS ((ACTOR)))
+                               <≡C
+                               ((ACTOR (FAL) <≡>T (*JOY*) <≡>F (*JOY*))
+                                TIME (T-1) FOCUS ((ACTOR)) INC (2)))))
             TIME (T-3))))
 
 
 
 
 (EXPRESS '(((ACTOR  (HAM) <=> (*MTRANS*) TO (*CP* PART (FAL)) FROM (*CP* PART (HAM))
-                   MOBJECT  ((CON
-                             ((ACTOR (FAL) <=> (*INGEST*) OBJECT (WINE1 REF (DEF))
-                                     TO (*INSIDE* PART (FAL)) FROM (*MOUTH* PART (FAL)))
-                              TIME (T-2) FOCUS ((ACTOR)))
-                             <≡C
-                             ((ACTOR (FAL) <≡>T (*JOY*) <≡>F (*JOY*))
-                              TIME (T-1) FOCUS ((ACTOR)) INC (2)))))
+                    MOBJECT  ((CON
+                               ((ACTOR (FAL) <=> (*INGEST*) OBJECT (WINE1 REF (DEF))
+                                       TO (*INSIDE* PART (FAL)) FROM (*MOUTH* PART (FAL)))
+                                TIME (T-2) FOCUS ((ACTOR)))
+                               <≡C
+                               ((ACTOR (FAL) <≡>T (*JOY*) <≡>F (*JOY*))
+                                TIME (T-1) FOCUS ((ACTOR)) INC (2)))))
             TIME (T-3))))
 
 

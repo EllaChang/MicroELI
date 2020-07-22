@@ -120,13 +120,13 @@ triggered, use RESOLVE-CONFLICT to pick one."
   (unless (empty-stack-p)
     (let ((ls (list 'dummy)))
       (dolist (request (top-stack))
-	(when (is-triggered request)
-	  (push request (cdr (last ls)))))
+        (when (is-triggered request)
+          (push request (cdr (last ls)))))
       (let ((reqs (cdr ls)))
-	(cond
-	  ((> (list-length reqs) 1)
-	   (resolve-conflict reqs))
-	  (t (nth 1 ls)))))))
+        (cond
+         ((> (list-length reqs) 1)
+          (resolve-conflict reqs))
+         (t (nth 1 ls)))))))
 
 (defun is-triggered (request)
   "Returns T if a request has no test or if the test
@@ -161,12 +161,12 @@ to the stack."
 (defun rec-search (lst elt)
   "Recursively searches for a list starting with elt."
   (cond ((null lst) nil)
-	((atom (car lst))
-	 (if (equal (car lst) elt)
-	     lst
-	     (rec-search (cdr lst) elt)))
-	(t (or (rec-search (car lst) elt)
-	       (rec-search (cdr lst) elt)))))
+        ((atom (car lst))
+         (if (equal (car lst) elt)
+             lst
+           (rec-search (cdr lst) elt)))
+        (t (or (rec-search (car lst) elt)
+               (rec-search (cdr lst) elt)))))
 
 (defun get-np-prediction ()
   "Looks for a request in the top packet of the stack with a test
@@ -175,8 +175,8 @@ finds one, it returns the predicate that FEATURE is looking for."
   (unless (empty-stack-p)
     (dolist (request (top-stack))
       (when (and (req-clause 'test request)
-		 (rec-search (req-clause 'test request) 'feature))
-	(return (list (nth 2 (rec-search (req-clause 'test request) 'feature))))))))
+                 (rec-search (req-clause 'test request) 'feature))
+        (return (list (nth 2 (rec-search (req-clause 'test request) 'feature))))))))
 
 (defun get-cd-form (request)
   "Takes a request and returns the structure the request would
@@ -194,8 +194,8 @@ assign to *CD-FORM* if executed."
   "Applies GET-CD-FORM to a list of requests, picking the first one
 that assigns to *CD-FORM* a structure matching *PREDICTED*."
   (loop for req in req-list
-	do (when (equal (stringify *predicted*) (stringify (get-cd-form req)))
-	     (return-from resolve-conflict req))))
+    do (when (equal (stringify *predicted*) (stringify (get-cd-form req)))
+         (return-from resolve-conflict req))))
 
 ;; NOTE: 
 ;;   This function has been modified to handle a list of CD forms
@@ -228,7 +228,7 @@ rather than binding lists."
                  (dolist (pair (roles-cd cd-form))
                    (let ((val (remove-variables (filler-pair pair))))
                      (when val (push `(,(role-pair pair) ,val)
-                      result))))
+                                     result))))
                  (nreverse result))))
         (t (cons (replace-list (car cd-form))
                  (replace-list (cdr cd-form))))))
