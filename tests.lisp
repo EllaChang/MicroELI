@@ -13,7 +13,7 @@
   (nonet)
   ;;(net)
   ;; (trace do_frames do_heads_2 findheads popit token check_matching_syntax)
-;; One half of Mary choked John...
+  ;; One half of Mary choked John...
   (EXPRESS '(((CON ((ACTOR (JOHN) <=> (*INGEST*) TO (*INSIDE* PART (JOHN)) FROM (*MOUTH* PART (JOHN)) OBJECT (*AIR*)) FOCUS ((ACTOR)) MODE ((*CANNOT*)) TIME (T-2)) <≡ ((ACTOR (JOHN) <≡>T (*HEALTH* VAL (-10))) TIME (T-2))))))
   )
 
@@ -22,19 +22,19 @@
 
 ;; Demo 2. Mary and John
 (EXPRESS '(((CON
-              ((CON
-                 ((CON
-                    ((ACTOR (MARY) <=> (*DO*)) TIME (T-1))
-                    <≡
-                    ((ACTOR (JOHN) <≡>T (*HEALTH* VAL (-10))) TIME (T-1))
-                    ))
-                 <≡C
-                 ((ACTOR (MARY) <≡>T (*JOY*) ) INC(+3) TIME(T-1) )
+             ((CON
+               ((CON
+                 ((ACTOR (MARY) <=> (*DO*)) TIME (T-1))
+                 <≡
+                 ((ACTOR (JOHN) <≡>T (*HEALTH* VAL (-10))) TIME (T-1))
                  ))
-              <≡> (*MLOC* VAL (*LTM* PART (MARY))))
-             TIME (T-2))
-            )
-  )
+               <≡C
+               ((ACTOR (MARY) <≡>T (*JOY*) ) INC(+3) TIME(T-1) )
+               ))
+             <≡> (*MLOC* VAL (*LTM* PART (MARY))))
+            TIME (T-2))
+           )
+         )
 
 ;; Falstaff bought some wine from Hamlet
 (EXPRESS '(((CON
@@ -86,22 +86,22 @@
 
 ; 3 Hamlet advised Falstaff to drink the wine.
 (EXPRESS '(((ACTOR (HAM) <=> (*MTRANS*) TO (*CP* PART (FAL)) FROM (*CP* PART (HAM))
-	MOBJECT	((CON
-		    ((ACTOR (FAL) <=> (*INGEST*) OBJECT (WINE1 REF (DEF))
-		      TO (*INSIDE* PART (FAL)) FROM (*MOUTH* PART (FAL)))
-		     TIME (T-2) FOCUS ((ACTOR)))
-		  <≡C
-		    ((ACTOR (FAL) <≡>T (*JOY*) <≡>F (*JOY*))
-		     TIME (T-1) FOCUS ((ACTOR)) INC (2)))))
- TIME (T-3))))
+                   MOBJECT  ((CON
+                             ((ACTOR (FAL) <=> (*INGEST*) OBJECT (WINE1 REF (DEF))
+                                     TO (*INSIDE* PART (FAL)) FROM (*MOUTH* PART (FAL)))
+                              TIME (T-2) FOCUS ((ACTOR)))
+                             <≡C
+                             ((ACTOR (FAL) <≡>T (*JOY*) <≡>F (*JOY*))
+                              TIME (T-1) FOCUS ((ACTOR)) INC (2)))))
+            TIME (T-3))))
 
 ; 4 John prevented Mary from reading the book
 (EXPRESS '(((CON ((ACTOR (JOHN1) <=> (*DO*)) TIME (T-1))
-      <≡
-      ((ACTOR (MARY1) <=> (*MTRANS*) TO (*CP* PART (MARY1)) MOBJECT (*CONCEPTS*)
-	      FROM(BOOK1 REF (DEF)))
-       FOCUS ((ACTOR)) MODE ((*CANNOT*)) TIME (T-1))
-))))
+                 <≡
+                 ((ACTOR (MARY1) <=> (*MTRANS*) TO (*CP* PART (MARY1)) MOBJECT (*CONCEPTS*)
+                         FROM(BOOK1 REF (DEF)))
+                  FOCUS ((ACTOR)) MODE ((*CANNOT*)) TIME (T-1))
+                 ))))
 
 
 ; 6 Mary ceased to have the book
@@ -109,7 +109,7 @@
 
 ; 7 Bill will give (return) a book to Mary
 (EXPRESS '(((ACTOR (BILL1) <=> (*ATRANS*) OBJECT (BOOK1 REF (DEF)) TO (MARY1) FROM (BILL1))
- FOCUS ((ACTOR)) TIME (T2))))
+            FOCUS ((ACTOR)) TIME (T2))))
 
 ; 8 Mary became happy
 (EXPRESS '(((ACTOR (MARY1) <≡>T (*JOY* ) <≡>F (*JOY*)) TIME (T-3) INC (2))))
@@ -119,12 +119,12 @@
 
 ; 10 Falstaff bought some wine from Hamlet
 (EXPRESS '(((CON
-      ((ACTOR (FAL) <=> (*ATRANS*) OBJECT (MONEY REF (INDEF)) TO (HAM)
-	FROM (FAL)) FOCUS ((ACTOR)) TIME (T-1))
-  <≡≡>
-      ((ACTOR (HAM) <=> (*ATRANS*) OBJECT (WINE1 REF (INDEF)) TO (FAL)
-	FROM (HAM)) TIME (T-1)FOCUS((ACTOR)))
-)FOCUS ((CON  OBJECT)))))
+             ((ACTOR (FAL) <=> (*ATRANS*) OBJECT (MONEY REF (INDEF)) TO (HAM)
+                     FROM (FAL)) FOCUS ((ACTOR)) TIME (T-1))
+             <≡≡>
+             ((ACTOR (HAM) <=> (*ATRANS*) OBJECT (WINE1 REF (INDEF)) TO (FAL)
+                     FROM (HAM)) TIME (T-1)FOCUS((ACTOR)))
+             )FOCUS ((CON  OBJECT)))))
 
 
 
@@ -146,115 +146,115 @@
 
 ;; BILL POSSIBLY
 (EXPRESS '(((CON ((CON
-		((ACTOR (*ONE1*) <=> (*ATRANS*) OBJECT (BOOK1 REF (INDEF)) TO (BILL1))
-		 TIME (T1))
-	      <≡C
-		((ACTOR (BILL1) <≡>T (*JOY*) <≡>F (*JOY*))
-		 INC (2) TIME (T2))))
-	<≡>
-	    (*MLOC* VAL (*LTM* PART (BILL1))))
-	FOCUS ((<≡> VAL PART)) TIME (T-0) CERTAINTY (.50))))
+                   ((ACTOR (*ONE1*) <=> (*ATRANS*) OBJECT (BOOK1 REF (INDEF)) TO (BILL1))
+                    TIME (T1))
+                   <≡C
+                   ((ACTOR (BILL1) <≡>T (*JOY*) <≡>F (*JOY*))
+                    INC (2) TIME (T2))))
+                 <≡>
+                 (*MLOC* VAL (*LTM* PART (BILL1))))
+            FOCUS ((<≡> VAL PART)) TIME (T-0) CERTAINTY (.50))))
 
 ; JOHN MADE MARY READ THE BOOK
 (EXPRESS '(((CON ((ACTOR (JOHN1) <=> (*DO*)) TIME (T-1))
-      <≡
-      ((ACTOR (MARY1) <=> (*MTRANS*) TO (*CP* PART (MARY1)) MOBJECT (*CONCEPTS*)
-	      FROM(BOOK1 REF (DEF)))
-       FOCUS ((ACTOR))  TIME (T-1))
-))))
+                 <≡
+                 ((ACTOR (MARY1) <=> (*MTRANS*) TO (*CP* PART (MARY1)) MOBJECT (*CONCEPTS*)
+                         FROM(BOOK1 REF (DEF)))
+                  FOCUS ((ACTOR))  TIME (T-1))
+                 ))))
 
 ;; MARY READ THE BOOK
 (EXPRESS '(((ACTOR (MARY1) <=> (*MTRANS*) TO (*CP* PART (MARY1)) MOBJECT (*CONCEPTS*)
-	      FROM (BOOK1 REF (DEF)))
-       FOCUS ((ACTOR))  TIME (T-1))))
+                   FROM (BOOK1 REF (DEF)))
+            FOCUS ((ACTOR))  TIME (T-1))))
 
 (EXPRESS '(((ACTOR (JOHN1) <=> (*MTRANS*) TO (*CP* PART (MARY1) REF (DEF)) FROM (*CP* PART (JOHN1) REF (DEF)) MOBJECT ((CON ((ACTOR (BILL1) <=> (*DO*)) TIME (T-2) MODE (NIL)) <≡ ((ACTOR (MARY1) <≡>T (*HEALTH* VAL (-10)) <≡>F (*HEALTH* VAL (NIL))) MODE (NIL) TIME (T-2))))) TIME (T-3) FOCUS ((ACTOR)))))
 
 (EXPRESS '(((ACTOR (JOHN1) <=> (*MTRANS*) TO (*CP* PART (MARY1)) FROM (*CP* PART (JOHN1)) MOBJECT (*CONCEPTS*))) TIME (T-1)))
 
 (EXPRESS '(((ACTOR (JOHN1) <=> (*MTRANS*) TO (*CP* PART (MARY1)) FROM (BOOK1 REF (DEF)) MOBJECT (*CONCEPTS*)))
-       FOCUS ((ACTOR))  TIME (T-1)))
+           FOCUS ((ACTOR))  TIME (T-1)))
 
 
 (EXPRESS '((ACTOR (MARY1) <=> (*MTRANS*) TO (*CP* PART (MARY1)) MOBJECT (*CONCEPTS*)
-	      FROM (BOOK1 REF (DEF)))))
+                  FROM (BOOK1 REF (DEF)))))
 
 (EXPRESS '(((ACTOR (JOHN1) <=> (*MTRANS*) TO (*CP* PART (MARY1)) MOBJECT (*CONCEPTS*))
-       FOCUS ((ACTOR))  TIME (T-1))))
+            FOCUS ((ACTOR))  TIME (T-1))))
 
 ;; BILL KILLED MARY BY DOING SOMETHING
 (EXPRESS '(((CON ((ACTOR (BILL1) <=> (*DO*)) TIME (T-2) MODE (NIL)) <≡ ((ACTOR (MARY1) <≡>T (*HEALTH* VAL (-10)) <≡>F (*HEALTH* VAL (NIL))) MODE (NIL) TIME (T-2))))))
 
-(EXPRESS '(	((ACTOR (IAG) <=> (*MTRANS*) FROM (*CP* PART (IAG)) TO (*CP* PART (OTH))
-	  MOBJECT ((ACTOR (HANDKERCHIEF *OWN* (DES)) <≡> (*POSS* VAL (CAS)))
-	  	    TIME (T-3))
-	  ) TIME (T-3))))
+(EXPRESS '( ((ACTOR (IAG) <=> (*MTRANS*) FROM (*CP* PART (IAG)) TO (*CP* PART (OTH))
+                    MOBJECT ((ACTOR (HANDKERCHIEF *OWN* (DES)) <≡> (*POSS* VAL (CAS)))
+                             TIME (T-3))
+                    ) TIME (T-3))))
 
 
 
 ; Try to test the EKE tree?  Doesn't look like this should give us anything?  Wait ... why isn't the word "because" in here
 (step (APTREE 'EKE
- '((CON ((ACTOR (JOHN1) <=> (*DO*)) TIME (T-1)) <≡
-    ((ACTOR (MARY1) <=> (*MTRANS*) TO (*CP* PART (MARY1)) MOBJECT (*CONCEPTS*)
-      FROM (BOOK1 REF (DEF)))
-     FOCUS ((ACTOR)) MODE ((*CANNOT*)) TIME (T-1))))))
+              '((CON ((ACTOR (JOHN1) <=> (*DO*)) TIME (T-1)) <≡
+                     ((ACTOR (MARY1) <=> (*MTRANS*) TO (*CP* PART (MARY1)) MOBJECT (*CONCEPTS*)
+                             FROM (BOOK1 REF (DEF)))
+                      FOCUS ((ACTOR)) MODE ((*CANNOT*)) TIME (T-1))))))
 
 
 ; Try to test the EVT tree to see if I can get an UNABLE out of it
 (step (APTREE 'EVT
- '((ACTOR (DES) <=> (*INGEST*) TO (*INSIDE* PART (DES)) FROM
-    (*MOUTH* PART (DES)) OBJECT (*AIR*))
-   FOCUS ((ACTOR)) MODE ((*CANNOT*)) TIME (T-1))))
+              '((ACTOR (DES) <=> (*INGEST*) TO (*INSIDE* PART (DES)) FROM
+                       (*MOUTH* PART (DES)) OBJECT (*AIR*))
+                FOCUS ((ACTOR)) MODE ((*CANNOT*)) TIME (T-1))))
 
 
 (FINDHEADS '((CON ((CON
-		((ACTOR (*ONE1*) <=> (*ATRANS*) OBJECT (BOOK1 REF (INDEF)) TO (BILL1))
-		 TIME (T1))
-	      <≡C
-		((ACTOR (BILL1) <≡>T (*JOY*) <≡>F (*JOY*))
-		 INC (2) TIME (T2))))
-	<≡>
-	    (*MLOC* VAL (*LTM* PART (BILL1))))
-	FOCUS ((<≡> VAL PART)) TIME (T-0) CERTAINTY (.50)))
+                    ((ACTOR (*ONE1*) <=> (*ATRANS*) OBJECT (BOOK1 REF (INDEF)) TO (BILL1))
+                     TIME (T1))
+                    <≡C
+                    ((ACTOR (BILL1) <≡>T (*JOY*) <≡>F (*JOY*))
+                     INC (2) TIME (T2))))
+                  <≡>
+                  (*MLOC* VAL (*LTM* PART (BILL1))))
+             FOCUS ((<≡> VAL PART)) TIME (T-0) CERTAINTY (.50)))
 
 
 
 (EXPRESS '(((ACTOR (BILL1) <=> (*ATRANS*) OBJECT (BOOK1 REF (DEF)) TO (MARY1) FROM (BILL1))
- FOCUS ((ACTOR)) TIME (T2))))
+            FOCUS ((ACTOR)) TIME (T2))))
 
-(EXPRESS '(((ACTOR	(HAM) <=> (*MTRANS*) TO (*CP* PART (FAL)) FROM (*CP* PART (HAM))
-	MOBJECT	((CON
-		    ((ACTOR (FAL) <=> (*INGEST*) OBJECT (WINE1 REF (DEF))
-		      TO (*INSIDE* PART (FAL)) FROM (*MOUTH* PART (FAL)))
-		     TIME (T-2) FOCUS ((ACTOR)))
-		  <≡C
-		    ((ACTOR (FAL) <≡>T (*JOY*) <≡>F (*JOY*))
-		     TIME (T-1) FOCUS ((ACTOR)) INC (2)))))
- TIME (T-3))))
-
-
+(EXPRESS '(((ACTOR  (HAM) <=> (*MTRANS*) TO (*CP* PART (FAL)) FROM (*CP* PART (HAM))
+                   MOBJECT  ((CON
+                             ((ACTOR (FAL) <=> (*INGEST*) OBJECT (WINE1 REF (DEF))
+                                     TO (*INSIDE* PART (FAL)) FROM (*MOUTH* PART (FAL)))
+                              TIME (T-2) FOCUS ((ACTOR)))
+                             <≡C
+                             ((ACTOR (FAL) <≡>T (*JOY*) <≡>F (*JOY*))
+                              TIME (T-1) FOCUS ((ACTOR)) INC (2)))))
+            TIME (T-3))))
 
 
-(EXPRESS '(((ACTOR	(HAM) <=> (*MTRANS*) TO (*CP* PART (FAL)) FROM (*CP* PART (HAM))
-	MOBJECT	((CON
-		    ((ACTOR (FAL) <=> (*INGEST*) OBJECT (WINE1 REF (DEF))
-		      TO (*INSIDE* PART (FAL)) FROM (*MOUTH* PART (FAL)))
-		     TIME (T-2) FOCUS ((ACTOR)))
-		  <≡C
-		    ((ACTOR (FAL) <≡>T (*JOY*) <≡>F (*JOY*))
-		     TIME (T-1) FOCUS ((ACTOR)) INC (2)))))
- TIME (T-3))))
+
+
+(EXPRESS '(((ACTOR  (HAM) <=> (*MTRANS*) TO (*CP* PART (FAL)) FROM (*CP* PART (HAM))
+                   MOBJECT  ((CON
+                             ((ACTOR (FAL) <=> (*INGEST*) OBJECT (WINE1 REF (DEF))
+                                     TO (*INSIDE* PART (FAL)) FROM (*MOUTH* PART (FAL)))
+                              TIME (T-2) FOCUS ((ACTOR)))
+                             <≡C
+                             ((ACTOR (FAL) <≡>T (*JOY*) <≡>F (*JOY*))
+                              TIME (T-1) FOCUS ((ACTOR)) INC (2)))))
+            TIME (T-3))))
 
 
 (EXPRESS '((((CON ((CON
-		((ACTOR (*ONE1*) <=> (*ATRANS*) OBJECT (BOOK1 REF (INDEF)) TO (BILL1))
-		 TIME (T1))
-	      <≡C
-		((ACTOR (BILL1) <≡>T (*JOY*) <≡>F (*JOY*))
-		 INC (2) TIME (T2))))
-	<≡>
-	    (*MLOC* VAL (*LTM* PART (BILL1))))
-	FOCUS ((<≡> VAL PART)) TIME (T-0) CERTAINTY (.50)))))
+                    ((ACTOR (*ONE1*) <=> (*ATRANS*) OBJECT (BOOK1 REF (INDEF)) TO (BILL1))
+                     TIME (T1))
+                    <≡C
+                    ((ACTOR (BILL1) <≡>T (*JOY*) <≡>F (*JOY*))
+                     INC (2) TIME (T2))))
+                  <≡>
+                  (*MLOC* VAL (*LTM* PART (BILL1))))
+             FOCUS ((<≡> VAL PART)) TIME (T-0) CERTAINTY (.50)))))
 
 (setq CD '((ACTOR (JOHN1) <=> (*PTRANS*) OBJECT (JOHN1) TO (STORE2))))
 
@@ -288,11 +288,11 @@
 (load 'warn.ex) ; identical to tst.ex
 
 (progn (load 'believ.ex)
-       (EXPRESS (list (nth 2 *BELIEV.EX*)))
-       )
+  (EXPRESS (list (nth 2 *BELIEV.EX*)))
+  )
 
 (EXPRESS '(  ((ACTOR (*ONE*) <=> (*PTRANS*) OBJECT (DOG1) FROM ((NY1)) TO (SF1) 
-  INST ((ACTOR ((PLANE1) CONT (DOG1)) <=> (*PTRANS*) OBJECT (PLANE1) FROM (NY1) TO (SF1) VIA (*AIR*))))) ))
+                     INST ((ACTOR ((PLANE1) CONT (DOG1)) <=> (*PTRANS*) OBJECT (PLANE1) FROM (NY1) TO (SF1) VIA (*AIR*))))) ))
 
 ;;;;;;;;;;;; =======================
 
@@ -312,21 +312,21 @@
 (INIT_SURF)
 (gen 'E1)
 
-  ;; Some other test code
-  ;; (SYMBOL-PLIST 'E1)
-  ;; (GET 'NP 'AFSTN)
-  ;; (GET 'SING3 'GO)
-  ;; (equal #\C (first (last (EXPLODE 'ABC))))
-  ;; (intern (concatenate 'string "A" "B"))
-  ;; (treein 'and)
-  ;; (FINDHEADS '((ACTOR (JOHN1) <=> (*PTRANS*) OBJECT (JOHN1) TO (STORE2))) )
-  ;; (TNAM '((CON
-  ;;   ((ACTOR (OTH) <=> (*GRASP*) OBJECT (*NECK* PART (DES))) TIME (T-0))
-  ;;   <≡ 
-  ;;   ((ACTOR (DES) <=> (*INGEST*) TO (*INSIDE* PART (DES)) FROM (*MOUTH* PART (DES))
-  ;; 	  OBJECT(*AIR*))
-  ;;    FOCUS ((ACTOR)) MODE ((*CANNOT*)) TIME (T-0))
-  ;;          )))
+;; Some other test code
+;; (SYMBOL-PLIST 'E1)
+;; (GET 'NP 'AFSTN)
+;; (GET 'SING3 'GO)
+;; (equal #\C (first (last (EXPLODE 'ABC))))
+;; (intern (concatenate 'string "A" "B"))
+;; (treein 'and)
+;; (FINDHEADS '((ACTOR (JOHN1) <=> (*PTRANS*) OBJECT (JOHN1) TO (STORE2))) )
+;; (TNAM '((CON
+;;   ((ACTOR (OTH) <=> (*GRASP*) OBJECT (*NECK* PART (DES))) TIME (T-0))
+;;   <≡ 
+;;   ((ACTOR (DES) <=> (*INGEST*) TO (*INSIDE* PART (DES)) FROM (*MOUTH* PART (DES))
+;;    OBJECT(*AIR*))
+;;    FOCUS ((ACTOR)) MODE ((*CANNOT*)) TIME (T-0))
+;;          )))
 
 ;;  (step (APTREE 'EKE '((CON ((ACTOR (OTH) <=> (*GRASP*) OBJECT (*NECK* PART (DES))) TIME (T-0)) <≡ ((ACTOR (DES) <=> (*INGEST*) TO (*INSIDE* PART (DES)) FROM (*MOUTH* PART (DES)) OBJECT (*AIR*)) FOCUS ((ACTOR)) MODE ((*CANNOT*)) TIME (T-0))))))
 

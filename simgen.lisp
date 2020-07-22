@@ -13,7 +13,7 @@
 (DEFPARAMETER !TMP! T)
 
 (DEFUN GEN
-    (STRUCLIST)
+  (STRUCLIST)
   (COND ((NULL STRUCLIST) T)
         (T (PROG NIL
                  (SETQ PREPOS NIL)
@@ -24,24 +24,24 @@
                  (PRINT (APPEND PREPOS (APPEND (GLKUP (LIST YY)) POSTPOS)))))))
 
 (DEFUN GLKUP ;; grammar lookup?
-    (STRUCS)
+  (STRUCS)
   (COND (STRUCS (COND (BREAKING (BREAK NIL)) (T NIL))
                 (COND ((CDR STRUCS) (APPEND (GLKUP (LIST (CAR STRUCS))) (CONS COMMA (GLKUP (CDR STRUCS)))))
                       (T
                        ((LAMBDA (J)
-                         (COND (J (COND ((ATOM J) (PUTPROP (CAR STRUCS) J (QUOTE LAB)) (GLKUP STRUCS))
-                                        (T (GLKUPH (CAR STRUCS) J))))
-                               (T NIL)))
+                          (COND (J (COND ((ATOM J) (PUTPROP (CAR STRUCS) J (QUOTE LAB)) (GLKUP STRUCS))
+                                         (T (GLKUPH (CAR STRUCS) J))))
+                                (T NIL)))
                         (GET (GET (CAR STRUCS) (QUOTE LAB)) !GR)))))
         (T NIL)))
 
 (DEFUN GLKUPH
   (STRUC JJ)
   (PROG (RES)
-        (PROG (&V ?&LST1 J)
-              (SETQ ?&LST1 JJ)
-         LOOP (COND ((NULL ?&LST1) (RETURN &V)) (T NIL))
-              (SETQ J (CAR ?&LST1))
+        (PROG (&V &LST1 J)
+              (SETQ &LST1 JJ)
+              LOOP (COND ((NULL &LST1) (RETURN &V)) (T NIL))
+              (SETQ J (CAR &LST1))
               (COND
                ((SETQ RES
                       (COND ((NULL (CDR J)) (PUTPROP STRUC (CAR J) (QUOTE LAB)) (GLKUP (LIST STRUC)))
@@ -49,7 +49,7 @@
                             (T NIL)))
                 (RETURN &V))
                (T NIL))
-              (SETQ ?&LST1 (CDR ?&LST1))
+              (SETQ &LST1 (CDR &LST1))
               (GO LOOP))
         (RETURN RES)))
 
@@ -70,12 +70,12 @@
 (DEFUN DELET
   (STRUC K RUL)
   (COND (RUL
-         (PROG (&V ?&LST1 X)
-               (SETQ ?&LST1 K)
-          LOOP (COND ((NULL ?&LST1) (RETURN &V)) (T NIL))
-               (SETQ X (CAR ?&LST1))
+         (PROG (&V &LST1 X)
+               (SETQ &LST1 K)
+               LOOP (COND ((NULL &LST1) (RETURN &V)) (T NIL))
+               (SETQ X (CAR &LST1))
                (SETQ &V (PUTPROP X (DELET! STRUC (GET X RUL)) RUL))
-               (SETQ ?&LST1 (CDR ?&LST1))
+               (SETQ &LST1 (CDR &LST1))
                (GO LOOP)))
         (T NIL)))
 
@@ -88,12 +88,12 @@
 (DEFUN HET
   (A V P)
   (COND (P (COND ((ATOM A) (PUTPROP A V P) (LIST A))
-                 (T (PROG (&V ?&LST1 X)
-                          (SETQ ?&LST1 A)
-                     LOOP (COND ((NULL ?&LST1) (RETURN &V)) (T NIL))
-                          (SETQ X (CAR ?&LST1))
+                 (T (PROG (&V &LST1 X)
+                          (SETQ &LST1 A)
+                          LOOP (COND ((NULL &LST1) (RETURN &V)) (T NIL))
+                          (SETQ X (CAR &LST1))
                           (SETQ &V (PUTPROP X V P))
-                          (SETQ ?&LST1 (CDR ?&LST1))
+                          (SETQ &LST1 (CDR &LST1))
                           (GO LOOP))
                     A)))
         (T NIL)))
@@ -121,11 +121,11 @@
 (DEFUN RESTORENET
   (L)
   (PROG (&V)
-   LOOP (COND (L (SETQ &V
-                       (PROG NIL
-                             (RPLACD (CAR L) (CONS 'PNAME (CONS (GET (CAR L) 'PNAME) (CADR L))))
-                             (SETQ L (CDDR L)))))
-              (T (RETURN &V)))
+        LOOP (COND (L (SETQ &V
+                            (PROG NIL
+                                  (RPLACD (CAR L) (CONS 'PNAME (CONS (GET (CAR L) 'PNAME) (CADR L))))
+                                  (SETQ L (CDDR L)))))
+                   (T (RETURN &V)))
         (GO LOOP)))
 
 
@@ -322,53 +322,53 @@
 
 (DEFUN DEFLIST
   (PAIR_LIS PROP)
-  (PROG (&V ?&LST1 X)
-        (SETQ ?&LST1 PAIR_LIS)
-   LOOP (COND ((NULL ?&LST1) (RETURN &V)) (T NIL))
-        (SETQ X (CAR ?&LST1))
+  (PROG (&V &LST1 X)
+        (SETQ &LST1 PAIR_LIS)
+        LOOP (COND ((NULL &LST1) (RETURN &V)) (T NIL))
+        (SETQ X (CAR &LST1))
         (SETQ &V (PUTPROP (CAR X) (CADR X) PROP))
-        (SETQ ?&LST1 (CDR ?&LST1))
+        (SETQ &LST1 (CDR &LST1))
         (GO LOOP)))
 
 
 (DEFUN INIT_SURF
   ()
   (SETQ BREAKING NIL)
-  (PROG (&V ?&LST1 X)
-              (SETQ ?&LST1 (QUOTE (TOK DET PREP VS NS MS PRON AGT! OBJ! INST!)))
-         LOOP (COND ((NULL ?&LST1) (RETURN &V)) (T NIL))
-              (SETQ X (CAR ?&LST1))
-              (SETQ &V (PUTPROP X T (QUOTE TE)))
-              (SETQ ?&LST1 (CDR ?&LST1))
-              (GO LOOP))
-  (PROG (&V ?&LST1 X)
-              (SETQ ?&LST1
-                    (QUOTE
-                     (VOICE FORM TENSE MOOD INF INF2 FIRN POBJ SUBJ PNOM OBJ
-                            POSS SECN NBR DEG OBJ! AGT! INST! PRON AUX OBJ2)))
-         LOOP (COND ((NULL ?&LST1) (RETURN &V)) (T NIL))
-              (SETQ X (CAR ?&LST1))
-              (SETQ &V (PUTPROP X T (QUOTE TF)))
-              (SETQ ?&LST1 (CDR ?&LST1))
-              (GO LOOP))
+  (PROG (&V &LST1 X)
+        (SETQ &LST1 (QUOTE (TOK DET PREP VS NS MS PRON AGT! OBJ! INST!)))
+        LOOP (COND ((NULL &LST1) (RETURN &V)) (T NIL))
+        (SETQ X (CAR &LST1))
+        (SETQ &V (PUTPROP X T (QUOTE TE)))
+        (SETQ &LST1 (CDR &LST1))
+        (GO LOOP))
+  (PROG (&V &LST1 X)
+        (SETQ &LST1
+              (QUOTE
+               (VOICE FORM TENSE MOOD INF INF2 FIRN POBJ SUBJ PNOM OBJ
+                      POSS SECN NBR DEG OBJ! AGT! INST! PRON AUX OBJ2)))
+        LOOP (COND ((NULL &LST1) (RETURN &V)) (T NIL))
+        (SETQ X (CAR &LST1))
+        (SETQ &V (PUTPROP X T (QUOTE TF)))
+        (SETQ &LST1 (CDR &LST1))
+        (GO LOOP))
   (SETF (GET 'NBR 'RF) T)
-  (PROG (&V ?&LST1 X)
-     (SETQ ?&LST1
-           (QUOTE ((AGT AGT!) (OBJ OBJ!) (INST INST!) (DAT DAT!) (IOBJ IOBJ!)
-                   (MOD MOD!) (LOC LOC!) (MAN MAN!))))
-     LOOP (COND ((NULL ?&LST1) (RETURN &V)) (T NIL))
-     (SETQ X (CAR ?&LST1))
-     (SETQ &V
-           (PROG NIL (PUTPROP (CAR X) (CADR X) (QUOTE INV)) (PUTPROP (CADR X) (CAR X) (QUOTE INV))))
-     (SETQ ?&LST1 (CDR ?&LST1))
-     (GO LOOP))
-  (PROG (&V ?&LST1 X)
-     (SETQ ?&LST1 (QUOTE (HE SHE IT THEY)))
-     LOOP (COND ((NULL ?&LST1) (RETURN &V)) (T NIL))
-     (SETQ X (CAR ?&LST1))
-     (SETQ &V (PUTPROP X X (QUOTE NOM)))
-     (SETQ ?&LST1 (CDR ?&LST1))
-     (GO LOOP))
+  (PROG (&V &LST1 X)
+        (SETQ &LST1
+              (QUOTE ((AGT AGT!) (OBJ OBJ!) (INST INST!) (DAT DAT!) (IOBJ IOBJ!)
+                      (MOD MOD!) (LOC LOC!) (MAN MAN!))))
+        LOOP (COND ((NULL &LST1) (RETURN &V)) (T NIL))
+        (SETQ X (CAR &LST1))
+        (SETQ &V
+              (PROG NIL (PUTPROP (CAR X) (CADR X) (QUOTE INV)) (PUTPROP (CADR X) (CAR X) (QUOTE INV))))
+        (SETQ &LST1 (CDR &LST1))
+        (GO LOOP))
+  (PROG (&V &LST1 X)
+        (SETQ &LST1 (QUOTE (HE SHE IT THEY)))
+        LOOP (COND ((NULL &LST1) (RETURN &V)) (T NIL))
+        (SETQ X (CAR &LST1))
+        (SETQ &V (PUTPROP X X (QUOTE NOM)))
+        (SETQ &LST1 (CDR &LST1))
+        (GO LOOP))
   (SETF (GET 'BE 'PL) 'ARE)
   (SETF (GET 'AND 'PRON) 'THEY)
   (DEFLIST (QUOTE ((HE HIM) (SHE HER) (IT IT) (THEY THEM))) (QUOTE OBJ))
@@ -393,14 +393,14 @@
 (DEFUN SURFSTART
   NIL
   (PROG (&V)
-   LOOP (COND (T (SETQ &V
-                       (PROG (STRUCTURES)
-                             (TERPRI NIL)
-                             (PRINC (QUOTE "STRUCTURE FILE?"))
-                             (SETQ STRUCTURES (READ (OPEN (READ))))
-                             (RESTORENET STRUCTURES)
-                             (BREAK NIL))))
-              (T (RETURN &V)))
+        LOOP (COND (T (SETQ &V
+                            (PROG (STRUCTURES)
+                                  (TERPRI NIL)
+                                  (PRINC (QUOTE "STRUCTURE FILE?"))
+                                  (SETQ STRUCTURES (READ (OPEN (READ))))
+                                  (RESTORENET STRUCTURES)
+                                  (BREAK NIL))))
+                   (T (RETURN &V)))
         (GO LOOP)))
 
 
@@ -413,11 +413,11 @@
 ;; SIMSTR converts it to property list form and returns a pointer to the `governing' semantic structure
 
 (DEFUN SIMSTR
-    (FORM)
+  (FORM)
   (PROG (C)
-     (SETQ LPROP NIL)
-     (GSTRUCT1 FORM (SETQ C (GENTEMP)))
-     (RETURN C)))
+        (SETQ LPROP NIL)
+        (GSTRUCT1 FORM (SETQ C (GENTEMP)))
+        (RETURN C)))
 
 ;; %FORM=(head .  <list of case-case_filler pairs>)
 ;; CV= structure (a gensym) to be filled out  %
@@ -438,26 +438,26 @@
 
 (DEFUN GSTRUCT2 (FORM CV)
   (PROG (&V)
-   LOOP (COND (FORM
-               (SETQ &V
-                     (PROG NIL
-                           (COND ((NULL (CDAR FORM)) (VCASE (CAAR FORM) (CADR FORM) CV))
-                                 (T (SCASE (CAR FORM) (CADR FORM) CV)))
-                           (SETQ FORM (CDDR FORM)))))
-              (T (RETURN &V)))
+        LOOP (COND (FORM
+                    (SETQ &V
+                          (PROG NIL
+                                (COND ((NULL (CDAR FORM)) (VCASE (CAAR FORM) (CADR FORM) CV))
+                                      (T (SCASE (CAR FORM) (CADR FORM) CV)))
+                                (SETQ FORM (CDDR FORM)))))
+                   (T (RETURN &V)))
         (GO LOOP)))
 
 
 (DEFUN TOKEN
   (X)
   (PROG (FLG)
-        (PROG (&V ?&LST1 PAIR)
-              (SETQ ?&LST1 LPROP)
-         LOOP (COND ((NULL ?&LST1) (RETURN &V)) (T NIL))
-              (SETQ PAIR (CAR ?&LST1))
+        (PROG (&V &LST1 PAIR)
+              (SETQ &LST1 LPROP)
+              LOOP (COND ((NULL &LST1) (RETURN &V)) (T NIL))
+              (SETQ PAIR (CAR &LST1))
               (SETQ &V (COND ((EQUAL X (CDR PAIR)) (SETQ FLG (CAR PAIR))) (T NIL)))
               (COND (FLG (RETURN &V)) (T NIL))
-              (SETQ ?&LST1 (CDR ?&LST1))
+              (SETQ &LST1 (CDR &LST1))
               (GO LOOP))
         (RETURN FLG)))
 
@@ -465,12 +465,12 @@
 (DEFUN VCASE
   (CASE FILLER CV)
   (PROG (C)
-     (COND
-       ((MEMBER CASE (QUOTE (AGT OBJ OBJ2 POBJ INF INF2 S2 PNOM DAT LOC IOBJ INST)))
-        (COND ((NULL (SETQ C (TOKEN (LIST (CAR FILLER))))) (SETQ C (GENTEMP)) (GSTRUCT1 FILLER C))
-              (T NIL))
+        (COND
+         ((MEMBER CASE (QUOTE (AGT OBJ OBJ2 POBJ INF INF2 S2 PNOM DAT LOC IOBJ INST)))
+          (COND ((NULL (SETQ C (TOKEN (LIST (CAR FILLER))))) (SETQ C (GENTEMP)) (GSTRUCT1 FILLER C))
+                (T NIL))
           (PUTPROP CV (LIST C) CASE))
-       (T (PUTPROP CV FILLER CASE)))))
+         (T (PUTPROP CV FILLER CASE)))))
 
 ;; CV is the new symbol that's being filled out (it has been generated by gensym in
 ;; SIMSTR.  Filler is 
@@ -506,77 +506,77 @@
 ;; This code populates the property list with it
 (mapcar #'(lambda (x) (PUTPROP (CAR x) (CADR x) !GR))
         '(
-          (S	((VOICE TFM) (TFM)))
-          (TFM	((FORM TENSE) (TENSE)))
-          (TENSE	((TENSE PROP) (PROP)))
-          (PROP	((MOOD T)))
+          (S  ((VOICE TFM) (TFM)))
+          (TFM  ((FORM TENSE) (TENSE)))
+          (TENSE  ((TENSE PROP) (PROP)))
+          (PROP ((MOOD T)))
           (INDIC ((INF3 SBJ) (SBJ)))
-          (SBJ  	((SUBJ PRED)))
-          (INTERROG	((FIRVS INDIC) (INDIC)))
-          (IMPER	((TOK VP1)))
-          (SUBJUNC	((IF INDIC)))
-          (FIRVS	((INP V1) (V1)))
-          (V1	((V1 NIL)))
-          (PRED	((MAN VP0) (FIR VP10) (VP0)))
-          (VP10	((TOK VP11) (VP11)))
-          (VP11	((SEC NIL)))
-          (FIR	PRED)
-          (SEC	PRED)
-          (VP0	((VS VP1)))
-          (VP1	((SOBJ VP2) (VP2)))
-          (VP2	((OBJ2 VP2_1) (VP2_1)))
-          (VP2_1	((MAN2 VP3) (VP3)))
-          (VP3	((PNOM VP4) (VP4)))
-          (VP4	((DAT VP5) (VP5)))
-          (VP5	((LOC VP6) (VP6)))
-          (VP6	((INF VP7) (INF2 VP7)(S2 VP7)(S3 VP7)(VP7)))
-          (VP7	((OBJ VP8) (VP8)))
-          (VP8	((IOBJ VP9) (VP9)))
-          (VP9	((INST NIL)))
-          (INF	QNP)
+          (SBJ    ((SUBJ PRED)))
+          (INTERROG ((FIRVS INDIC) (INDIC)))
+          (IMPER  ((TOK VP1)))
+          (SUBJUNC  ((IF INDIC)))
+          (FIRVS  ((INP V1) (V1)))
+          (V1 ((V1 NIL)))
+          (PRED ((MAN VP0) (FIR VP10) (VP0)))
+          (VP10 ((TOK VP11) (VP11)))
+          (VP11 ((SEC NIL)))
+          (FIR  PRED)
+          (SEC  PRED)
+          (VP0  ((VS VP1)))
+          (VP1  ((SOBJ VP2) (VP2)))
+          (VP2  ((OBJ2 VP2_1) (VP2_1)))
+          (VP2_1  ((MAN2 VP3) (VP3)))
+          (VP3  ((PNOM VP4) (VP4)))
+          (VP4  ((DAT VP5) (VP5)))
+          (VP5  ((LOC VP6) (VP6)))
+          (VP6  ((INF VP7) (INF2 VP7)(S2 VP7)(S3 VP7)(VP7)))
+          (VP7  ((OBJ VP8) (VP8)))
+          (VP8  ((IOBJ VP9) (VP9)))
+          (VP9  ((INST NIL)))
+          (INF  QNP)
           (INF2   VP0)
-          (S2	S)
-          (S3	S)
-          (NP1	((NBR NP2) (NP2)))
-          (NP2	((MOD NP3) (NP3)))
-          (NP3	((NS NP4)))
-          (NP4	((PMOD NP5) (NP5)))
-          (NP5	((OBJ! NP6) (NP6)))
-          (NP6	((AGT! NP7) (NP7)))
-          (NP7	((INST! NIL)))
-          (PNP	((TOK PNP1) (PNP1)))
-          (PNP1	((PREP PNP2) (INF NIL) (PNP2)))
-          (PNP2	((POBJ NIL)))
-          (QNP	((PRON NP4) (DET NP1) (POSS NP1) (FIRN NP8) (VOICE G) (NP1)))
-          (POSS	((PRON NIL) (DET NP10) (NP10)))
-          (NP10	((NBR NP11) (NP11)))
-          (NP11	((NS NIL)))
-          (FIRN	QNP)
-          (SECN	QNP)
-          (SUBJ	QNP)
-          (OBJ	QNP)
-          (POBJ	QNP)
+          (S2 S)
+          (S3 S)
+          (NP1  ((NBR NP2) (NP2)))
+          (NP2  ((MOD NP3) (NP3)))
+          (NP3  ((NS NP4)))
+          (NP4  ((PMOD NP5) (NP5)))
+          (NP5  ((OBJ! NP6) (NP6)))
+          (NP6  ((AGT! NP7) (NP7)))
+          (NP7  ((INST! NIL)))
+          (PNP  ((TOK PNP1) (PNP1)))
+          (PNP1 ((PREP PNP2) (INF NIL) (PNP2)))
+          (PNP2 ((POBJ NIL)))
+          (QNP  ((PRON NP4) (DET NP1) (POSS NP1) (FIRN NP8) (VOICE G) (NP1)))
+          (POSS ((PRON NIL) (DET NP10) (NP10)))
+          (NP10 ((NBR NP11) (NP11)))
+          (NP11 ((NS NIL)))
+          (FIRN QNP)
+          (SECN QNP)
+          (SUBJ QNP)
+          (OBJ  QNP)
+          (POBJ QNP)
           (OBJ2 QNP)
-          (PNOM	QNPC)
-          (AGT	QNP)
-          (NP8	((TOK NP9) (NP9)))
-          (NP9	((SECN NIL)))
-          (FIRM	MOD)
-          (SECM	MOD)
-          (MAN	PNP)
-          (MAN2	PNP)
-          (SOBJ	PNP)
-          (DAT	PNP)
-          (INST	PNP)
-          (IOBJ	PNP)
-          (PMOD	PNP)
-          (LOC	PNP)
-          (MOD	((DEG MOD1) (MOD1)))
-          (MOD1	((FIRM MOD2) (MS NIL)))
-          (MOD2	((TOK MOD3) (MOD3)))
-          (MOD3	((SECM NIL)))
-          (G	((AUX GP)))
-          (GP	((SUBJ VP0)))
+          (PNOM QNPC)
+          (AGT  QNP)
+          (NP8  ((TOK NP9) (NP9)))
+          (NP9  ((SECN NIL)))
+          (FIRM MOD)
+          (SECM MOD)
+          (MAN  PNP)
+          (MAN2 PNP)
+          (SOBJ PNP)
+          (DAT  PNP)
+          (INST PNP)
+          (IOBJ PNP)
+          (PMOD PNP)
+          (LOC  PNP)
+          (MOD  ((DEG MOD1) (MOD1)))
+          (MOD1 ((FIRM MOD2) (MS NIL)))
+          (MOD2 ((TOK MOD3) (MOD3)))
+          (MOD3 ((SECM NIL)))
+          (G  ((AUX GP)))
+          (GP ((SUBJ VP0)))
           )
         )
 
@@ -592,23 +592,23 @@
           (SING3 (BE IS GO GOES HAVE HAS DO DOES CAN CAN))
 
           (PAST (BE WERE BECOME BECAME BUY BOUGHT CAN COULD
-                 COME CAME DO DID DRINK DRANK EAT ATE GET GOT
-                 GIVE GAVE GO WENT GRAB GRABBED HEAR HEARD
-                 HAVE HAD HIT HIT KNOW KNEW MAKE MADE READ READ
-                 STAB STABBED SEE SAW SELL SOLD TAKE TOOK
-                 TELL TOLD THINK THOUGHT))
+                    COME CAME DO DID DRINK DRANK EAT ATE GET GOT
+                    GIVE GAVE GO WENT GRAB GRABBED HEAR HEARD
+                    HAVE HAD HIT HIT KNOW KNEW MAKE MADE READ READ
+                    STAB STABBED SEE SAW SELL SOLD TAKE TOOK
+                    TELL TOLD THINK THOUGHT))
 
           (!ING (BE BEING HAVE HAVING GRAB GRABBING STAB STABBING))
 
           (!EN (BE BEEN BUY BOUGHT COME COME CAN BEEN-ABLE-TO
-                DO DONE DRINK DRUNK EAT EATEN GET GOTTEN
-                GIVE GIVEN GO GONE HAVE HAD HIT HIT HEAR HEARD
-                KNOW KNOWN MAKE MADE READ READ SEE SEEN SELL SOLD
-                TAKE TAKEN TELL TOLD THINK THOUGHT))
+                   DO DONE DRINK DRUNK EAT EATEN GET GOTTEN
+                   GIVE GIVEN GO GONE HAVE HAD HIT HIT HEAR HEARD
+                   KNOW KNOWN MAKE MADE READ READ SEE SEEN SELL SOLD
+                   TAKE TAKEN TELL TOLD THINK THOUGHT))
 
           (PRON (JOHN HE BILL HE MARY SHE FRED HE HAMLET HE
-                 LAERTES HE OTHELLO HE IAGO HE CASSIO HE
-                 DESDEMONA SHE FALSTAFF HE SOMEONE HE))
+                      LAERTES HE OTHELLO HE IAGO HE CASSIO HE
+                      DESDEMONA SHE FALSTAFF HE SOMEONE HE))
 
           (CONJ (AND T BECAUSE T))
           

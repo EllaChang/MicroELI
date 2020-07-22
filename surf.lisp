@@ -19,7 +19,7 @@
   (PROG (RES)
         (PROG (&V &L1 ALT)
               (SETQ &L1 RHS)
-         LOOP (COND ((NULL &L1) (RETURN &V)))
+              LOOP (COND ((NULL &L1) (RETURN &V)))
               (SETQ ALT (CAR &L1))
               (SETQ &L1 (CDR &L1))
               (COND
@@ -38,9 +38,9 @@
         (PUTPROP NODE (CADR GRUL) (QUOTE LAB))
         (RETURN
          (COND
-           ((AND (GET (CAR GRUL) (QUOTE SF)) (NULL (APPLY (CAR GRUL) (NCONS NODE)))) (FINDPATHS NODE))
-           ((GET (CAR GRUL) (QUOTE TE)) (APPEND K (FINDPATHS NODE)))
-           (T (PUTPROP (CAR K) (CAR GRUL) (QUOTE LAB)) (APPEND (FINDPATHS (CAR K)) (FINDPATHS NODE)))))))
+          ((AND (GET (CAR GRUL) (QUOTE SF)) (NULL (APPLY (CAR GRUL) (NCONS NODE)))) (FINDPATHS NODE))
+          ((GET (CAR GRUL) (QUOTE TE)) (APPEND K (FINDPATHS NODE)))
+          (T (PUTPROP (CAR K) (CAR GRUL) (QUOTE LAB)) (APPEND (FINDPATHS (CAR K)) (FINDPATHS NODE)))))))
 
 
 (DEFUN VOICE
@@ -69,13 +69,13 @@
 (DEFUN PRGRSIFY
   (V)
   ((LAMBDA (TMP)
-    (COND (TMP TMP)
-          (T
-           ((LAMBDA (X)
-              (INTERN
-               ;; JCM: made plenty of changes to code below for Common Lisp strings.
-              (CONCATENATE 'STRING (COND ((EQ (CAR (LAST X)) #\E) (SUBSEQ X 0 (SUB1 (LENGTH X)))) (T (STRING V))) "ING")))
-            (EXPLODE V)))))
+     (COND (TMP TMP)
+           (T
+            ((LAMBDA (X)
+               (INTERN
+                ;; JCM: made plenty of changes to code below for Common Lisp strings.
+                (CONCATENATE 'STRING (COND ((EQ (CAR (LAST X)) #\E) (SUBSEQ X 0 (SUB1 (LENGTH X)))) (T (STRING V))) "ING")))
+             (EXPLODE V)))))
    (GET V (QUOTE !ING))))
 
 
@@ -115,9 +115,9 @@
     ((AND (EQ V (QUOTE BE)) (OR (EQ !TYP (QUOTE SING3)) (EQ !TYP (QUOTE SING1)))) (QUOTE WAS))
     (T
      ((LAMBDA (TMP)
-       (COND (TMP TMP)
-             ((EQ (CAR (LAST (EXPLODE V))) #\E) (INTERN (CONCATENATE 'STRING (STRING V) "D")))
-             (T (INTERN (CONCATENATE 'STRING (STRING V) "ED")) )))
+        (COND (TMP TMP)
+              ((EQ (CAR (LAST (EXPLODE V))) #\E) (INTERN (CONCATENATE 'STRING (STRING V) "D")))
+              (T (INTERN (CONCATENATE 'STRING (STRING V) "ED")) )))
       (GET V (QUOTE PAST)))))))
 
 
@@ -267,11 +267,11 @@
   (NODE)
   (PROG (VBSTR)
         (COND
-          ((NOT (OR (CDR (SETQ VBSTR (GET NODE 'VS))) (EQUAL (GET NODE 'LEX) '(BE))))
+         ((NOT (OR (CDR (SETQ VBSTR (GET NODE 'VS))) (EQUAL (GET NODE 'LEX) '(BE))))
           (SETQ !NODE NODE)
           (SETQ !TYP (COND ((GET NODE 'SUBJ) (GET NODE 'TYP)) (T 'SING3)))
           (SETQ VBSTR (APPEND (APPLY (CAR (GET NODE 'TENSE)) (LIST 'DO)) (INFIN (CAR VBSTR))))))
-    (PUTPROP NODE (CONS (CAR VBSTR) (APPEND (GET NODE 'NGT) (SUFLIST VBSTR 1))) 'VS)))
+        (PUTPROP NODE (CONS (CAR VBSTR) (APPEND (GET NODE 'NGT) (SUFLIST VBSTR 1))) 'VS)))
 
 
 (DEFUN INF
@@ -332,7 +332,7 @@
         (PUTPROP VNODE (NCONS (PRGRSIFY (CAR (GET VNODE (QUOTE LEX))))) (QUOTE VS))
         (PUTPROP VNODE T (QUOTE VS_MADE))
         (PUTPROP VNODE T (QUOTE DEL_SUBJ))
-    (RETURN T)))
+        (RETURN T)))
 
 ;; JCM new function, is basically a copy of GSBJ
 ;; except for OBJSUBJ instead of DEL_SUBJ
@@ -343,7 +343,7 @@
         (PUTPROP VNODE (NCONS (PRGRSIFY (CAR (GET VNODE (QUOTE LEX))))) (QUOTE VS))
         (PUTPROP VNODE T (QUOTE VS_MADE))
         (PUTPROP VNODE T (QUOTE OBJSUBJ)) 
-    (RETURN T)))
+        (RETURN T)))
 
 
 
@@ -371,12 +371,12 @@
 
 
 (DEFUN INIT_SURF
-    NIL
+  NIL
   (PROG NIL
         (SETQ !BREAKING NIL)
         (PROG (&V &L1 X)
               (SETQ &L1 (QUOTE (LEX PREP VS VS1 NS MS PART1 PART2 MAN)))
-         LOOP (COND ((NULL &L1) (RETURN &V)))
+              LOOP (COND ((NULL &L1) (RETURN &V)))
               (SETQ X (CAR &L1))
               (SETQ &L1 (CDR &L1))
               (SETQ &V (PUTPROP X T (QUOTE TE)))
@@ -388,21 +388,21 @@
                             SUBJ PNOM OBJ POSS DEG PRON OBJ2 MODAL
                             GSBJ IVT CNDIT NBR INST2 SPRG GOBJ QUANT DET
                             NGT PRSNT)))
-         LOOP (COND ((NULL &L1) (RETURN &V)))
+              LOOP (COND ((NULL &L1) (RETURN &V)))
               (SETQ X (CAR &L1))
               (SETQ &L1 (CDR &L1))
               (SETQ &V (PUTPROP X T (QUOTE SF)))
               (GO LOOP))
         (PROG (&V &L1 X)
               (SETQ &L1 (QUOTE (NBR IVT CNDIT DEG)))
-         LOOP (COND ((NULL &L1) (RETURN &V)))
+              LOOP (COND ((NULL &L1) (RETURN &V)))
               (SETQ X (CAR &L1))
               (SETQ &L1 (CDR &L1))
               (SETQ &V (PUTPROP X T (QUOTE DF)))
               (GO LOOP))
         (PROG (&V &L1 X)
               (SETQ &L1 (QUOTE (HE SHE IT THEY)))
-         LOOP (COND ((NULL &L1) (RETURN &V)))
+              LOOP (COND ((NULL &L1) (RETURN &V)))
               (SETQ X (CAR &L1))
               (SETQ &L1 (CDR &L1))
               (SETQ &V (PUTPROP X X (QUOTE NOM)))
@@ -427,12 +427,12 @@
 
 (DEFUN DEFLIST
   (PAIR_LIS PROP)
-  (PROG (&V ?&LST1 X)
-        (SETQ ?&LST1 PAIR_LIS)
-   LOOP (COND ((NULL ?&LST1) (RETURN &V)) (T NIL))
-        (SETQ X (CAR ?&LST1))
+  (PROG (&V &LST1 X)
+        (SETQ &LST1 PAIR_LIS)
+        LOOP (COND ((NULL &LST1) (RETURN &V)) (T NIL))
+        (SETQ X (CAR &LST1))
         (SETQ &V (PUTPROP (CAR X) (CADR X) PROP))
-        (SETQ ?&LST1 (CDR ?&LST1))
+        (SETQ &LST1 (CDR &LST1))
         (GO LOOP)))
 
 (DEFUN PUTPROP (ID VAL PROP) (SETF (GET ID PROP) VAL))
@@ -461,63 +461,63 @@
 ;; (note, format is different from that in GR1)
 (mapcar #'(lambda (x) (PUTPROP (CAR x) (CDR x) !GR))
         '(
-          (S	(FIRS SNT1) (INF3 V0) V0)
-          (V0	(VOICE V1))
-          (SNT1	(LEX SNT2))
+          (S  (FIRS SNT1) (INF3 V0) V0)
+          (V0 (VOICE V1))
+          (SNT1 (LEX SNT2))
           (SNT2   (SECS T))
-          (V1 	(FORM V2))
+          (V1   (FORM V2))
           (V2   (MODAL V3) V3)
-          (V3	(TENSE V4))
-          (V4  	(MOOD T))
+          (V3 (TENSE V4))
+          (V4   (MOOD T))
           (COND   (CNDIT INDIC))
           (INTERROG (IVT INDIC))
           (SUBJUNC INDIC)
           (INDIC  (VS1 SBJ) SBJ)
-          (SBJ  	(SUBJ PRED) (GSBJ PRED))
-          (PRED	(MAN PRED1) PRED1)
-          (PRED1	(NGT VP0) VP0)
-          (VP0	(VS VP1))
-          (VP1	(PART1 VP2) VP2)
-          (VP2	(OBJ2 VP3) VP3)
-          (VP3	(PP1 VP4) VP4)
-          (VP4	(P_ADJ VP5) VP5)
-          (VP5	(LOC VP6) VP6)
+          (SBJ    (SUBJ PRED) (GSBJ PRED))
+          (PRED (MAN PRED1) PRED1)
+          (PRED1  (NGT VP0) VP0)
+          (VP0  (VS VP1))
+          (VP1  (PART1 VP2) VP2)
+          (VP2  (OBJ2 VP3) VP3)
+          (VP3  (PP1 VP4) VP4)
+          (VP4  (P_ADJ VP5) VP5)
+          (VP5  (LOC VP6) VP6)
           (VP6    (OBJ VP7) VP7)
-          (VP7	(PART2 VP8) VP8)
-           (VP8	(IOBJ VP9) VP9)
-           ;; JCM added GOBJ to the below
-          (VP9	(INF VP10) (INF2 VP10)(S2 VP10)(S3 VP10)(SPRG VP10)(PRSNT VP10) (GOBJ VP10) VP10)
-          (VP10	(INST T)(INST2 T))
+          (VP7  (PART2 VP8) VP8)
+          (VP8  (IOBJ VP9) VP9)
+          ;; JCM added GOBJ to the below
+          (VP9  (INF VP10) (INF2 VP10)(S2 VP10)(S3 VP10)(SPRG VP10)(PRSNT VP10) (GOBJ VP10) VP10)
+          (VP10 (INST T)(INST2 T))
           (INST2  S)
           (SPRG   S)
-          (INF	S)
+          (INF  S)
           (INF2   S)
-          (S2	S)
-          (FIRS	S)
-          (SECS	S)
-          (GSBJ	S)
-           (PRSNT S)
-           (GOBJ S) ;; JCM new addition
-          (PP1	PNP)
-          (INST	PNP)
-          (IOBJ	PNP)
-          (LOC	PNP)
-          (PNP	(PREP PNP1))
-          (PNP1	(POBJ T))
-          (SUBJ	NP)
-          (OBJ	NP)
-          (POBJ	NP)
+          (S2 S)
+          (FIRS S)
+          (SECS S)
+          (GSBJ S)
+          (PRSNT S)
+          (GOBJ S) ;; JCM new addition
+          (PP1  PNP)
+          (INST PNP)
+          (IOBJ PNP)
+          (LOC  PNP)
+          (PNP  (PREP PNP1))
+          (PNP1 (POBJ T))
+          (SUBJ NP)
+          (OBJ  NP)
+          (POBJ NP)
           (OBJ2   NP)
-          (NP	(PRON NP3)(POSS NP1)(DET NP1) NP1)
-          (NP1	(QUANT NP2) NP2)
+          (NP (PRON NP3)(POSS NP1)(DET NP1) NP1)
+          (NP1  (QUANT NP2) NP2)
           (NP2    (NBR NP3))
-           (NP3	(NS NP4))
-           (NP4	(PP1 NP5) NP5)
-           (NP5 (INF2 T) T);; JCM new addition
-          (POSS	(PRON NP3) (DET NP1) NP1)
+          (NP3  (NS NP4))
+          (NP4  (PP1 NP5) NP5)
+          (NP5 (INF2 T) T);; JCM new addition
+          (POSS (PRON NP3) (DET NP1) NP1)
           (P_ADJ  MOD)
-          (MOD	(DEG MOD1))
-          (MOD1	 (MS T))
+          (MOD  (DEG MOD1))
+          (MOD1  (MS T))
           )
         )
 
@@ -528,34 +528,34 @@
 ;; This code populates the property list with it
 ;; This time by just setf-ing symbol-plist  (DEFLIST (READ) !TMP!)))
 (mapcar #'(lambda (x) (DEFLIST (CADR X) (CAR X)) )
-                  '(
-                    (SING3
-                     ((BE IS)(GO GOES)(HAVE HAS)(DO DOES)(CAN CAN))
-                     )
-                    (PAST
-                     ((BE WERE)(BECOME BECAME)(BUY BOUGHT) (CAN COULD)(COME CAME) (DO DID)(DRINK DRANK)(EAT ATE) (GET GOT)(GIVE GAVE)(GO WENT)(GRAB GRABBED) (HEAR HEARD)(HAVE HAD)(HIT HIT)(KNOW KNEW)(MAKE MADE)(READ READ) (STAB STABBED)(SEE SAW)(SELL SOLD)(TAKE TOOK)(TELL TOLD)(THINK THOUGHT) (LOSE LOST))
-                     )
-                    (!ING
-                     ((BE BEING) (HAVE HAVING) (GRAB GRABBING) (STAB STABBING) (DIE DYING))
-                     )
-                    (!EN
-                     ((BE BEEN)(BUY BOUGHT)(COME COME)(CAN BEEN-ABLE-TO) (DO DONE)(DRINK DRUNK)(EAT EATEN) (GET GOTTEN)(GIVE GIVEN)(GO GONE) (HAVE HAD)(HIT HIT)(HEAR HEARD) (KNOW KNOWN)(MAKE MADE)(READ READ) (SEE SEEN)(SELL SOLD)(TAKE TAKEN)(TELL TOLD)(THINK THOUGHT))
-                     )
-                    (PRON
-                     ((JOHN HE) (BILL HE) (MARY SHE) (FRED HE) (HAMLET HE) (LAERTES HE) (OTHELLO HE) (IAGO HE) (CASSIO HE) (DESDEMONA SHE) (FALSTAFF HE)(SOMEONE HE))
-                     )
-                    (CONJ
-                     ((AND T) (BECAUSE T))
-                     )
-                    (OBJ
-                     ((HE HIM) (SHE HER) (IT IT) (THEY THEM) (I ME) (YOU YOU) (WE US))
-                     )
-                    (POSS
-                     ((HE HIS) (SHE HER) (IT ITS) (THEY THEIR) (I MY) (YOU YOUR) (WE OUR))
-                     )
-                    (INF
-                     ((CAN BE_ABLE_TO) (IS BE)(WAS BE)(HAD HAVE)(HAS HAVE))
-                     )
+        '(
+          (SING3
+           ((BE IS)(GO GOES)(HAVE HAS)(DO DOES)(CAN CAN))
+           )
+          (PAST
+           ((BE WERE)(BECOME BECAME)(BUY BOUGHT) (CAN COULD)(COME CAME) (DO DID)(DRINK DRANK)(EAT ATE) (GET GOT)(GIVE GAVE)(GO WENT)(GRAB GRABBED) (HEAR HEARD)(HAVE HAD)(HIT HIT)(KNOW KNEW)(MAKE MADE)(READ READ) (STAB STABBED)(SEE SAW)(SELL SOLD)(TAKE TOOK)(TELL TOLD)(THINK THOUGHT) (LOSE LOST))
+           )
+          (!ING
+           ((BE BEING) (HAVE HAVING) (GRAB GRABBING) (STAB STABBING) (DIE DYING))
+           )
+          (!EN
+           ((BE BEEN)(BUY BOUGHT)(COME COME)(CAN BEEN-ABLE-TO) (DO DONE)(DRINK DRUNK)(EAT EATEN) (GET GOTTEN)(GIVE GIVEN)(GO GONE) (HAVE HAD)(HIT HIT)(HEAR HEARD) (KNOW KNOWN)(MAKE MADE)(READ READ) (SEE SEEN)(SELL SOLD)(TAKE TAKEN)(TELL TOLD)(THINK THOUGHT))
+           )
+          (PRON
+           ((JOHN HE) (BILL HE) (MARY SHE) (FRED HE) (HAMLET HE) (LAERTES HE) (OTHELLO HE) (IAGO HE) (CASSIO HE) (DESDEMONA SHE) (FALSTAFF HE)(SOMEONE HE))
+           )
+          (CONJ
+           ((AND T) (BECAUSE T))
+           )
+          (OBJ
+           ((HE HIM) (SHE HER) (IT IT) (THEY THEM) (I ME) (YOU YOU) (WE US))
+           )
+          (POSS
+           ((HE HIS) (SHE HER) (IT ITS) (THEY THEIR) (I MY) (YOU YOUR) (WE OUR))
+           )
+          (INF
+           ((CAN BE_ABLE_TO) (IS BE)(WAS BE)(HAD HAVE)(HAS HAVE))
+           )
           ) ;; ends big quoted s-exp
         ) ;; ends mapcar
 
