@@ -91,7 +91,7 @@
 (setq q-acid-rain
       '(where does acid rain go))
 
-(write (answer q-acid-rain acid-rain))
+; (write (answer q-acid-rain acid-rain))
 
 ;; Acid rain enters the atmosphere and lands.
 ;; How do greenhouse gases form?

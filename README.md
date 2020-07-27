@@ -1,18 +1,28 @@
 # MicroELI
 
-Micro ELI (English Language Interpreter) takes in an input sentence and outputs its conceptual dependency (CD) form.
+Micro ELI (English Language Interpreter) takes in an input sentence and outputs its conceptual dependency (CD) form. BABEL takes in a CD form and outputs natural language sentences of the same meaning.
 
 ## How to Run
 
-Install clisp. To run Micro ELI, run clisp, and once in the interpreter, run these lines:
+Install clisp. To run Micro ELI, run clisp, and once in the interpreter, run this:
 
-(load 'micro-eli)
+(load 'qa)
 
-(process-text text)
+## Current Capabilities
 
-## Current Issues
+<ul>
+	<li>Output the CD form of a simple statement. Given "jack got a red kite", it outputs: (ACTOR (JACK) <=> (*ATRANS*) OBJECT (KITE (COLOR (RED))) TO (JACK)).</li>
+	<li>Output the CD form of a simple question. Given "who went to the store", it outputs: (ACTOR (BOB) <=> (*PTRANS*) OBJECT (BOB) TO (*?*)).</li>
+	<li>Combined with BABEL, it can produce natural language answers to a question given a simple story. If the story is ((jack went to the store) (bob went to the beach) (jack got a kite) (bob got a seashell)) and the question is "where did bob go", it outputs: (bob is going to beach) (bob is coming to beach).</li>
+</ul>
 
-To successfully parse "jack paid the check with a check", articles "the" and "a" must take on a different form of definition where they don't look for a noun to form a noun phrase. Otherwise, the control flow of the stack will not have given *predicted* a value by the time the program gets to the first "check". However, these alternative definitions will not correctly parse "jack got a red kite". In this scenario, "a" must look for an adjective to form a noun phrase so that the predicates defined in "red" can be appended to the final CD form.
+## Current Limitations
+
+<ul>
+	<li>The current lexicon is small.</li>
+	<li>More CD predicates need to be added.</li>
+	<li>Distinguishing between word senses: To successfully parse "jack paid the check with a check", articles "the" and "a" must take on a different form of definition where they don't look for a noun to form a noun phrase. Otherwise, the control flow of the stack will not have given *predicted* a value by the time the program gets to the first "check". However, these alternative definitions will not correctly parse "jack got a red kite". In this scenario, "a" must look for an adjective to form a noun phrase so that the predicates defined in "red" can be appended to the final CD form.</li>
+</ul>
 
 ## Conceptual Dependency Predicates
 
