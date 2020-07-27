@@ -1,4 +1,5 @@
 (require :micro-eli)
+(require :micro-sam)
 
 (defun answer (question story)
   "Find the answer to a question given a story."
@@ -15,11 +16,26 @@
       (format t "~%The answer to the given question is:~%")
       (return-from answer (nth 1 pair)))))
 
+(defun answer-cd (question story)
+  "Find the answer to a question given a story."
+  (let ((ls (list 'dummy)))
+    (dolist (sentence story)
+      (let ((sentence-cd sentence))
+        (when (and (equal (header-cd sentence-cd) (header-cd question))
+                   (or (equal (filler-role 'actor sentence-cd) (filler-role 'actor question))
+                       (equal (filler-role 'object sentence-cd) (filler-role 'object question))
+                       (equal (filler-role 'to sentence-cd) (filler-role 'to question))))
+          (push sentence-cd (cdr (last ls))))))
+    (dolist (cd (cdr ls))
+      (format t "~%The CD answer to the given question is:~%")
+      (return-from answer-cd cd))))
+
 (defun express-cd (cd)
-  "Express a MicroELI CD form."
+  "Express a MicroELI CD form (i.e. turn in into natural language)."
   (express (list (list cd))))
 
 (defun paraphrase (s)
+  "Generate paraphrases for a given sentence."
   (express-cd (cd-translate (parse s))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -73,11 +89,14 @@
 (setq cd-kite
       (cd-translate (parse red-kite)))
 
-(progn
-  (load 'prph)
-  (load 'surf)
-  (nonet)
-  (express-cd (cd-translate (parse (answer q-where-bob story2)))))
+; (progn
+;   (load 'prph)
+;   (load 'surf)
+;   (nonet)
+;   (write (cd-translate (parse (answer q-where-bob story2))))
+;   (write "CD-TRANSLATEEEEEEEEEEEEEEEEEE"))
+
+; (express-cd (cd-translate (parse (answer q-where-bob story2))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -97,4 +116,35 @@
 ;; How do greenhouse gases form?
 ;; Decomposition produces methane.
 
-(provide :qa)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;;  Micro SAM Question Answering Task
+;;;
+
+(setq q-money
+      '(what did jack pay))
+
+(process-story kite-story)
+
+(setq shop-story *data-base*)
+
+(progn
+  (load 'prph)
+  (load 'surf)
+  (nonet)
+  (let ((ls (list 'dummy)))
+    (dolist (cd (reverse (cdr (reverse *data-base*))))
+      (push cd (cdr (last ls))))
+    (write ls)
+    (answer-cd (parse q-who-store) (cdr ls))))
+
+;(push (car (express-cd (cd-translate cd))) (cdr (last ls)))
+
+;(write (answer q-money shop-story))
+
+; ((PTRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (PERSON (NAME (JACK)))) (TO (STORE)))
+;  (PTRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (KITE)) (TO (PERSON (NAME (JACK)))))
+;  (ATRANS (ACTOR (STORE)) (OBJECT (KITE)) (FROM (STORE)) (TO (PERSON (NAME (JACK)))))
+;  (ATRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (MONEY)) (FROM (PERSON (NAME (JACK)))) (TO (STORE)))
+;  (PTRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (PERSON (NAME (JACK)))) (FROM (STORE)) (TO (HOUSE)))
+;  ($SHOPPING (SHOPPER (PERSON (NAME (JACK)))) (STORE (STORE)) (BOUGHT (KITE)) (ELSEWHERE (HOUSE))))

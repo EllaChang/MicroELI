@@ -37,8 +37,8 @@
 ;;;
 
 (defconstant *cd-acts*
-  '(*atrans* *ptrans* *propel* *move* *grasp* *ingest*
-    *expel* *mtrans* *conc* *mbuild* *attend* *speak*)
+  '(atrans ptrans propel move grasp ingest
+    expel mtrans conc mbuild attend speak)
   "List of valid CD predicates")
 
 (defparameter *user-trace* t
@@ -55,30 +55,30 @@ occurs.")
 ;; ROLES-CD gets the list of role-pairs of a CD form.
 
 (defun header-cd (x)
-  "Returns predicate of a CD form"
-  (car x))
+   "Returns predicate of a CD form"
+   (car x))
 
-(defun roles-cd (x)
-  "Returns list of (role value) pairs for
+(defun roles-cd (x) 
+   "Returns list of (role value) pairs for
 a CD form."
-  (cdr x))
+   (cdr x))
 
 ;; Role-pairs have the form (role filler) - ROLE-PAIR returns the
 ;; role and FILLER-PAIR returns the filler.
 
-(defun role-pair (x)
-  "Returns the role of a (role filler) pair."
-  (car x))
+(defun role-pair (x) 
+   "Returns the role of a (role filler) pair."
+   (car x))
 
-(defun filler-pair (x)
-  "Returns the filler of a (role filler) pair."
-  (cadr x))
+(defun filler-pair (x) 
+   "Returns the filler of a (role filler) pair."
+   (cadr x))
 
 ;; A filler for a role is found by looking for the role name
 ;; in the CD, and returning the filler if a pair is found.
 
 (defun filler-role (role cd)
-  "Returns the filler for a given role in CD, or
+   "Returns the filler for a given role in CD, or
 NIL if there is no filler for role."
   (let ((pair (assoc role (roles-cd cd))))
     (and pair (filler-pair pair))))
@@ -87,7 +87,7 @@ NIL if there is no filler for role."
 ;; replacing the old (role ...) pair.
 
 (defun setrole (role filler cd)
-  "Adds (role filler) pair to CD or changes the filler
+   "Adds (role filler) pair to CD or changes the filler
 for role if the role already is present/"
   (cons (header-cd cd)
         (cons (list role filler)
@@ -118,9 +118,9 @@ for role if the role already is present/"
 ;; a structure representing the variable.
 
 (set-macro-character #\?
-                     #'(lambda (stream char)
-                        (make-cd-var :name (read stream t nil t)))
-                     t)
+  #'(lambda (stream char)
+      (make-cd-var :name (read stream t nil t)))
+  t)
 
 ;;; MATCH takes three (predicate role-pair ...) forms as arguments.
 ;;; 1) a CD pattern which may contain variables;
@@ -180,9 +180,9 @@ the pattern did not match the constant."
   (dolist (pattern-arg pattern-args)
     (let ((const (filler-role (role-pair pattern-arg) constant))
           (var (filler-pair pattern-arg)))
-      (setq bindings (match var const bindings))
-      (if (null bindings) 
-        (return nil))))
+        (setq bindings (match var const bindings))
+        (if (null bindings) 
+          (return nil))))
   bindings)
 
 ;;; MATCH-VAR takes a variable, a constant, and a binding form -
@@ -193,7 +193,7 @@ the pattern did not match the constant."
 (defun match-var (pattern constant bindings)
   (let ((var-value (filler-role (name-var pattern) bindings)))
     (if var-value
-        (match var-value constant bindings)
+      (match var-value constant bindings)
       (cons-end bindings (list (name-var pattern) constant)))))
 
 ;;; Instantiating Patterns
@@ -212,26 +212,10 @@ bindings."
                       bindings))
         (t (cons (header-cd cd-form)
                  (mapcar #'(lambda (pair)
-                            (list (role-pair pair)
-                                  (instantiate (filler-pair pair)
-                                               bindings)))
+                             (list (role-pair pair)
+                                   (instantiate (filler-pair pair)
+                                                bindings)))
                          (roles-cd cd-form))))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;
-;;;  Translation Function
-;;;
-
-(defun cd-translate (cd)
-  "Translates an ELI CD form into a BABEL CD form."
-  (list 'ACTOR
-        (filler-role 'ACTOR cd)
-        '<=>
-        (list (header-cd cd))
-        'OBJECT
-        (filler-role 'OBJECT cd)
-        'TO
-        (filler-role 'TO cd)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -251,3 +235,4 @@ bindings."
       (apply #'format t str args))))
 
 (provide :cd-functions)
+

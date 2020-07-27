@@ -1,0 +1,187 @@
+0] (trace process-story)
+
+(PROCESS-STORY)
+0] (process-story restaurant-story)
+
+  0: (PROCESS-STORY ((PTRANS # # #) (INGEST # #) (PTRANS # # #)))
+
+Input is
+    (PTRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (PERSON (NAME (JACK))))
+     (TO (RESTAURANT)))
+
+New script $RESTAURANT
+Matches
+    (PTRANS (ACTOR ?DINER) (OBJECT ?DINER) (TO ?RESTAURANT))
+
+Adding script CD
+    (PTRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (PERSON (NAME (JACK))))
+     (TO (RESTAURANT)))
+
+Input is
+    (INGEST (ACTOR (PERSON)) (OBJECT (LOBSTER)))
+
+Matches
+    (INGEST (ACTOR ?DINER) (OBJECT ?MEAL))
+
+Adding script CD
+    (MTRANS (ACTOR (PERSON (NAME (JACK))))
+     (OBJECT (INGEST (ACTOR (PERSON (NAME (JACK)))) (OBJECT (LOBSTER)))))
+
+Adding script CD
+    (INGEST (ACTOR (PERSON (NAME (JACK)))) (OBJECT (LOBSTER)))
+
+Input is
+    (PTRANS (ACTOR (PERSON)) (OBJECT (PERSON)) (FROM (RESTAURANT)))
+
+Matches
+    (PTRANS (ACTOR ?DINER) (OBJECT ?DINER) (FROM ?RESTAURANT) (TO ?ELSEWHERE))
+
+Adding script CD
+    (ATRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (MONEY))
+     (FROM (PERSON (NAME (JACK)))) (TO (RESTAURANT)))
+
+Adding script CD
+    (PTRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (PERSON (NAME (JACK))))
+     (FROM (RESTAURANT)) (TO NIL))
+
+
+Story done - final script header
+    ($RESTAURANT (DINER (PERSON (NAME (JACK)))) (RESTAURANT (RESTAURANT))
+     (MEAL (LOBSTER)))
+
+Database contains:
+    ((PTRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (PERSON (NAME (JACK))))
+      (TO (RESTAURANT)))
+     (MTRANS (ACTOR (PERSON (NAME (JACK))))
+      (OBJECT (INGEST (ACTOR (PERSON (NAME (JACK)))) (OBJECT (LOBSTER)))))
+     (INGEST (ACTOR (PERSON (NAME (JACK)))) (OBJECT (LOBSTER)))
+     (ATRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (MONEY))
+      (FROM (PERSON (NAME (JACK)))) (TO (RESTAURANT)))
+     (PTRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (PERSON (NAME (JACK))))
+      (FROM (RESTAURANT)) (TO NIL))
+     ($RESTAURANT (DINER (PERSON (NAME (JACK)))) (RESTAURANT (RESTAURANT))
+      (MEAL (LOBSTER))))
+  0: PROCESS-STORY returned NIL
+NIL
+0] (trace match match-args match-var)
+
+(MATCH MATCH-ARGS MATCH-VAR)
+0] (process-story restaurant-story)
+  0: (PROCESS-STORY ((PTRANS # # #) (INGEST # #) (PTRANS # # #)))
+
+Input is
+    (PTRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (PERSON (NAME (JACK))))
+     (TO (RESTAURANT)))
+
+    1: (MATCH (PTRANS (ACTOR ?DINER) (OBJECT ?DINER) (TO ?RESTAURANT))
+              (PTRANS (ACTOR #) (OBJECT #) (TO #))
+              ($RESTAURANT))
+      2: (MATCH-ARGS ((ACTOR ?DINER) (OBJECT ?DINER) (TO ?RESTAURANT))
+                     (PTRANS (ACTOR #) (OBJECT #) (TO #))
+                     ($RESTAURANT))
+        3: (MATCH-VAR ?DINER (PERSON (NAME #)) ($RESTAURANT))
+        3: MATCH-VAR returned ($RESTAURANT (DINER #))
+        3: (MATCH-VAR ?DINER (PERSON (NAME #)) ($RESTAURANT (DINER #)))
+        3: MATCH-VAR returned ($RESTAURANT (DINER #))
+        3: (MATCH-VAR ?RESTAURANT (RESTAURANT) ($RESTAURANT (DINER #)))
+        3: MATCH-VAR returned ($RESTAURANT (DINER #) (RESTAURANT #))
+      2: MATCH-ARGS returned ($RESTAURANT (DINER #) (RESTAURANT #))
+    1: MATCH returned ($RESTAURANT (DINER #) (RESTAURANT #))
+New script $RESTAURANT
+Matches
+    (PTRANS (ACTOR ?DINER) (OBJECT ?DINER) (TO ?RESTAURANT))
+
+Adding script CD
+    (PTRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (PERSON (NAME (JACK))))
+     (TO (RESTAURANT)))
+
+Input is
+    (INGEST (ACTOR (PERSON)) (OBJECT (LOBSTER)))
+    1: (MATCH (MTRANS (ACTOR ?DINER) (OBJECT #))
+              (INGEST (ACTOR #) (OBJECT #))
+              ($RESTAURANT (DINER #) (RESTAURANT #)))
+    1: MATCH returned NIL
+    1: (MATCH (INGEST (ACTOR ?DINER) (OBJECT ?MEAL))
+              (INGEST (ACTOR #) (OBJECT #))
+              ($RESTAURANT (DINER #) (RESTAURANT #)))
+      2: (MATCH-ARGS ((ACTOR ?DINER) (OBJECT ?MEAL))
+                     (INGEST (ACTOR #) (OBJECT #))
+                     ($RESTAURANT (DINER #) (RESTAURANT #)))
+        3: (MATCH-VAR ?DINER (PERSON) ($RESTAURANT (DINER #) (RESTAURANT #)))
+        3: MATCH-VAR returned ($RESTAURANT (DINER #) (RESTAURANT #))
+        3: (MATCH-VAR ?MEAL (LOBSTER) ($RESTAURANT (DINER #) (RESTAURANT #)))
+        3: MATCH-VAR returned ($RESTAURANT (DINER #) (RESTAURANT #) (MEAL #))
+      2: MATCH-ARGS returned ($RESTAURANT (DINER #) (RESTAURANT #) (MEAL #))
+    1: MATCH returned ($RESTAURANT (DINER #) (RESTAURANT #) (MEAL #))
+
+Matches
+    (INGEST (ACTOR ?DINER) (OBJECT ?MEAL))
+
+Adding script CD
+    (MTRANS (ACTOR (PERSON (NAME (JACK))))
+     (OBJECT (INGEST (ACTOR (PERSON (NAME (JACK)))) (OBJECT (LOBSTER)))))
+
+Adding script CD
+    (INGEST (ACTOR (PERSON (NAME (JACK)))) (OBJECT (LOBSTER)))
+
+Input is
+    (PTRANS (ACTOR (PERSON)) (OBJECT (PERSON)) (FROM (RESTAURANT)))
+    1: (MATCH (ATRANS (ACTOR ?DINER) (OBJECT #) (FROM ?DINER) (TO ?RESTAURANT))
+              (PTRANS (ACTOR #) (OBJECT #) (FROM #))
+              ($RESTAURANT (DINER #) (RESTAURANT #) (MEAL #)))
+    1: MATCH returned NIL
+    1: (MATCH
+        (PTRANS (ACTOR ?DINER) (OBJECT ?DINER) (FROM ?RESTAURANT)
+         (TO ?ELSEWHERE))
+        (PTRANS (ACTOR #) (OBJECT #) (FROM #))
+        ($RESTAURANT (DINER #) (RESTAURANT #) (MEAL #)))
+      2: (MATCH-ARGS
+          ((ACTOR ?DINER) (OBJECT ?DINER) (FROM ?RESTAURANT) (TO ?ELSEWHERE))
+          (PTRANS (ACTOR #) (OBJECT #) (FROM #))
+          ($RESTAURANT (DINER #) (RESTAURANT #) (MEAL #)))
+        3: (MATCH-VAR ?DINER
+                      (PERSON)
+                      ($RESTAURANT (DINER #) (RESTAURANT #) (MEAL #)))
+        3: MATCH-VAR returned ($RESTAURANT (DINER #) (RESTAURANT #) (MEAL #))
+        3: (MATCH-VAR ?DINER
+                      (PERSON)
+                      ($RESTAURANT (DINER #) (RESTAURANT #) (MEAL #)))
+        3: MATCH-VAR returned ($RESTAURANT (DINER #) (RESTAURANT #) (MEAL #))
+        3: (MATCH-VAR ?RESTAURANT
+                      (RESTAURANT)
+                      ($RESTAURANT (DINER #) (RESTAURANT #) (MEAL #)))
+        3: MATCH-VAR returned ($RESTAURANT (DINER #) (RESTAURANT #) (MEAL #))
+      2: MATCH-ARGS returned ($RESTAURANT (DINER #) (RESTAURANT #) (MEAL #))
+    1: MATCH returned ($RESTAURANT (DINER #) (RESTAURANT #) (MEAL #))
+
+Matches
+    (PTRANS (ACTOR ?DINER) (OBJECT ?DINER) (FROM ?RESTAURANT) (TO ?ELSEWHERE))
+
+Adding script CD
+    (ATRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (MONEY))
+     (FROM (PERSON (NAME (JACK)))) (TO (RESTAURANT)))
+
+Adding script CD
+    (PTRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (PERSON (NAME (JACK))))
+     (FROM (RESTAURANT)) (TO NIL))
+
+
+Story done - final script header
+    ($RESTAURANT (DINER (PERSON (NAME (JACK)))) (RESTAURANT (RESTAURANT))
+     (MEAL (LOBSTER)))
+
+Database contains:
+    ((PTRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (PERSON (NAME (JACK))))
+      (TO (RESTAURANT)))
+     (MTRANS (ACTOR (PERSON (NAME (JACK))))
+      (OBJECT (INGEST (ACTOR (PERSON (NAME (JACK)))) (OBJECT (LOBSTER)))))
+     (INGEST (ACTOR (PERSON (NAME (JACK)))) (OBJECT (LOBSTER)))
+     (ATRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (MONEY))
+      (FROM (PERSON (NAME (JACK)))) (TO (RESTAURANT)))
+     (PTRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (PERSON (NAME (JACK))))
+      (FROM (RESTAURANT)) (TO NIL))
+     ($RESTAURANT (DINER (PERSON (NAME (JACK)))) (RESTAURANT (RESTAURANT))
+      (MEAL (LOBSTER))))
+  0: PROCESS-STORY returned NIL
+NIL
+0] 

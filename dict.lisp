@@ -222,6 +222,26 @@
                     (feature *cd-form* 'money)))
          (assign get-var2 *cd-form*)))))))))
 
+(defword pay
+  ((assign *part-of-speech* 'verb
+           *cd-form* '(atrans (actor ?get-var1)
+                       (object ?get-var2)
+                       (to ?get-var3)
+                       (from ?get-var1))
+           get-var1 *subject*
+           get-var2 nil
+           get-var3 nil)
+   (next-packet
+    ((test (and (equal *part-of-speech* 'noun)
+                (feature *cd-form* 'cost-form)))
+     (assign *cd-form* '((amount (cost-form))))
+     (next-packet
+      ((test (equal *word* 'with))
+       (next-packet
+        ((test (and (equal *part-of-speech* 'noun)
+                    (feature *cd-form* 'money)))
+         (assign get-var2 *cd-form*)))))))))
+
 (defword bill
   ((assign *part-of-speech* 'noun
            *cd-form* '(cost-form)
@@ -281,7 +301,9 @@
     ((test (equal *word* 'get))
      (assign get-var2 '(*?*)))
     ((test (equal *word* 'do))
-     (assign do-var2 '(*?*))))))
+     (assign do-var2 '(*?*)))
+    ((test (equal *word* 'pay))
+     (assign get-var2 '(*?*))))))
 
 (defword did
   ((assign *part-of-speech* 'helping-verb)
