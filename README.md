@@ -1,6 +1,6 @@
 # MicroELI
 
-Micro ELI (English Language Interpreter) takes in an input sentence and outputs its conceptual dependency (CD) form. BABEL takes in a CD form and outputs natural language sentences of the same meaning.
+Micro ELI (English Language Interpreter) takes in an input sentence and outputs its conceptual dependency (CD) form. BABEL takes in a CD form and outputs natural language sentences of the same meaning. Micro SAM (Script Applier Mechanism) matches stories to scripts (templates for stereotypical social situations).
 
 ## How to Run
 
@@ -11,9 +11,10 @@ Install clisp. To run Micro ELI, run clisp, and once in the interpreter, run thi
 ## Current Capabilities
 
 <ul>
-	<li>Output the CD form of a simple statement. Given "jack got a red kite", it outputs: (ACTOR (JACK) <=> (*ATRANS*) OBJECT (KITE (COLOR (RED))) TO (JACK)).</li>
-	<li>Output the CD form of a simple question. Given "who went to the store", it outputs: (ACTOR (BOB) <=> (*PTRANS*) OBJECT (BOB) TO (*?*)).</li>
+	<li>It can output the CD form of a simple statement. Given "jack got a red kite", it outputs: (ACTOR (JACK) <=> (*ATRANS*) OBJECT (KITE (COLOR (RED))) TO (JACK)).</li>
+	<li>It can output the CD form of a simple question. Given "who went to the store", it outputs: (ACTOR (BOB) <=> (*PTRANS*) OBJECT (BOB) TO (*?*)).</li>
 	<li>Combined with BABEL, it can produce natural language answers to a question given a simple story. If the story is ((jack went to the store) (bob went to the beach) (jack got a kite) (bob got a seashell)) and the question is "where did bob go", it outputs: (bob is going to beach) (bob is coming to beach).</li>
+	<li>It can work with MicroSAM and answer questions given an input story.</li>
 </ul>
 
 ## Current Limitations
