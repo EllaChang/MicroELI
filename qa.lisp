@@ -86,17 +86,11 @@
 (setq q-do
       '(what did jack do))
 
-(setq cd-kite
-      (cd-translate (parse red-kite)))
-
-; (progn
-;   (load 'prph)
-;   (load 'surf)
-;   (nonet)
-;   (write (cd-translate (parse (answer q-where-bob story2))))
-;   (write "CD-TRANSLATEEEEEEEEEEEEEEEEEE"))
-
-; (express-cd (cd-translate (parse (answer q-where-bob story2))))
+(setq story2cd
+      '((*PTRANS* (ACTOR (JACK)) (OBJECT (JACK)) (TO (STORE)))
+        (*PTRANS* (ACTOR (BOB)) (OBJECT (BOB)) (TO (BEACH)))
+        (*ATRANS* (ACTOR (JACK)) (OBJECT (KITE)) (TO (JACK)))
+        (*ATRANS* (ACTOR (BOB)) (OBJECT (SEASHELL)) (TO (BOB)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -111,10 +105,6 @@
       '(where does acid rain go))
 
 ; (write (answer q-acid-rain acid-rain))
-
-;; Acid rain enters the atmosphere and lands.
-;; How do greenhouse gases form?
-;; Decomposition produces methane.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -133,18 +123,6 @@
   (load 'surf)
   (nonet)
   (let ((ls (list 'dummy)))
-    (dolist (cd (reverse (cdr (reverse *data-base*))))
+    (dolist (cd (reverse (cdr (reverse shop-story))))
       (push cd (cdr (last ls))))
-    (write ls)
-    (answer-cd (parse q-who-store) (cdr ls))))
-
-;(push (car (express-cd (cd-translate cd))) (cdr (last ls)))
-
-;(write (answer q-money shop-story))
-
-; ((PTRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (PERSON (NAME (JACK)))) (TO (STORE)))
-;  (PTRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (KITE)) (TO (PERSON (NAME (JACK)))))
-;  (ATRANS (ACTOR (STORE)) (OBJECT (KITE)) (FROM (STORE)) (TO (PERSON (NAME (JACK)))))
-;  (ATRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (MONEY)) (FROM (PERSON (NAME (JACK)))) (TO (STORE)))
-;  (PTRANS (ACTOR (PERSON (NAME (JACK)))) (OBJECT (PERSON (NAME (JACK)))) (FROM (STORE)) (TO (HOUSE)))
-;  ($SHOPPING (SHOPPER (PERSON (NAME (JACK)))) (STORE (STORE)) (BOUGHT (KITE)) (ELSEWHERE (HOUSE))))
+    (write (answer-cd (parse-question q-where-jack) (cdr ls)))))
