@@ -1,5 +1,7 @@
 (require :micro-eli)
 (require :micro-sam)
+(require :prph)
+(require :surf)
 
 (defun answer (question story)
   "Find the answer to a question given a story."
@@ -31,7 +33,7 @@
       (return-from answer-cd cd))))
 
 (defun express-cd (cd)
-  "Express a MicroELI CD form (i.e. turn in into natural language)."
+  "Express a BABEL CD form (i.e. turn in into natural language)."
   (express (list (list cd))))
 
 (defun paraphrase (s)
@@ -45,7 +47,7 @@
 
 (setq story1
       '((jack went to the store)
-        (jack got a red kite)
+        (jack got a kite)
         (jack went home)))
 
 (setq story2
@@ -86,12 +88,6 @@
 (setq q-do
       '(what did jack do))
 
-(setq story2cd
-      '((*PTRANS* (ACTOR (JACK)) (OBJECT (JACK)) (TO (STORE)))
-        (*PTRANS* (ACTOR (BOB)) (OBJECT (BOB)) (TO (BEACH)))
-        (*ATRANS* (ACTOR (JACK)) (OBJECT (KITE)) (TO (JACK)))
-        (*ATRANS* (ACTOR (BOB)) (OBJECT (SEASHELL)) (TO (BOB)))))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;;  ProPara Question Answering Task
@@ -104,15 +100,17 @@
 (setq q-acid-rain
       '(where does acid rain go))
 
-; (write (answer q-acid-rain acid-rain))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;;  Paraphrase Generation Task
+;;;
+
+; (write (paraphrase '(bob went to the beach)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;;  Micro SAM Question Answering Task
 ;;;
-
-(setq q-money
-      '(what did jack pay))
 
 (process-story kite-story)
 
@@ -125,4 +123,4 @@
   (let ((ls (list 'dummy)))
     (dolist (cd (reverse (cdr (reverse shop-story))))
       (push cd (cdr (last ls))))
-    (write (answer-cd (parse-question q-where-jack) (cdr ls)))))
+    (write (express-cd (cd-translate (answer-cd (parse-question q-where-jack) (cdr ls)))))))
