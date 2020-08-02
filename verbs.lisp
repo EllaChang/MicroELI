@@ -355,7 +355,8 @@
     (assign pb-var2 *cd-form*))))
 
 
-;; ============================ REVERSED ========================================
+
+;; ================================= REVERSED ========================================
 
 
 ; "430, 8": "The trash is unloaded." = something unloads the trash from somewhere to somewhere
@@ -621,4 +622,4 @@
        (assign j-var3 *cd-form*)))))))
 ;; write
 ;; zip
-                       (to     ?pb-var3)
+
