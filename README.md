@@ -27,30 +27,16 @@ Install clisp. To run Micro ELI, run clisp, and once in the interpreter, run thi
 
 ## Conceptual Dependency Predicates
 
-**ATRANS** - the transfer of an abstract relationship such as possession, ownership or control.
-
-**PTRANS** - having physical movement.
-
-**PSTAY** - PTRANS without location change.
-
-**PBUILD** - Change of a physical form.
-
-**PREDUCTION** - the reduction of a physical form.
-
-**PROPEL** - the application of a physical force to an object. If movement takes place as a result, a PTRANS has taken place too if it can be determined that the PROPEL was intended by the actor.
-
-**INGEST** - the taking in of an object by an animal into the inner workings of that animal.
-
-**GRASP** - to grasp an object.
-
-**ATTEND** - to focus a sense organ to an object.
-
-**SPEAK** - to make a noise.
-
-**MOVE** - to move a body part.
-
-**EXPEL** - to push something out of the body.
-
-**MTRANS** - the transfer of information between animals or within an animal.
-
-**MBUILD** - the construction within an animal of new information from old information.
+| Predicate | Parameters | Variable Name | Definition |
+| --------- | ---------- | ------------- | ---------- |
+| ATRANS | (ACTOR, OBJECT, TO, FROM) | get-var | The transfer of an abstract relationship such as possession, ownership or control. |
+| PTRANS | (ACTOR, OBJECT, TO, FROM) | go-var | The transfer of physical location of an object. |
+| PBUILD | (ACTOR, OBJECT, TO, FROM, PREV, AFTER) | pb-var | The change in the physical form of an object. |
+| STRANS | (ACTOR, OBJECT, PREV, AFTER) | st-var | The change in the status of an object. |
+| PROPEL | (ACTOR, OBJECT, TO, FROM) | prop-var | The application of a physical force to an object. |
+| INGEST | (ACTOR, OBJECT, TO, FROM) | in-var | The taking in of an object by another object. |
+| GRASP | (ACTOR, OBJECT) | gs-var | To grasp an object. |
+| ATTEND | (ACTOR, OBJECT, TO, FROM) | att-var | To focus a sense organ to an object. |
+| SPEAK | (ACTOR, OBJECT, TO, FROM) | sp-var | To make a noise. |
+| MOVE | (ACTOR, OBJECT, TO, FROM) | mov-var | To move a body part. |
+| EXPEL | (ACTOR, OBJECT, TO, FROM) | exp-var | To push something out of the body. |
