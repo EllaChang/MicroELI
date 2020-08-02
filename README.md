@@ -33,15 +33,11 @@ Install clisp. To run Micro ELI, run clisp, and once in the interpreter, run thi
 
 **PSTAY** - PTRANS without location change.
 
-**PBUILD** - the construction of a physical form.
+**PBUILD** - Change of a physical form.
 
 **PREDUCTION** - the reduction of a physical form.
 
 **PROPEL** - the application of a physical force to an object. If movement takes place as a result, a PTRANS has taken place too if it can be determined that the PROPEL was intended by the actor.
-
-**MTRANS** - the transfer of information between animals or within an animal.
-
-**MBUILD** - the construction within an animal of new information from old information.
 
 **INGEST** - the taking in of an object by an animal into the inner workings of that animal.
 
@@ -55,6 +51,6 @@ Install clisp. To run Micro ELI, run clisp, and once in the interpreter, run thi
 
 **EXPEL** - to push something out of the body.
 
-**SEVER** - the division of something into separate parts.
+**MTRANS** - the transfer of information between animals or within an animal.
 
-**JOIN** - the joining of separate parts.
+**MBUILD** - the construction within an animal of new information from old information.
