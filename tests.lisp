@@ -29,7 +29,7 @@
                  ((ACTOR (JOHN) <≡>T (*HEALTH* VAL (-10))) TIME (T-1))
                  ))
                <≡C
-               ((ACTOR (MARY) <≡>T (*JOY*) ) INC(+3) TIME(T-1) )
+               ((ACTOR (MARY) <≡>T (*JOY*) ) INC(+3) TIME(T-1))
                ))
              <≡> (*MLOC* VAL (*LTM* PART (MARY))))
             TIME (T-2))

@@ -352,4 +352,13 @@
     ((test (equal *part-of-speech* 'noun))
      (assign go-var2 (append (list go-var2) (list *cd-form*)))))))
 
+(defword died
+  ((assign *part-of-speech* 'verb
+           *cd-form* '(*state* (actor ?s-var1)
+                       (attr ?s-var2)
+                       (value ?s-var3))
+           s-var1 *subject*
+           s-var2 '(*health*)
+           s-var3 '(-10))))
+
 (provide :dict)

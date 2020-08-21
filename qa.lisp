@@ -2,6 +2,7 @@
 (require :micro-sam)
 (require :prph)
 (require :surf)
+(require :dict)
 
 (defun answer (question story)
   "Find the answer to a question given a story."
@@ -88,17 +89,19 @@
 (setq q-do
       '(what did jack do))
 
+; (write (answer q-who-store story2))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;;  ProPara Question Answering Task
 ;;;
 
-(setq acid-rain
-      '((acid rain enters the atmosphere and lands)
-        (kite enters the atmosphere and lands)))
+; (setq acid-rain
+;       '((acid rain enters the atmosphere and lands)
+;         (kite enters the atmosphere and lands)))
 
-(setq q-acid-rain
-      '(where does acid rain go))
+; (setq q-acid-rain
+;       '(where does acid rain go))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -112,15 +115,24 @@
 ;;;  Micro SAM Question Answering Task
 ;;;
 
-(process-story kite-story)
+; (process-story kite-story)
 
-(setq shop-story *data-base*)
+; (setq shop-story *data-base*)
 
-(progn
-  (load 'prph)
-  (load 'surf)
-  (nonet)
-  (let ((ls (list 'dummy)))
-    (dolist (cd (reverse (cdr (reverse shop-story))))
-      (push cd (cdr (last ls))))
-    (write (express-cd (cd-translate (answer-cd (parse-question q-where-jack) (cdr ls)))))))
+; (progn
+;   (load 'prph)
+;   (load 'surf)
+;   (nonet)
+;   (let ((ls (list 'dummy)))
+;     (dolist (cd (reverse (cdr (reverse shop-story))))
+;       (push cd (cdr (last ls))))
+;     (write (express-cd (cd-translate (answer-cd (parse-question q-where-jack) (cdr ls)))))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;;  Testing the STATE Primitive
+;;;
+
+(write (parse '(jack died)))
+(write (cd-translate (parse '(jack died))))

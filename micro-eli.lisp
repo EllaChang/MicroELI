@@ -102,7 +102,7 @@ conceptual analysis for it."
 (defun run-stack ()
   "If some request in the packet on the top of the stack
 can be triggered, that packet is removed from the stack,
-and the request is saved and executed.  When the top packet
+and the request is saved and executed. When the top packet
 contains no triggerable requests, the packets in the
 requests which were triggered and saved are added to the
 stack."

@@ -38,7 +38,7 @@
 
 (defconstant *cd-acts*
   '(*atrans* *ptrans* *propel* *move* *grasp* *ingest*
-    *expel* *mtrans* *conc* *mbuild* *attend* *speak*)
+    *expel* *mtrans* *conc* *mbuild* *attend* *speak* *state* *strans*)
   "List of valid CD predicates")
 
 (defparameter *user-trace* t
@@ -224,14 +224,22 @@ bindings."
 
 (defun cd-translate (cd)
   "Translates an ELI CD form into a BABEL CD form."
-  (list 'ACTOR
-        (filler-role 'ACTOR cd)
-        '<=>
-        (list (header-cd cd))
-        'OBJECT
-        (filler-role 'OBJECT cd)
-        'TO
-        (filler-role 'TO cd)))
+  (if (equal (header-cd cd) '*state*)
+      (list 'ACTOR
+            (filler-role 'ACTOR cd)
+            '<==> 'T
+            (list 
+             (nth 0 (filler-role 'ATTR cd))
+             'VAL
+             (nth 0 (list (filler-role 'VALUE cd)))))
+    (list 'ACTOR
+          (filler-role 'ACTOR cd)
+          '<=>
+          (list (header-cd cd))
+          'OBJECT
+          (filler-role 'OBJECT cd)
+          'TO
+          (filler-role 'TO cd))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -241,13 +249,13 @@ bindings."
 ;; CONS-END is really inefficient!  Problem is some algorithms 
 ;; count on it being non-destructive.
 
-(defun cons-end (l x)
-  "Adds x to the end of list l"
-  (append l (list x)))
+  (defun cons-end (l x)
+    "Adds x to the end of list l"
+    (append l (list x)))
 
-(defun user-trace (str &rest args)
-  (let ((*print-pretty* t))
-    (when *user-trace*
-      (apply #'format t str args))))
+  (defun user-trace (str &rest args)
+    (let ((*print-pretty* t))
+      (when *user-trace*
+        (apply #'format t str args))))
 
-(provide :cd-functions)
+  (provide :cd-functions)
