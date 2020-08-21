@@ -232,14 +232,36 @@ bindings."
              (nth 0 (filler-role 'ATTR cd))
              'VAL
              (nth 0 (list (filler-role 'VALUE cd)))))
-    (list 'ACTOR
-          (filler-role 'ACTOR cd)
-          '<=>
-          (list (header-cd cd))
-          'OBJECT
-          (filler-role 'OBJECT cd)
-          'TO
-          (filler-role 'TO cd))))
+    (remove 'NIL (list 'ACTOR
+                       (filler-role 'ACTOR cd)
+                       '<=>
+                       (list (header-cd cd))
+          
+                       (when (filler-role 'OBJECT cd)
+                         'OBJECT)
+                       (when (filler-role 'OBJECT cd)
+                         (filler-role 'OBJECT cd))
+          
+                       (when (filler-role 'TO cd)
+                         'TO)
+                       (when (filler-role 'TO cd)
+                         (filler-role 'TO cd))
+          
+                       (when (filler-role 'THRU cd)
+                         'THRU)
+                       (when (filler-role 'THRU cd)
+                         (filler-role 'THRU cd))
+          
+                       (when (filler-role 'PREV cd)
+                         'PREV)
+                       (when (filler-role 'PREV cd)
+                         (filler-role 'PREV cd))
+          
+                       (when (filler-role 'AFTER cd)
+                         'AFTER)
+                       (when (filler-role 'AFTER cd)
+                         'AFTER
+                         (filler-role 'AFTER cd))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;

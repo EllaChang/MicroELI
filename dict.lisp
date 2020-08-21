@@ -361,4 +361,74 @@
            s-var2 '(*health*)
            s-var3 '(-10))))
 
-(provide :dict)
+(defword gave
+  ((assign *part-of-speech* 'verb
+           *cd-form* '(*atrans* (actor ?get-var1)
+                       (object ?get-var2)
+                       (to ?get-var3)
+                       (from ?get-var4)
+                       (thru ?get-var5))
+           get-var1 *subject*
+           get-var2 nil
+           get-var3 nil
+           get-var4 nil
+           get-var5 nil)
+   (next-packet
+    ((test (equal *part-of-speech* 'noun-phrase))
+     (assign get-var2 *cd-form*)
+     (next-packet
+      ((test (equal *word* 'to))
+       (next-packet
+        ((test (equal *part-of-speech* 'noun-phrase))
+         (assign get-var3 *cd-form*)))))))))
+
+(defword trash
+  ((assign *part-of-speech* 'noun
+           *cd-form* '(trash))))
+
+(defword truck
+  ((assign *part-of-speech* 'noun
+           *cd-form* '(truck))))
+
+(defword unloaded
+  ((assign *part-of-speech* 'verb
+           *cd-form* '((*expel* (actor ?j-var1)
+                                (object ?j-var2))
+                       (*ptrans* (actor ?go-var1)
+                                 (object ?go-var2)
+                                 (to go-var3)
+                                 (from go-var4)))
+           j-var1 nil
+           j-var2 nil
+           go-var1 *subject*
+           go-var2 nil
+           go-var3 nil
+           go-var4 nil)
+   (next-packet
+    ((test (equal *part-of-speech* 'noun-phrase))
+     (assign j-var2 *cd-form*
+             go-var2 *cd-form*)
+     (next-packet
+      ((test (equal *word* 'from))
+       (next-packet
+        ((test *part-of-speech* 'noun-phrase)
+         (assign j-var1 *cd-form*
+                 go-var4 *cd-form*)
+         (next-packet
+          ((test (equal *word* 'to))
+           (next-packet
+            ((test *part-of-speech* 'noun-phrase)
+             (assign go-var3 *cd-form*))))))))
+      ((test (equal *word* 'to))
+       (next-packet
+        ((test *part-of-speech* 'noun-phrase)
+         (assign go-var3 *cd-form*)
+         (next-packet
+          ((test (equal *word* 'from))
+           (next-packet
+            ((test *part-of-speech* 'noun-phrase)
+             (assign j-var1 *cd-form*
+                     go-var4 *cd-form*)))))))))))))
+
+
+     (provide :dict)

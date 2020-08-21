@@ -131,8 +131,17 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
-;;;  Testing the STATE Primitive
+;;;  Testing Primitives
 ;;;
 
-(write (parse '(jack died)))
-(write (cd-translate (parse '(jack died))))
+;; STATE
+;(write (cd-translate (parse '(jack died))))
+
+;; ATRANS
+;(write (cd-translate (parse '(jack gave the knife to bob))))
+
+;; EXPEL
+;(write (cd-translate (parse '(the truck unloaded the trash))))
+
+;; Parallel PTRANS & EXPEL
+(write (cd-translate (parse '(jack unloaded the trash from the truck))))
