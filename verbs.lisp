@@ -358,6 +358,178 @@
 
 ;; ================================= REVERSED ========================================
 
+; "256, 5": "The air sacs transfer the oxygen into your blood."
+; "1250, 4": "Electricity is transferred through a wire or cable.",
+; "132, 4": "The carbon dioxide in the blood stream is transferred to the air sacs.",
+; "502, 2": "The energy is transferred from the pistons moving up and down at high speeds.",
+(defword transfer 
+  ((assign *part-of-speech* 'verb
+           *cd-form* '(*ptrans* (actor  ?go-var1)
+                                (object ?go-var2)
+                                (to     ?go-var3)
+                                (from   ?go-var4))
+           go-var1 *subject*
+           go-var2 nil  
+           go-var3 nil
+           go-var4 nil)
+   (next-packet
+    ; transport sth from somewhere to somewhere
+    ((test (equal *part-of-speech* 'noun-phrase))
+     (assign go-var2 *cd-form*)
+     (next-packet
+      ((test (equal *word* 'from))
+       (assign go-var4 *cd-form*))
+       (next-packet
+        ((test (equal *word* 'to))
+         (assign go-var3 *cd-form*)))))
+        ; transport sth to somewhere from somewhere
+    ((test (equal *part-of-speech* 'noun-phrase))
+     (assign go-var2 *cd-form*)
+     (next-packet
+      ((test (equal *word* 'to))
+       (assign go-var3 *cd-form*))
+       (next-packet
+          ((test (equal *word* 'from))
+           (assign go-var4 *cd-form*)))))
+    
+    ((test (equal *part-of-speech* 'noun-phrase))
+     (assign go-var2 *cd-form*)
+     (next-packet
+      ((test (equal *word* 'into))
+       (assign go-var3 *cd-form*)))))))
+
+; "1155, 3": "The resulting heat and pressure transforms the organic layer into a dark and waxy substance known as kerogen.",
+; "409, 5": "The retina transforms this image into electrical impulses."
+(defword transform
+  ((assign *part-of-speech* 'verb
+           *cd-form* '(*pbuild* (actor ?pb-var1)
+                                (object ?pb-var2)
+                                (prev ?pb-var2)
+                                (after ?pb-var3))
+        
+           pb-var1 *subject*
+           pb-var2 nil
+           pb-var3 nil)
+  (next-packet
+      ((test (equal *part-of-speech* 'noun-phrase))
+       (assign pb-var2 *cd-form*)
+       (next-packet
+        ((test (equal *word* 'into))
+         (assign pb-var3 *cd-form*)))))))
+
+
+; "390, 7": "The national grid uses high voltages to transmit electricity through the power lines."
+(defword transmit 
+  ((assign *part-of-speech* 'verb
+           *cd-form* '(*ptrans* (actor ?go-var1)
+                                (object ?go-var2)
+                                (to     ?go-var3)
+                                (from   ?go-var4))
+           go-var1 *subject*
+           go-var2 nil  
+           go-var3 nil
+           go-var4 nil)
+   (next-packet
+    ; transport sth from somewhere to somewhere
+    ((test (equal *part-of-speech* 'noun-phrase))
+     (assign go-var2 *cd-form*)
+     (next-packet
+      ((test (equal *word* 'from))
+       (assign go-var4 *cd-form*))
+       (next-packet
+        ((test (equal *word* 'to))
+         (assign go-var3 *cd-form*)))))
+        ; transport sth to somewhere
+    ((test (equal *part-of-speech* 'noun-phrase))
+     (assign go-var2 *cd-form*)
+     (next-packet
+      ((test (equal *word* 'to))
+       (assign go-var3 *cd-form*)))))))
+
+; "157, 2": "Your town or a private company collect and transport the aluminum to a recycling facility.",
+; "377, 4": "The oxygen is transported by hemoglobin.",
+; "846, 6": "The carbon dioxide by product is transported back to the lungs.",
+(defword transport 
+  ((assign *part-of-speech* 'verb
+           *cd-form* '(*ptrans* (actor  ?go-var1)
+                       (object ?go-var2)
+                       (to     ?go-var3)
+                       (from   ?go-var4))
+           go-var1 *subject*
+           go-var2 nil  
+           go-var3 nil
+           go-var4 nil)
+   (next-packet
+    ; transport sth from somewhere to somewhere
+    ((test (equal *part-of-speech* 'noun-phrase))
+     (assign go-var2 *cd-form*)
+     (next-packet
+      ((test (equal *word* 'from))
+       (assign go-var4 *cd-form*))
+       (next-packet
+        ((test (equal *word* 'to))
+         (assign go-var3 *cd-form*)))))
+    ; transport sth to somewhere from somewhere
+    ((test (equal *part-of-speech* 'noun-phrase))
+     (assign go-var2 *cd-form*)
+     (next-packet
+      ((test (equal *word* 'to))
+       (assign go-var3 *cd-form*)))
+       (next-packet
+          ((test (equal *word* 'form))
+           (assign go-var4 *cd-form*))))
+    ; transport sth from somewhere back to somewhere
+    ((test (equal *part-of-speech* 'noun-phrase))
+     (assign go-var2 *cd-form*)
+     (next-packet
+      ((test (equal *word* 'back))
+       (next-packet
+        ((test (equal *word* 'to))
+         (assign go-var3 *cd-form*))))))
+    ; transport sth from somewhere into somewhere
+    ((test (equal *part-of-speech* 'noun-phrase))
+     (assign go-var2 *cd-form*)
+     (next-packet
+      ((test (equal *word* 'into))
+       (assign go-var3 *cd-form*)))))))
+
+;; trap
+
+; "1061, 2": "You must draw up a plan to what kind of orbit the satellite will travel.",
+; "1061, 3": "You make preparations for the rocket that will travel into space.",
+; "135, 3": "The sound waves travel away from the bat.",
+; "207, 1": "Electrical signals in the brain travel through nerves to muscles.",
+; "409, 6": "The impulses travel along the optic nerve to the brain.",
+; "627, 4": "The enzymes travel from the pancreas to the small intestine through tubes.",
+; "879, 4": "The clouds travel over areas on land.",
+; "882, 3": "The recyclable items travel to a recycling plant.",
+; "99, 1": "Rain clouds travel across the sky."
+(defword travel 
+  ((assign *part-of-speech* 'verb
+           *cd-form* '(*ptrans* (actor  ?go-var1)
+                       (object ?go-var2)
+                       (to     ?go-var3)
+                       (from   ?go-var4))
+           go-var1 *subject*
+           go-var2 *subject*  
+           go-var3 nil
+           go-var4 nil)
+   (next-packet
+    ((test (equal *word* 'to))
+     (assign go-var3 *cd-form*))
+    
+    ((test (equal *word* 'into))
+     (assign go-var3 *cd-form*))
+
+    ((test (equal *word* 'away))
+     (next-packet
+        ((test (equal *word* 'from))
+         (assign go-var4 *cd-form*))))
+
+    ((test (equal *word* 'from))
+     (assign go-var4 *cd-form*)))))
+
+;; type
 
 ; "430, 8": "The trash is unloaded." = something unloads the trash from somewhere to somewhere
 (defword unload
@@ -372,15 +544,15 @@
            j-var2 nil
            j-var3 nil
            j-var4 nil)
-   (next-packet
-    ((test (equal *part-of-speech* 'noun-phrase))
-     (assign j-var2 *cd-form*)
-     (next-packet
-      ((test (equal *word* 'from))
-       (assign j-var4 *cd-form*)
-       (next-packet
-        ((test (equal *word* 'to))
-         (assign j-var3 *cd-form*)))))))))
+	(next-packet
+	    ((test (equal *part-of-speech* 'noun-phrase))
+	     (assign j-var2 *cd-form*)
+	     (next-packet
+      		((test (equal *word* 'from))
+       		 (assign j-var4 *cd-form*)
+       		 (next-packet
+       		 	((test (equal *word* 'to))
+       		 	 (assign j-var3 *cd-form*)))))))))
 
 
 ;; unuse
@@ -389,31 +561,33 @@
 (defword unwind
   ((assign *part-of-speech* 'verb
            *cd-form* '(*join* (actor ?j-var1)
-                       (object ?j-var2)
-                       (to ?j-var3)
-                       (from ?j-var4)
-                       (prev 2) 
-                       (after 0))
+                      (object ?j-var2)
+                      (to ?j-var3)
+                      (from ?j-var4)
+                      (prev ?j-var5) 
+                      (after ?j-var6))
            j-var1 *subject*
            j-var2 nil
            j-var3 nil
-           j-var4 nil)
-   (next-packet
+           j-var4 nil
+           j-var5 2
+           j-var6 0)
+  (next-packet
     ((test (equal *part-of-speech* 'noun-phrase))
-     (assign j-var2 *cd-form*)))))
+	 (assign j-var2 *cd-form*)))))
 
 ; "693, 3": "This upsets the balance of the carbon cycle."
 (defword upset
   ((assign *part-of-speech* 'verb
            *cd-form* '(*strans* (actor ?st-var1)
-                       (object ?st-var2)
-                       (prev 2)
-                       (after 1))
+           			   (object ?st-var2)
+           			   (prev 2)
+           			   (after 1))
            st-var1 *subject*
            st-var2 nil) 
-   (next-packet
-    ((test (equal *part-of-speech* 'noun-phrase))
-     (assign st-var2 *cd-form*)))))
+	(next-packet
+	    ((test (equal *part-of-speech* 'noun-phrase))
+	     (assign st-var2 *cd-form*)))))
 
 ; "1208, 7": "Exhaust valve opens to vent exhaust out tail pipe."
 (defword vent 
@@ -461,18 +635,20 @@
 (defword wake
   ((assign *part-of-speech* 'verb
            *cd-form* '(*strans* (actor ?st-var1)
-                       (object ?st-var2)
-                       (prev 1)
-                       (after 2))
+                                (object ?st-var2)
+                                (prev ?st-var3)
+                                (after ?st-var4))
            st-var1 *subject*
-           st-var2 *subject*) ;; wake up oneself
-   (next-packet
-    ((test (equal *word* 'up))
-     (next-packet
-      ((test (equal *part-of-speech* 'noun-phrase))
-       (assign st-var2 *cd-form*))))
-    ((test (equal *part-of-speech* 'noun-phrase))  
-     (assign st-var2 *cd-form*)))))
+           st-var2 *subject*
+           st-var3 1
+           st-var4 2) ;; wake up oneself
+	(next-packet
+	    ((test (equal *word* 'up))
+	     (next-packet
+	      ((test (equal *part-of-speech* 'noun-phrase))
+	       (assign st-var2 *cd-form*))))
+	    ((test (equal *part-of-speech* 'noun-phrase))  
+	       (assign st-var2 *cd-form*)))))
 
 
 ; "784, 3": "The animal wanders to another area."
@@ -501,23 +677,28 @@
 (defword warm
   ((assign *part-of-speech* 'verb
            *cd-form* '((*pbuild* (actor ?pb-var1)
-                                 (object '(heat))
-                                 (prev 2)
-                                 (after 1))
-                       (*strans* (actor ?st-var1)
-                                 (object ?st-var2)
-                                 (prev 1)
-                                 (after 2)))
+                                 (object ?pb-var2)
+                                 (prev ?pb-var3)
+                                 (after ?pb-var4))
+               			   (*strans* (actor ?st-var1)
+                         			   (object ?st-var2)
+                         			   (prev st-var3)
+                         			   (after st-var4)))
            pb-var1 *subject*
+           pb-var2 '(heat)
+           pb-var3 2
+           pb-var4 1
            st-var1 *subject*
-           st-var2 *subject*)
-   (next-packet
-    ((test (equal *word* 'up))
-     (next-packet
-      ((test (equal *part-of-speech* 'noun-phrase))
-       (assign st-var2 *cd-form*))))
-    ((test (equal *part-of-speech* 'noun-phrase))
-     (assign st-var2 *cd-form*)))))
+           st-var2 *subject*
+           st-var3 1
+           st-var4 2)
+	(next-packet
+	    ((test (equal *word* 'up))
+	     (next-packet
+	      ((test (equal *part-of-speech* 'noun-phrase))
+	       (assign st-var2 *cd-form*))))
+	    ((test (equal *part-of-speech* 'noun-phrase))
+	     (assign st-var2 *cd-form*)))))
 
 ;; wash
 
@@ -547,13 +728,15 @@
 (defword wear
   ((assign *part-of-speech* 'verb
            *cd-form* '(*pbuild* (actor ?pb-var1)
-                       (object ?pb-var2) ;; something wears away 
-                       (prev 1)
-                       (after 0))
+                                (object ?pb-var2) ;; something wears away 
+                                (prev ?pb-var3)
+                                (after ?pb-var4))
            pb-var1 *subject*
-           pb-var2 *subject*)
-   (next-packet
-    ;; wedge apart something
+           pb-var2 *subject*
+           pb-var3 1
+           pb-var4 0)
+  (next-packet
+  	;; wedge apart something
     ((test (equal *word* 'away))
      (next-packet
       ((test (equal *part-of-speech* 'noun-phrase))
@@ -563,59 +746,68 @@
 (defword weather
   ((assign *part-of-speech* 'verb
            *cd-form* '(*pbuild* (actor ?pb-var1)
-                       (object ?pb-var1)
-                       (prev 2)
-                       (after 1))
-           pb-var1 *subject*)))
+                                (object ?pb-var2)
+                                (prev ?pb-var3)
+                                (after ?pb-var4))
+           pb-var1 *subject*
+           pb-var2 *subject*
+           pb-var3 2
+           pb-var4 1)))
 
 ; "908, 3": "The force of the pressure exerted on the rock surrounding it is enough to wedge the walls of the crack farther apart, thus expanding and deepening the crack."
 (defword wedge
   ((assign *part-of-speech* 'verb
            *cd-form* '(*join* (actor ?j-var1)
-                       (object ?j-var2)
-                       (to ?j-var3)
-                       (from ?j-var4)
-                       (prev 2) 
-                       (after 1))
+                              (object ?j-var2)
+                              (to ?j-var3)
+                              (from ?j-var4)
+                              (prev ?j-var5) 
+                              (after ?j-var6))
            j-var1 *subject*
            j-var2 nil
            j-var3 nil
-           j-var4 nil)
-   (next-packet
-    ;; wedge apart something
+           j-var4 nil
+           j-var5 2
+           j-var6 1)
+  (next-packet
+  	;; wedge apart something
     ((test (equal *word* 'apart))
      (next-packet
       ((test (equal *part-of-speech* 'noun-phrase))
        (assign j-var2 *cd-form*))))
     ;; wedge soomething apart
     ((test (equal *part-of-speech* 'noun-phrase))
-     (assign j-var2 *cd-form*)))))
+	 (assign j-var2 *cd-form*)))))
 
 ; "1007, 1": "A plant dies and withers."
 (defword wither
   ((assign *part-of-speech* 'verb
            *cd-form* '(*pbuild* (actor ?pb-var1)
-                       (object ?pb-var1)
-                       (prev 2)
-                       (after 1))
-           pb-var1 *subject*)))
-
+                                (object ?pb-var2)
+                                (prev ?pb-var3)
+                                (after ?pb-var4))
+           pb-var1 *subject*
+           pb-var2 *subject*
+           pb-var3 2
+           pb-var4 1)))
 
 
 ; "Wire is wrapped around a piece of metal." = nil wrapped wire around a piece of metal
 (defword wrap
   ((assign *part-of-speech* 'verb
            *cd-form* '(*join* (actor ?j-var1)
-                       (object ?j-var2)
-                       (to ?j-var3)
-                       (from ?j-var4)
-                       (prev 0) 
-                       (after 1))
+                      (object ?j-var2)
+                      (to ?j-var3)
+                      (from ?j-var4)
+                      (prev ?j-var5) 
+                      (after ?j-var6))
            j-var1 *subject*
            j-var2 nil
            j-var3 nil
-           j-var4 nil)
-   (next-packet
+           j-var4 nil
+           j-var5 0
+           j-var6 1)
+  (next-packet
     ((test (equal *word* 'around))
      (next-packet
       ((test (equal *part-of-speech* 'noun-phrase))
