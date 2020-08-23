@@ -81,8 +81,7 @@ conceptual analysis for it."
   (do ((*word* nil)
        (*sentence* (cons '*start* sentence)))
       ((null (setq *word* (pop *sentence*)))
-       (loop for cd in *concept*
-         do (remove-variables cd)))
+       (remove-variables *concept*))
     (user-trace "~2%Processing word ~s" *word*)
     (load-def)
     (run-stack)))

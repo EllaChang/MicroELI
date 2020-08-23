@@ -135,13 +135,16 @@
 ;;;
 
 ;; STATE
-;(write (cd-translate (parse '(jack died))))
+; (write (cd-translate (parse '(jack died))))
 
 ;; ATRANS
-;(write (cd-translate (parse '(jack gave the knife to bob))))
+; (write (parse '(jack gave the knife to bob)))
 
 ;; EXPEL
-;(write (cd-translate (parse '(the truck unloaded the trash))))
+; (write (parse '(the truck unloaded the trash)))
 
 ;; Parallel PTRANS & EXPEL
-(write (cd-translate (parse '(jack unloaded the trash from the truck))))
+; (write (cd-translate (parse '(jack unloaded the trash from the truck))))
+
+;; STATE & PBUILD
+(write (parse '(the truck warmed up the trash)))

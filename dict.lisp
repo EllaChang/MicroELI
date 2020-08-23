@@ -430,5 +430,35 @@
              (assign j-var1 *cd-form*
                      go-var4 *cd-form*)))))))))))))
 
+(defword warmed
+  ((assign *part-of-speech* 'verb
+           *cd-form* '(*pbuild* (actor ?pb-var1)
+                       (a-attr ?pb-var2)
+                       (a-val ?pb-var3)
+                       (object ?pb-var4)
+                       (o-attr ?pb-var5)
+                       (o-val ?pb-var6))
+           pb-var1 *subject*
+           pb-var2 '(TEMP)
+           pb-var3 '(1)
+           pb-var4 nil
+           pb-var5 nil
+           pb-var6 nil)
+   (next-packet
+    ((test (equal *word* 'up))
+     (next-packet
+      ((test (equal *part-of-speech* 'noun-phrase))
+       (assign pb-var2 nil
+               pb-var3 nil
+               pb-var4 *cd-form*
+               pb-var5 '(TEMP)
+               pb-var6 '(1)))))
+    ((test (equal *part-of-speech* 'noun-phrase))
+     (assign pb-var2 nil
+             pb-var3 nil
+             pb-var4 *cd-form*
+             pb-var5 '(TEMP)
+             pb-var6 '(1))))))
 
-     (provide :dict)
+
+(provide :dict)
