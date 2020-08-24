@@ -29,14 +29,14 @@ Install clisp. To run Micro ELI, run clisp, and once in the interpreter, run thi
 
 | Predicate | Parameters | Variable Name | Definition |
 | --------- | ---------- | ------------- | ---------- |
-| ATRANS | (ACTOR, OBJECT, TO, FROM) | get-var | The transfer of an abstract relationship such as possession, ownership or control. |
-| PTRANS | (ACTOR, OBJECT, TO, FROM) | go-var | The transfer of physical location of an object. |
-| PBUILD | (ACTOR, OBJECT, TO, FROM, PREV, AFTER) | pb-var | The change in the physical form of an object. |
-| STRANS | (ACTOR, OBJECT, PREV, AFTER) | st-var | The change in the status of an object. |
-| PROPEL | (ACTOR, OBJECT, TO, FROM) | prop-var | The application of a physical force to an object. |
-| INGEST | (ACTOR, OBJECT, TO, FROM) | in-var | The taking in of an object by another object. |
+| ATRANS | (ACTOR, OBJECT, FROM, THRU, TO) | get-var | The transfer of an abstract relationship such as possession, ownership or control. |
+| PTRANS | (ACTOR, OBJECT, FROM, THRU, TO) | go-var | The transfer of physical location of an object. |
+| PBUILD | (ACTOR, OBJECT) | pb-var | The change in the physical form of an object. |
+| STRANS | (ACTOR, OBJECT) | st-var | The change in the status of an object. |
+| PROPEL | (ACTOR, OBJECT, FROM, TO) | prop-var | The application of a physical force to an object. |
+| INGEST | (ACTOR, OBJECT, FROM, TO) | in-var | The taking in of an object by another object. |
 | GRASP | (ACTOR, OBJECT) | gs-var | To grasp an object. |
-| ATTEND | (ACTOR, OBJECT, TO, FROM) | att-var | To focus a sense organ to an object. |
-| SPEAK | (ACTOR, OBJECT, TO, FROM) | sp-var | To make a noise. |
-| MOVE | (ACTOR, OBJECT, TO, FROM) | mov-var | To move a body part. |
-| EXPEL | (ACTOR, OBJECT, TO, FROM) | exp-var | To push something out of the body. |
+| ATTEND | (ACTOR, OBJECT) | att-var | To focus a sense organ to an object. |
+| MOVE | (ACTOR, OBJECT, FROM, TO) | mov-var | To move a body part. |
+| EXPEL | (ACTOR, OBJECT, FROM, TO) | exp-var | To push something out of the body. |
+| JOIN | (ACTOR, OBJECT, FROM, TO) | j-var | To change the physical relationship between objects. |
