@@ -147,4 +147,7 @@
 ; (write (cd-translate (parse '(jack unloaded the trash from the truck))))
 
 ;; STATE & PBUILD
-(write (parse '(the truck warmed up the trash)))
+; (write (parse '(the truck warmed up the trash)))
+
+;; Testing the incorporated states
+(write (cd-translate (parse '(the truck warmed up the trash))))

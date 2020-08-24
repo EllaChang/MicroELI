@@ -224,26 +224,34 @@ bindings."
 
 (defun cd-translate (cd)
   "Translates an ELI CD form into a BABEL CD form."
-  (remove 'NIL (list (remove 'NIL (list 'ACTOR (filler-role 'ACTOR cd)
+  (list (list (remove 'NIL (list 'ACTOR (filler-role 'ACTOR cd)
                            
-                                        '<=> (list (header-cd cd))
+                                 '<=> (list (header-cd cd))
           
-                                        (when (filler-role 'OBJECT cd) 'OBJECT)
-                                        (when (filler-role 'OBJECT cd) (filler-role 'OBJECT cd))
+                                 (when (filler-role 'OBJECT cd) 'OBJECT)
+                                 (when (filler-role 'OBJECT cd) (filler-role 'OBJECT cd))
                      
-                                        (when (filler-role 'FROM cd) 'FROM)
-                                        (when (filler-role 'FROM cd) (filler-role 'FROM cd))
+                                 (when (filler-role 'FROM cd) 'FROM)
+                                 (when (filler-role 'FROM cd) (filler-role 'FROM cd))
           
-                                        (when (filler-role 'THRU cd) 'THRU)
-                                        (when (filler-role 'THRU cd) (filler-role 'THRU cd))
+                                 (when (filler-role 'THRU cd) 'THRU)
+                                 (when (filler-role 'THRU cd) (filler-role 'THRU cd))
                      
-                                        (when (filler-role 'TO cd) 'TO)
-                                        (when (filler-role 'TO cd) (filler-role 'TO cd)))))
-          (when (or (filler-role 'A-ATTR cd) (filler-role 'O-ATTR cd))
-            '<=
-            (when (filler-role 'A-ATTR cd)
-              
-              ))))
+                                 (when (filler-role 'TO cd) 'TO)
+                                 (when (filler-role 'TO cd) (filler-role 'TO cd)))))
+        '<==
+        (if (and (filler-role 'A-ATTR cd) (filler-role 'O-ATTR cd))
+            (list (list 'ACTOR (list (filler-role 'OBJECT cd))
+                        '<==> 'T
+                        (list (filler-role 'O-ATTR cd) 'VAL (list (filler-role 'O-VAL cd)))))
+          (if (filler-role 'A-ATTR cd)
+              (list (list 'ACTOR (filler-role 'ACTOR cd)
+                          '<==> 'T
+                          (list (filler-role 'A-ATTR cd) 'VAL (filler-role 'A-VAL cd))))
+            (list (list 'ACTOR (filler-role 'OBJECT cd)
+                        '<==> 'T
+                        (list (filler-role 'O-ATTR cd) 'VAL (filler-role 'O-VAL cd))))))))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
