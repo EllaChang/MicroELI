@@ -150,4 +150,8 @@
 ; (write (parse '(the truck warmed up the trash)))
 
 ;; Testing the incorporated states
-(write (cd-translate (parse '(the truck warmed up the trash))))
+;;(write (cd-translate (parse '(the truck warmed up the trash))))
+;;(write (cd-translate (parse '(water flows into streams))))
+; (write (cd-translate (parse '(the microwave warmed up the soup))))
+; (write (parse '(the microwave warmed up the soup)))
+(write (parse '(jack went to the store)))
