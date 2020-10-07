@@ -27,6 +27,7 @@
 (defvar *cd-form*)
 (defvar *word*)
 (defvar *part-of-speech*)
+(defvar *predicted* nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
