@@ -73,19 +73,15 @@
            *cd-form* '(to))))
 
 (defword a
-  ((test (equal *part-of-speech* 'noun))
-   (assign *part-of-speech* 'noun-phrase
-           *predicates* nil))
-  ((test (equal *part-of-speech* 'adjective))
-   (assign *part-of-speech* 'noun-phrase
-           *cd-form* (append *cd-form* *predicates*)
-           *predicates* nil)))
-
-(defword a2
-  ((assign *part-of-speech* nil
-           *cd-form* (append *cd-form* *predicates*)
-           *predicates* nil
-           *predicted* (get-np-prediction))))
+  ((assign *predicates* nil *predicted* (get-np-prediction))
+   (next-packet
+    ((test (equal *part-of-speech* 'noun))
+     (assign *part-of-speech* 'noun-phrase
+             *predicates* nil))
+    ((test (equal *part-of-speech* 'adjective))
+     (assign *part-of-speech* 'noun-phrase
+             *cd-form* (append *cd-form* *predicates*)
+             *predicates* nil)))))
 
 (defword restaurant
   ((assign *part-of-speech* 'noun
@@ -145,12 +141,6 @@
     ((test (equal *part-of-speech* 'noun-phrase))
      (assign get-var2 *cd-form*)))))
 
-(defword the1
-  ((assign *part-of-speech* nil
-           *cd-form* (append *cd-form* *predicates*)
-           *predicates* nil
-           *predicted* (get-np-prediction))))
-
 (defword get
   ((assign *part-of-speech* 'verb
            *cd-form* '(*atrans* (actor  ?get-var1)
@@ -165,10 +155,12 @@
      (assign get-var2 *cd-form*)))))
 
 (defword the
-  ((test (equal *part-of-speech* 'noun))
-   (assign *part-of-speech* 'noun-phrase
-           *predicates* nil
-           *predicted* (get-np-prediction))))
+  ((assign *predicates* nil *predicted* (get-np-prediction))
+   (next-packet
+    ((test (equal *part-of-speech* 'noun))
+     (assign *part-of-speech* 'noun-phrase
+             *predicates* nil
+             *predicted* (get-np-prediction))))))
 
 (defword red
   ((test (equal *part-of-speech* 'noun))
@@ -206,13 +198,13 @@
            get-var2 nil
            get-var3 nil)
    (next-packet
-    ((test (and (equal *part-of-speech* 'noun)
+    ((test (and (equal *part-of-speech* 'noun-phrase)
                 (feature *cd-form* 'cost-form)))
      (assign *cd-form* '((amount (cost-form))))
      (next-packet
       ((test (equal *word* 'with))
        (next-packet
-        ((test (and (equal *part-of-speech* 'noun)
+        ((test (and (equal *part-of-speech* 'noun-phrase)
                     (feature *cd-form* 'money)))
          (assign get-var2 *cd-form*)))))))))
 
