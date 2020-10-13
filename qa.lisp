@@ -151,8 +151,9 @@
 
 ;; Testing the incorporated states
 ;;(write (cd-translate (parse '(the truck warmed up the trash))))
-(write (cd-translate (parse '(jack paid the check with a check))))
-; (write (cd-translate (parse '(the microwave warmed up the soup))))
+;; (write (cd-translate (parse '(the microwave warmed up the soup))))
 ; (write (parse '(the microwave warmed up the soup)))
 ; (write (parse '(jack went to the store)))
-; (write (parse '(jack paid the check with a check)))
+(write (parse '(jack paid the check with a check)))
+; (write (parse '(the dead plants join together)))
+; (write (parse '(jack got the red kite)))

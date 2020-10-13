@@ -72,17 +72,6 @@
   ((assign *part-of-speech* 'preposition
            *cd-form* '(to))))
 
-(defword a
-  ((assign *predicates* nil *predicted* (get-np-prediction))
-   (next-packet
-    ((test (equal *part-of-speech* 'noun))
-     (assign *part-of-speech* 'noun-phrase
-             *predicates* nil))
-    ((test (equal *part-of-speech* 'adjective))
-     (assign *part-of-speech* 'noun-phrase
-             *cd-form* (append *cd-form* *predicates*)
-             *predicates* nil)))))
-
 (defword restaurant
   ((assign *part-of-speech* 'noun
            *cd-form '(restaurant))))
@@ -159,8 +148,26 @@
    (next-packet
     ((test (equal *part-of-speech* 'noun))
      (assign *part-of-speech* 'noun-phrase
+             *cd-form* (append *cd-form* *predicates*)
              *predicates* nil
-             *predicted* (get-np-prediction))))))
+             *predicted* (get-np-prediction)))
+    ((test (equal *part-of-speech* 'adjective))
+     (assign *part-of-speech* 'noun-phrase
+             *cd-form* (append *cd-form* *predicates*)
+             *predicates* nil)))))
+
+(defword a
+  ((assign *predicates* nil *predicted* (get-np-prediction))
+   (next-packet
+    ((test (equal *part-of-speech* 'noun))
+     (assign *part-of-speech* 'noun-phrase
+             *cd-form* (append *cd-form* *predicates*)
+             *predicates* nil
+             *predicted* (get-np-prediction)))
+    ((test (equal *part-of-speech* 'adjective))
+     (assign *part-of-speech* 'noun-phrase
+             *cd-form* (append *cd-form* *predicates*)
+             *predicates* nil)))))
 
 (defword red
   ((test (equal *part-of-speech* 'noun))
@@ -520,6 +527,6 @@
 (defword dead
   ((test (equal *part-of-speech* 'noun))
    (assign *part-of-speech* 'adjective
-           *predicates* '((color(red))))))
+           *predicates* '((health(dead))))))
 
 (provide :dict)
