@@ -199,21 +199,23 @@
   ((assign *part-of-speech* 'verb
            *cd-form* '(atrans (actor ?get-var1)
                        (object ?get-var2)
+                       (with ?get-var4)
                        (to ?get-var3)
                        (from ?get-var1))
            get-var1 *subject*
            get-var2 nil
-           get-var3 nil)
+           get-var3 nil
+           get-var4 nil)
    (next-packet
     ((test (and (equal *part-of-speech* 'noun-phrase)
                 (feature *cd-form* 'cost-form)))
-     (assign *cd-form* '((amount (cost-form))))
+     (assign get-var2 *cd-form*)
      (next-packet
       ((test (equal *word* 'with))
        (next-packet
         ((test (and (equal *part-of-speech* 'noun-phrase)
                     (feature *cd-form* 'money)))
-         (assign get-var2 *cd-form*)))))))))
+         (assign get-var4 *cd-form*)))))))))
 
 (defword pay
   ((assign *part-of-speech* 'verb
@@ -251,8 +253,7 @@
   ((assign *part-of-speech* 'noun
            *cd-form* '(money)))
   ((assign *part-of-speech* 'noun
-           *cd-form* '(cost-form)
-           *predicates* '((amount (cost-form))))))
+           *cd-form* '(cost-form))))
 
 (defword go
   ((assign *part-of-speech* 'verb
