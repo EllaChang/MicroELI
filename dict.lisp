@@ -155,7 +155,7 @@
 (defword the
   ((assign *predicates* nil *predicted* (get-np-prediction))
    (next-packet
-    ((test (equal *part-of-speech* 'noun))
+    ((test (equal *part-of-speech* 'noun-phrase))
      (assign *part-of-speech* 'noun-phrase
              *cd-form* (append *cd-form* *predicates*)
              *predicates* nil
@@ -669,8 +669,142 @@
     ((test (equal *part-of-speech* 'noun))
      (assign mov-var4 *cd-form*)))))
 
-(defword arms
-  ((assign *part-of-speech* 'noun
-           *cd-form* '(arms))))
+
+(defword force
+  ((assign *part-of-speech* 'noun-phrase
+           *cd-form* '(force))))
+(defword walls
+  ((assign *part-of-speech* 'noun-phrase
+           *cd-form* '(walls))))
+
+; "908, 3": "The force wedge the walls farther."
+(defword wedge
+  ((assign *part-of-speech* 'verb
+           *cd-form* '(*join* (actor ?j-var1)
+                       (a-attr ?j-var2)
+                       (a-val ?j-var3)
+                       (object ?j-var4)
+                       (o-attr ?j-var5)
+                       (o-val ?j-var6)
+                       (from ?j-var7)
+                       (to ?j-var8))
+           j-var1 *subject*
+           j-var2 nil
+           j-var3 nil
+           j-var4 nil
+           j-var5 '*STATE-JOIN*
+           j-var6 '(-2)
+           j-var7 nil
+           j-var8 nil)
+
+  (next-packet
+    ;; wedge apart something
+    ((test (equal *word* 'apart))
+     (next-packet
+      ((test (equal *part-of-speech* 'noun-phrase))
+       (assign j-var4 *cd-form*))))
+    ;; wedge soomething apart
+    ((test (equal *part-of-speech* 'noun-phrase))
+     (assign j-var4 *cd-form*)))))
+
+
+(defword clouds
+  ((assign *part-of-speech* 'noun-phrase
+           *cd-form* '(clouds))))
+
+(defword areas
+  ((assign *part-of-speech* 'noun-phrase
+           *cd-form* '(areas))))
+
+; "1061, 2": the satellite will travels.
+; "1061, 3": the rocket travel into space.
+; "135, 3": "The sound waves travel away from the bat.",
+; "207, 1": "Electrical signals travel through nerves to muscles.",
+; "409, 6": "The impulses travel along the optic nerve to the brain.",
+; "627, 4": "The enzymes travel from the pancreas to the small intestine through tubes.",
+; "879, 4": "The clouds travel over areas.",
+; "99, 1": "Rain clouds travel across the sky."
+
+(defword travel
+  ((assign *part-of-speech* 'verb
+             *cd-form* '(*ptrans* (actor ?go-var1)
+                         (a-attr ?go-var2)
+                         (a-val ?go-var3)
+                         (object ?go-var4)
+                         (o-attr ?go-var5)
+                         (o-val ?go-var6)
+                         (from ?go-var7)
+                         (thru ?go-var8)
+                         (to ?go-var9))
+             go-var1 *subject*
+             go-var2 nil
+             go-var3 nil
+             go-var4 *subject*
+             go-var5 nil
+             go-var6 nil
+             go-var7 nil
+             go-var8 nil
+             go-var9 nil)
+   (next-packet
+    ((test (equal *word* 'from))
+     (assign go-var7 *cd-form*)
+     (next-packet
+      ((test (equal *word* 'to))
+        (assign go-var *cd-form*)
+        (next-packet
+        ((test (equal *word* 'through))
+          (assign go-var8 *cd-form*))))))
+
+    ((test (equal *word* 'accross))
+     (assign go-var8 *cd-form*)
+     (next-packet
+      ((test (equal *word* 'from))
+        (assign go-var7 *cd-form*))))
+
+    ((test (equal *word* 'over))
+     (assign go-var8 *cd-form*)
+     (next-packet
+      ((test (equal *word* 'from))
+        (assign go-var7 *cd-form*)))))))
+
+
+(defword wire
+  ((assign *part-of-speech* 'noun-phrase
+           *cd-form* '(wire))))
+
+(defword metal
+  ((assign *part-of-speech* 'noun-phrase
+           *cd-form* '(metal))))
+
+
+; "Wire is wrapped around a piece of metal." = jack wrap wire around metal
+(defword wrap
+  ((assign *part-of-speech* 'verb
+           *cd-form* '(*join* (actor ?j-var1)
+                       (a-attr ?j-var2)
+                       (a-val ?j-var3)
+                       (object ?j-var4)
+                       (o-attr ?j-var5)
+                       (o-val ?j-var6)
+                       (from ?j-var7)
+                       (to ?j-var8))
+           j-var1 *subject*
+           j-var2 nil
+           j-var3 '(+1)
+           j-var4 *subject*
+           j-var5 '*STATE-JOIN*
+           j-var6 '(+1)
+           j-var7 nil
+           j-var8 nil)
+
+ (next-packet
+    ((test (equal *part-of-speech* 'noun-phrase))
+     (assign j-var4 *cd-form*)
+
+     (next-packet
+      ((test (equal *word* 'around))
+       (next-packet
+        ((test (equal *part-of-speech* 'noun-phrase))
+         (assign j-var8 *cd-form*)))))))))
 
 (provide :dict)

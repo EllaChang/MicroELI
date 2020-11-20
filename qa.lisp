@@ -161,4 +161,6 @@
 ; (write (cd-translate (parse '(jack ate a lobster))))
 ; (write (cd-translate (parse '(gravity acts on the particles))))
 ; (write (cd-translate (parse '(the owl grabs the rabbit with beak))))
-(write (cd-translate (parse '(jack moved arms))))
+; (write (cd-translate (parse '(jack moved arms))))
+; (write (cd-translate (parse '(The force wedge the walls))))
+(write (cd-translate (parse '(The clouds travel over areas))))
