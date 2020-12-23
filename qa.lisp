@@ -144,7 +144,7 @@
 ; (write (parse '(the truck unloaded the trash)))
 
 ;; Parallel PTRANS & EXPEL
-; (write (cd-translate (parse '(jack unloaded the trash from the truck))))
+(write (cd-translate (parse '(jack unloaded the trash from the truck))))
 
 ;; STATE & PBUILD
 ; (write (parse '(the truck warmed up the trash)))
@@ -152,15 +152,13 @@
 ;; Testing the incorporated states
 ;;(write (cd-translate (parse '(the truck warmed up the trash))))
 ;; (write (cd-translate (parse '(the microwave warmed up the soup))))
-; (write (parse '(the microwave warmed up the soup)))
-; (write (parse '(jack went to the store)))
+; (write (cd-translate (parse '(the microwave warmed up the soup))))
+; (write (cd-translate (parse '(jack went to the store))))
 ; (write (parse '(jack paid the check with a check)))
-; (write (parse '(the dead plants join together)))
+; (write (cd-translate (parse '(the dead plants join together))))
 ; (write (parse '(jack got the red kite)))
 ; (write (cd-translate (parse '(the volcanoes erupt lava))))
 ; (write (cd-translate (parse '(jack ate a lobster))))
 ; (write (cd-translate (parse '(gravity acts on the particles))))
 ; (write (cd-translate (parse '(the owl grabs the rabbit with beak))))
-; (write (cd-translate (parse '(jack moved arms))))
-; (write (cd-translate (parse '(The force wedge the walls))))
-(write (cd-translate (parse '(The clouds travel over areas))))
+; (write (cd-translate (parse '(jack ordered a lobster))))

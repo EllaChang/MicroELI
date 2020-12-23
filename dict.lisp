@@ -53,27 +53,38 @@
 
 (defword went
   ((assign *part-of-speech* 'verb
-           *cd-form* '(*ptrans* (actor  ?go-var1)
-                       (object ?go-var1)
-                       (to     ?go-var2)
-                       (from   ?go-var3))
+           *cd-form* '(*ptrans* (actor ?go-var1)
+                       (a-attr ?go-var2)
+                       (a-val ?go-var3)
+                       (object ?go-var4)
+                       (o-attr ?go-var5)
+                       (o-val ?go-var6)
+                       (from ?go-var7)
+                       (thru ?go-var8)
+                       (to ?go-var9))
            go-var1 *subject*
            go-var2 nil
-           go-var3 nil)
+           go-var3 nil
+           go-var4 nil
+           go-var5 nil
+           go-var6 nil
+           go-var7 nil
+           go-var8 nil
+           go-var9 nil)
    (next-packet
     ((test (equal *word* 'to))
      (next-packet
       ((test (equal *part-of-speech* 'noun-phrase))
-       (assign go-var2 *cd-form*))))
+       (assign go-var9 *cd-form*))))
     ((test (equal *word* 'home))
-     (assign go-var2 '(house))))))
+     (assign go-var9 '(house))))))
 
 (defword to
   ((assign *part-of-speech* 'preposition
            *cd-form* '(to))))
 
 (defword restaurant
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form '(restaurant))))
 
 (defword he
@@ -82,13 +93,32 @@
 
 (defword ordered
   ((assign *part-of-speech* 'verb
-           *cd-form* '(atrans (actor ?get-var3)
-                       (object ?get-var2)
-                       (to ?get-var1)
-                       (from ?get-var3))
+           *cd-form* '(*atrans* (actor ?get-var1)
+                       (a-attr ?get-var2)
+                       (a-val ?get-var3)
+                       (object ?get-var4)
+                       (o-attr ?get-var5)
+                       (o-val ?get-var6)
+                       (from ?get-var7)
+                       (with ?get-var8)
+                       (to ?get-var9))
            get-var1 *subject*
            get-var2 nil
-           get-var3 nil)))
+           get-var3 nil
+           get-var4 nil
+           get-var5 nil
+           get-var6 nil
+           get-var7 nil
+           get-var8 nil
+           get-var9 *subject*)
+   (next-packet
+    ((test (equal *part-of-speech* 'noun-phrase))
+     (assign get-var4 *cd-form*)
+     (next-packet
+      ((test (equal *word* 'for))
+       (next-packet
+        ((test (equal *part-of-speech* 'noun-phrase)
+               (assign get-var9 *cd-form*))))))))))
 
 (defword ate
   ((assign *part-of-speech* 'verb
@@ -113,44 +143,77 @@
      (assign in-var4 *cd-form*)))))
 
 (defword lobster
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(lobster))))
 
 (defword left
   ((assign *part-of-speech* 'verb
-           *cd-form* '(ptrans (actor  ?go-var1)
-                       (object ?go-var1)
-                       (to     ?go-var2)
-                       (from   ?go-var3))
+           *cd-form* '(*ptrans* (actor ?go-var1)
+                       (a-attr ?go-var2)
+                       (a-val ?go-var3)
+                       (object ?go-var4)
+                       (o-attr ?go-var5)
+                       (o-val ?go-var6)
+                       (from ?go-var7)
+                       (thru ?go-var8)
+                       (to ?go-var9))
            go-var1 *subject*
            go-var2 nil
-           go-var3 nil)))
+           go-var3 nil
+           go-var4 nil
+           go-var5 nil
+           go-var6 nil
+           go-var7 nil
+           go-var8 nil
+           go-var9 nil)))
 
 (defword got
   ((assign *part-of-speech* 'verb
-           *cd-form* '(*atrans* (actor  ?get-var1)
-                       (object ?get-var2)
-                       (to     ?get-var1)
-                       (from   ?get-var3))
+           *cd-form* '(*atrans* (actor ?get-var1)
+                       (a-attr ?get-var2)
+                       (a-val ?get-var3)
+                       (object ?get-var4)
+                       (o-attr ?get-var5)
+                       (o-val ?get-var6)
+                       (from ?get-var7)
+                       (with ?get-var8)
+                       (to ?get-var9))
            get-var1 *subject*
            get-var2 nil
-           get-var3 nil)
+           get-var3 nil
+           get-var4 nil
+           get-var5 nil
+           get-var6 nil
+           get-var7 nil
+           get-var8 nil
+           get-var9 nil)
    (next-packet
     ((test (equal *part-of-speech* 'noun-phrase))
-     (assign get-var2 *cd-form*)))))
+     (assign get-var4 *cd-form*)))))
 
 (defword get
   ((assign *part-of-speech* 'verb
-           *cd-form* '(*atrans* (actor  ?get-var1)
-                       (object ?get-var2)
-                       (to     ?get-var1)
-                       (from   ?get-var3))
+           *cd-form* '(*atrans* (actor ?get-var1)
+                       (a-attr ?get-var2)
+                       (a-val ?get-var3)
+                       (object ?get-var4)
+                       (o-attr ?get-var5)
+                       (o-val ?get-var6)
+                       (from ?get-var7)
+                       (with ?get-var8)
+                       (to ?get-var9))
            get-var1 *subject*
            get-var2 nil
-           get-var3 nil)
+           get-var3 nil
+           get-var4 nil
+           get-var5 nil
+           get-var6 nil
+           get-var7 nil
+           get-var8 nil
+           get-var9 nil)
    (next-packet
     ((test (equal *part-of-speech* 'noun-phrase))
-     (assign get-var2 *cd-form*)))))
+     (assign get-var4 *cd-form*)))))
 
 (defword the
   ((assign *predicates* nil *predicted* (get-np-prediction))
@@ -168,7 +231,7 @@
 (defword a
   ((assign *predicates* nil *predicted* (get-np-prediction))
    (next-packet
-    ((test (equal *part-of-speech* 'noun))
+    ((test (equal *part-of-speech* 'noun-phrase))
      (assign *part-of-speech* 'noun-phrase
              *cd-form* (append *cd-form* *predicates*)
              *predicates* nil
@@ -179,29 +242,29 @@
              *predicates* nil)))))
 
 (defword red
-  ((test (equal *part-of-speech* 'noun))
+  ((test (equal *part-of-speech* 'noun-phrase))
    (assign *part-of-speech* 'adjective
            *predicates* '((color(red))))))
 
 (defword kite
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(kite))))
 
 (defword hawaii
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(place-us))))
 
 (defword knife
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(knife))))
 
 (defword beach
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(beach))))
 
 
 (defword store
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(store))))
 
 (defword paid
@@ -237,40 +300,51 @@
 
 (defword pay
   ((assign *part-of-speech* 'verb
-           *cd-form* '(atrans (actor ?get-var1)
-                       (object ?get-var2)
-                       (to ?get-var3)
-                       (from ?get-var1))
+           *cd-form* '(*atrans* (actor ?get-var1)
+                       (a-attr ?get-var2)
+                       (a-val ?get-var3)
+                       (object ?get-var4)
+                       (o-attr ?get-var5)
+                       (o-val ?get-var6)
+                       (from ?get-var7)
+                       (with ?get-var8)
+                       (to ?get-var9))
            get-var1 *subject*
            get-var2 nil
-           get-var3 nil)
+           get-var3 nil
+           get-var4 nil
+           get-var5 nil
+           get-var6 nil
+           get-var7 nil
+           get-var8 nil
+           get-var9 nil)
    (next-packet
-    ((test (and (equal *part-of-speech* 'noun)
+    ((test (and (equal *part-of-speech* 'noun-phrase)
                 (feature *cd-form* 'cost-form)))
      (assign *cd-form* '((amount (cost-form))))
      (next-packet
       ((test (equal *word* 'with))
        (next-packet
-        ((test (and (equal *part-of-speech* 'noun)
+        ((test (and (equal *part-of-speech* 'noun-phrase)
                     (feature *cd-form* 'money)))
-         (assign get-var2 *cd-form*)))))))))
+         (assign get-var4 *cd-form*)))))))))
 
 (defword bill
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(cost-form)
            *predicates* '((amount (cost-form))))))
 
 (defword seashell
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(seashell))))
 
 (defword with
   ((assign *part-of-speech* 'preposition)))
 
 (defword check
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(money)))
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(cost-form))))
 
 (defword go
@@ -330,77 +404,96 @@
      (assign *subject* *cd-form*)))))
 
 (defword acid
-  ((test (equal *part-of-speech* 'noun))
+  ((test (equal *part-of-speech* 'noun-phrase))
    (assign *part-of-speech* 'noun-phrase
            *predicates* '((type(acid))))))
 
 (defword rain
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(rain))))
 
 (defword atmosphere
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(atmosphere))))
 
 (defword lands
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(lands))))
 
 (defword enters
   ((assign *part-of-speech* 'verb
-           *cd-form* '(*ptrans* (actor  ?go-var1)
-                       (object ?go-var2)
-                       (to     ?go-var2)
-                       (from   ?go-var3))
+           *cd-form* '(*ptrans* (actor ?go-var1)
+                       (a-attr ?go-var2)
+                       (a-val ?go-var3)
+                       (object ?go-var4)
+                       (o-attr ?go-var5)
+                       (o-val ?go-var6)
+                       (from ?go-var7)
+                       (thru ?go-var8)
+                       (to ?go-var9))
            go-var1 *subject*
            go-var2 nil
-           go-var3 nil)
+           go-var3 nil
+           go-var4 nil
+           go-var5 nil
+           go-var6 nil
+           go-var7 nil
+           go-var8 nil
+           go-var9 nil)
    (next-packet
     ((test (equal *part-of-speech* 'noun-phrase))
-     (assign go-var2 *cd-form*)))))
+     (assign go-var4 *cd-form*
+             go-var9 *cd-form*)))))
 
 (defword and
   ((next-packet
-    ((test (equal *part-of-speech* 'noun))
+    ((test (equal *part-of-speech* 'noun-phrase))
      (assign go-var2 (append (list go-var2) (list *cd-form*)))))))
-
-(defword died
-  ((assign *part-of-speech* 'verb
-           *cd-form* '(*state* (actor ?s-var1)
-                       (attr ?s-var2)
-                       (value ?s-var3))
-           s-var1 *subject*
-           s-var2 '(*HEALTH*)
-           s-var3 '(-10))))
 
 (defword gave
   ((assign *part-of-speech* 'verb
            *cd-form* '(*atrans* (actor ?get-var1)
-                       (object ?get-var2)
-                       (to ?get-var3)
-                       (from ?get-var4)
-                       (thru ?get-var5))
+                       (a-attr ?get-var2)
+                       (a-val ?get-var3)
+                       (object ?get-var4)
+                       (o-attr ?get-var5)
+                       (o-val ?get-var6)
+                       (from ?get-var7)
+                       (with ?get-var8)
+                       (to ?get-var9))
            get-var1 *subject*
            get-var2 nil
            get-var3 nil
            get-var4 nil
-           get-var5 nil)
+           get-var5 nil
+           get-var6 nil
+           get-var7 nil
+           get-var8 nil
+           get-var9 nil)
    (next-packet
     ((test (equal *part-of-speech* 'noun-phrase))
-     (assign get-var2 *cd-form*)
+     (assign get-var4 *cd-form*)
      (next-packet
       ((test (equal *word* 'to))
        (next-packet
         ((test (equal *part-of-speech* 'noun-phrase))
-         (assign get-var3 *cd-form*)))))))))
+         (assign get-var9 *cd-form*)))))))))
 
 (defword soup
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(soup))))
 
 (defword microwave
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(microwave))))
+
+(defword truck
+  ((assign *part-of-speech* 'noun-phrase
+           *cd-form* '(truck))))
+
+(defword trash
+  ((assign *part-of-speech* 'noun-phrase
+           *cd-form* '(trash))))
 
 (defword unloaded
   ((assign *part-of-speech* 'verb
@@ -495,7 +588,7 @@
    (next-packet
     ((test (equal *word* 'into))
      (next-packet
-      ((test (equal *part-of-speech* 'noun))
+      ((test (equal *part-of-speech* 'noun-phrase))
        (assign go-var9 *cd-form*)))))))
 
 (defword water
@@ -503,7 +596,7 @@
            *cd-form* '(water))))
 
 (defword streams
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(streams))))
 
 (defword join
@@ -525,26 +618,26 @@
            j-var7 *subject*
            j-var8 *subject*)
    (next-packet
-    ((test (equal *part-of-speech* 'noun))
+    ((test (equal *part-of-speech* 'noun-phrase))
      (assign j-var4 *cd-form*
              j-var8 *cd-form*))
     ((test (equal *word* 'with))
      (next-packet
-      ((text (equal *part-of-speech* 'noun))
+      ((text (equal *part-of-speech* 'noun-phrase))
        (assign j-var4 *cd-form*
                j-var8 *cd-form*))))
     ((test (equal *word* 'in))
      (next-packet
-      ((text (equal *part-of-speech* 'noun))
+      ((text (equal *part-of-speech* 'noun-phrase))
        (assign j-var4 *cd-form*
                j-var8 *cd-form*)))))))
 
 (defword plants
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(plants))))
 
 (defword dead
-  ((test (equal *part-of-speech* 'noun))
+  ((test (equal *part-of-speech* 'noun-phrase))
    (assign *part-of-speech* 'adjective
            *predicates* '((health(dead))))))
 
@@ -567,15 +660,15 @@
            exp-var7 *subject*
            exp-var8 nil)
    (next-packet
-    ((test (equal *cd-form* 'noun))
+    ((test (equal *cd-form* 'noun-phrase))
      (assign exp-var4 *cd-form*)))))
 
 (defword volcanoes
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(valcanoes))))
 
 (defword lava
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(lava))))
 
 (defword acts
@@ -607,7 +700,7 @@
            *cd-form* '(gravity))))
 
 (defword particles
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(particles))))
 
 (defword grabs
@@ -632,19 +725,19 @@
      (next-packet
       ((test (equal *word* 'with))
        (next-packet
-        ((test (equal *part-of-speech* 'noun))
+        ((test (equal *part-of-speech* 'noun-phrase))
          (assign gs-var7 *cd-form*)))))))))
 
 (defword owl
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(owl))))
 
 (defword rabbit
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(rabbit))))
 
 (defword beak
-  ((assign *part-of-speech* 'noun
+  ((assign *part-of-speech* 'noun-phrase
            *cd-form* '(beak))))
 
 (defword moved
@@ -666,145 +759,58 @@
            mov-var7 nil
            mov-var8 nil)
    (next-packet
-    ((test (equal *part-of-speech* 'noun))
+    ((test (equal *part-of-speech* 'noun-phrase))
      (assign mov-var4 *cd-form*)))))
 
-
-(defword force
+(defword arms
   ((assign *part-of-speech* 'noun-phrase
-           *cd-form* '(force))))
-(defword walls
-  ((assign *part-of-speech* 'noun-phrase
-           *cd-form* '(walls))))
+           *cd-form* '(arms))))
 
-; "908, 3": "The force wedge the walls farther."
-(defword wedge
+(defword wander
   ((assign *part-of-speech* 'verb
-           *cd-form* '(*join* (actor ?j-var1)
-                       (a-attr ?j-var2)
-                       (a-val ?j-var3)
-                       (object ?j-var4)
-                       (o-attr ?j-var5)
-                       (o-val ?j-var6)
-                       (from ?j-var7)
-                       (to ?j-var8))
-           j-var1 *subject*
-           j-var2 nil
-           j-var3 nil
-           j-var4 nil
-           j-var5 '*STATE-JOIN*
-           j-var6 '(-2)
-           j-var7 nil
-           j-var8 nil)
+           *cd-form* '(*ptrans* (actor ?go-var1)
+                       (a-attr ?go-var2)
+                       (a-val ?go-var3)
+                       (object ?go-var4)
+                       (o-attr ?go-var5)
+                       (o-val ?go-var6)
+                       (from ?go-var7)
+                       (thru ?go-var8)
+                       (to ?go-var9))
+           go-var1 *subject*
+           go-var2 nil
+           go-var3 nil
+           go-var4 nil
+           go-var5 nil
+           go-var6 nil
+           go-var7 nil
+           go-var8 nil
+           go-var9 nil)))
 
-  (next-packet
-    ;; wedge apart something
-    ((test (equal *word* 'apart))
-     (next-packet
-      ((test (equal *part-of-speech* 'noun-phrase))
-       (assign j-var4 *cd-form*))))
-    ;; wedge soomething apart
-    ((test (equal *part-of-speech* 'noun-phrase))
-     (assign j-var4 *cd-form*)))))
-
-
-(defword clouds
-  ((assign *part-of-speech* 'noun-phrase
-           *cd-form* '(clouds))))
-
-(defword areas
-  ((assign *part-of-speech* 'noun-phrase
-           *cd-form* '(areas))))
-
-; "1061, 2": the satellite will travels.
-; "1061, 3": the rocket travel into space.
-; "135, 3": "The sound waves travel away from the bat.",
-; "207, 1": "Electrical signals travel through nerves to muscles.",
-; "409, 6": "The impulses travel along the optic nerve to the brain.",
-; "627, 4": "The enzymes travel from the pancreas to the small intestine through tubes.",
-; "879, 4": "The clouds travel over areas.",
-; "99, 1": "Rain clouds travel across the sky."
-
-(defword travel
+(defword visit
   ((assign *part-of-speech* 'verb
-             *cd-form* '(*ptrans* (actor ?go-var1)
-                         (a-attr ?go-var2)
-                         (a-val ?go-var3)
-                         (object ?go-var4)
-                         (o-attr ?go-var5)
-                         (o-val ?go-var6)
-                         (from ?go-var7)
-                         (thru ?go-var8)
-                         (to ?go-var9))
-             go-var1 *subject*
-             go-var2 nil
-             go-var3 nil
-             go-var4 *subject*
-             go-var5 nil
-             go-var6 nil
-             go-var7 nil
-             go-var8 nil
-             go-var9 nil)
+           *cd-form* '(*ptrans* (actor ?go-var1)
+                       (a-attr ?go-var2)
+                       (a-val ?go-var3)
+                       (object ?go-var4)
+                       (o-attr ?go-var5)
+                       (o-val ?go-var6)
+                       (from ?go-var7)
+                       (thru ?go-var8)
+                       (to ?go-var9))
+           go-var1 *subject*
+           go-var2 nil
+           go-var3 nil
+           go-var4 nil
+           go-var5 nil
+           go-var6 nil
+           go-var7 nil
+           go-var8 nil
+           go-var9 nil)
    (next-packet
-    ((test (equal *word* 'from))
-     (assign go-var7 *cd-form*)
-     (next-packet
-      ((test (equal *word* 'to))
-        (assign go-var *cd-form*)
-        (next-packet
-        ((test (equal *word* 'through))
-          (assign go-var8 *cd-form*))))))
-
-    ((test (equal *word* 'accross))
-     (assign go-var8 *cd-form*)
-     (next-packet
-      ((test (equal *word* 'from))
-        (assign go-var7 *cd-form*))))
-
-    ((test (equal *word* 'over))
-     (assign go-var8 *cd-form*)
-     (next-packet
-      ((test (equal *word* 'from))
-        (assign go-var7 *cd-form*)))))))
-
-
-(defword wire
-  ((assign *part-of-speech* 'noun-phrase
-           *cd-form* '(wire))))
-
-(defword metal
-  ((assign *part-of-speech* 'noun-phrase
-           *cd-form* '(metal))))
-
-
-; "Wire is wrapped around a piece of metal." = jack wrap wire around metal
-(defword wrap
-  ((assign *part-of-speech* 'verb
-           *cd-form* '(*join* (actor ?j-var1)
-                       (a-attr ?j-var2)
-                       (a-val ?j-var3)
-                       (object ?j-var4)
-                       (o-attr ?j-var5)
-                       (o-val ?j-var6)
-                       (from ?j-var7)
-                       (to ?j-var8))
-           j-var1 *subject*
-           j-var2 nil
-           j-var3 '(+1)
-           j-var4 *subject*
-           j-var5 '*STATE-JOIN*
-           j-var6 '(+1)
-           j-var7 nil
-           j-var8 nil)
-
- (next-packet
     ((test (equal *part-of-speech* 'noun-phrase))
-     (assign j-var4 *cd-form*)
+     (assign go-var4 'cd-form
+             go-var9 'cd-form)))))
 
-     (next-packet
-      ((test (equal *word* 'around))
-       (next-packet
-        ((test (equal *part-of-speech* 'noun-phrase))
-         (assign j-var8 *cd-form*)))))))))
 
 (provide :dict)
