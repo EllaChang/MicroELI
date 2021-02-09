@@ -144,7 +144,7 @@
 ; (write (parse '(the truck unloaded the trash)))
 
 ;; Parallel PTRANS & EXPEL
-(write (cd-translate (parse '(jack unloaded the trash from the truck))))
+; (write (cd-translate (parse '(jack unloaded the trash from the truck))))
 
 ;; STATE & PBUILD
 ; (write (parse '(the truck warmed up the trash)))
@@ -162,3 +162,6 @@
 ; (write (cd-translate (parse '(gravity acts on the particles))))
 ; (write (cd-translate (parse '(the owl grabs the rabbit with beak))))
 ; (write (cd-translate (parse '(jack ordered a lobster))))
+
+(parse '(jack))
+(write *stack*)

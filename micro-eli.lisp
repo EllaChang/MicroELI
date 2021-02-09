@@ -110,7 +110,9 @@ stack."
   (do ((request (check-top) (check-top))
        (triggered nil))
       ((null request) (add-packets triggered))
-    (pop-stack)
+    (if (not (rec-search request 'keep-packet))
+        (pop-stack))
+    (write *stack*)
     (do-assigns request)
     (push request triggered)))
 

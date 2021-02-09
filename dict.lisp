@@ -10,7 +10,8 @@
 ;; Vocabulary items.
 
 (defword *start*
-  ((assign *part-of-speech* nil
+  ( (keep-stack)
+    (assign *part-of-speech* nil
            *cd-form* nil
            *subject* nil
            *predicates* nil)
