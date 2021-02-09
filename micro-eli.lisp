@@ -28,6 +28,7 @@
 (defvar *word*)
 (defvar *part-of-speech*)
 (defvar *predicted* nil)
+(defvar *kept-packets* (list))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -110,9 +111,10 @@ stack."
   (do ((request (check-top) (check-top))
        (triggered nil))
       ((null request) (add-packets triggered))
-    (if (not (rec-search request 'keep-packet))
-        (pop-stack))
-    (write *stack*)
+    (write (rec-search request 'keepstack))
+    (if (rec-search request 'keepstack)
+        (push request *kept-packets*))
+    (pop-stack)
     (do-assigns request)
     (push request triggered)))
 
@@ -155,50 +157,54 @@ of a request."
   "Takes a list of requests and add their NEXT-PACKETs
 to the stack."
   (dolist (request requests)
-    (add-stack (req-clause 'next-packet request))))
+    (add-stack (req-clause 'next-packet request)))
+  (write *kept-packets*)
+  (dolist (request *kept-packets*)
+    (add-stack request)
+    (remove request *kept-packets*)))
 
-(defun feature (cd-form predicate)
-  "Tests whether the CD is of the form (predicate...)."
-  (equal predicate (header-cd cd-form)))
+  (defun feature (cd-form predicate)
+    "Tests whether the CD is of the form (predicate...)."
+    (equal predicate (heasder-cd cd-form)))
 
-(defun rec-search (lst elt)
-  "Recursively searches for a list starting with elt."
-  (cond ((null lst) nil)
-        ((atom (car lst))
-         (if (equal (car lst) elt)
-             lst
-           (rec-search (cdr lst) elt)))
-        (t (or (rec-search (car lst) elt)
-               (rec-search (cdr lst) elt)))))
+  (defun rec-search (lst elt)
+    "Recursively searches for a list starting with elt."
+    (cond ((null lst) nil)
+          ((atom (car lst))
+           (if (equal (car lst) elt)
+               lst
+             (rec-search (cdr lst) elt)))
+          (t (or (rec-search (car lst) elt)
+                 (rec-search (cdr lst) elt)))))
 
-(defun get-np-prediction ()
-  "Looks for a request in the top packet of the stack with a test
+  (defun get-np-prediction ()
+    "Looks for a request in the top packet of the stack with a test
 looks for a noun phrase generating a particular type of CD. If it
 finds one, it returns the predicate that FEATURE is looking for."
-  (unless (empty-stack-p)
-    (dolist (request (top-stack))
-      (when (and (req-clause 'test request)
-                 (rec-search (req-clause 'test request) 'feature))
-        (return (list (nth 2 (rec-search (req-clause 'test request) 'feature))))))))
+    (unless (empty-stack-p)
+      (dolist (request (top-stack))
+        (when (and (req-clause 'test request)
+                   (rec-search (req-clause 'test request) 'feature))
+          (return (list (nth 2 (rec-search (req-clause 'test request) 'feature))))))))
 
-(defun get-cd-form (request)
-  "Takes a request and returns the structure the request would
+  (defun get-cd-form (request)
+    "Takes a request and returns the structure the request would
 assign to *CD-FORM* if executed."
-  (let ((assign-clause (req-clause 'assign request)))
-    (let ((n (position '*CD-FORM* assign-clause)))
-      (nth (+ n 1) assign-clause))))
+    (let ((assign-clause (req-clause 'assign request)))
+      (let ((n (position '*CD-FORM* assign-clause)))
+        (nth (+ n 1) assign-clause))))
 
-(defun stringify (obj)
-  "Remove single quotes from the string form of an object."
-  (let ((s (prin1-to-string obj)))
-    (remove-if (lambda (ch) (find ch "'")) s)))
+  (defun stringify (obj)
+    "Remove single quotes from the string form of an object."
+    (let ((s (prin1-to-string obj)))
+      (remove-if (lambda (ch) (find ch "'")) s)))
 
-(defun resolve-conflict (req-list)
-  "Applies GET-CD-FORM to a list of requests, picking the first one
+  (defun resolve-conflict (req-list)
+    "Applies GET-CD-FORM to a list of requests, picking the first one
 that assigns to *CD-FORM* a structure matching *PREDICTED*."
-  (loop for req in req-list
-    do (when (equal (stringify *predicted*) (stringify (get-cd-form req)))
-         (return-from resolve-conflict req))))
+    (loop for req in req-list
+      do (when (equal (stringify *predicted*) (stringify (get-cd-form req)))
+           (return-from resolve-conflict req))))
 
 ;; NOTE: 
 ;;   This function has been modified to handle a list of CD forms
@@ -209,31 +215,31 @@ that assigns to *CD-FORM* a structure matching *PREDICTED*."
 ;;   The parser is not affected since all it does is control the
 ;; request firing which in turn makes variable assignments.
 
-(defun remove-variables (cd-form)
-  "Takes a parsed CD from Micro-ELI and returns a copy
+  (defun remove-variables (cd-form)
+    "Takes a parsed CD from Micro-ELI and returns a copy
 of the pattern with the variables replaced by values.
 Roles with NIL fillers are left out of the result.  This
 works like INSTANTIATE in Micro-SAM and Micro-POLITICS
 except that the values are derived from global variables
 rather than binding lists."
-  (cond ((symbolp cd-form) cd-form)
-        ((is-var cd-form)
-         (remove-variables (eval (name-var cd-form))))
-        (t (replace-list cd-form))))
+    (cond ((symbolp cd-form) cd-form)
+          ((is-var cd-form)
+           (remove-variables (eval (name-var cd-form))))
+          (t (replace-list cd-form))))
 
 ;; REPLACE-LIST is just an auxiliary function for 
 ;; REMOVE-VARIABLES.
-(defun replace-list (cd-form)
-  (cond ((null cd-form) nil)
-        ((atom (header-cd cd-form))
-         (cons (header-cd cd-form)
-               (let (result)
-                 (dolist (pair (roles-cd cd-form))
-                   (let ((val (remove-variables (filler-pair pair))))
-                     (when val (push `(,(role-pair pair) ,val)
-                                     result))))
-                 (nreverse result))))
-        (t (cons (replace-list (car cd-form))
-                 (replace-list (cdr cd-form))))))
+  (defun replace-list (cd-form)
+    (cond ((null cd-form) nil)
+          ((atom (header-cd cd-form))
+           (cons (header-cd cd-form)
+                 (let (result)
+                   (dolist (pair (roles-cd cd-form))
+                     (let ((val (remove-variables (filler-pair pair))))
+                       (when val (push `(,(role-pair pair) ,val)
+                                       result))))
+                   (nreverse result))))
+          (t (cons (replace-list (car cd-form))
+                   (replace-list (cdr cd-form))))))
 
-(provide :micro-eli)
+  (provide :micro-eli)
