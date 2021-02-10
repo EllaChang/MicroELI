@@ -111,7 +111,7 @@ stack."
   (do ((request (check-top) (check-top))
        (triggered nil))
       ((null request) (add-packets triggered))
-    (write (rec-search request 'keepstack))
+    ; if keepstack is present, save the current request
     (if (rec-search request 'keepstack)
         (push request *kept-packets*))
     (pop-stack)

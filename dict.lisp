@@ -16,10 +16,12 @@
            *subject* nil
            *predicates* nil)
    (next-packet
-    ((test (equal *part-of-speech* 'noun-phrase))
+    ((keepstack)
+     (test (equal *part-of-speech* 'noun-phrase))
      (assign *subject* *cd-form*)
      (next-packet
-      ((test (equal *part-of-speech* 'verb))
+      ((keepstack)
+       (test (equal *part-of-speech* 'verb))
        (assign *concept* *cd-form*)))))))
 
 (defword *start-question*
