@@ -163,5 +163,6 @@
 ; (write (cd-translate (parse '(the owl grabs the rabbit with beak))))
 ; (write (cd-translate (parse '(jack ordered a lobster))))
 
+(trace add-stack)
 (parse '(jack))
 (write *stack*)

@@ -10,8 +10,7 @@
 ;; Vocabulary items.
 
 (defword *start*
-  ((keepstack)
-   (assign *part-of-speech* nil
+  ((assign *part-of-speech* nil
            *cd-form* nil
            *subject* nil
            *predicates* nil)
@@ -20,8 +19,7 @@
      (test (equal *part-of-speech* 'noun-phrase))
      (assign *subject* *cd-form*)
      (next-packet
-      ((keepstack)
-       (test (equal *part-of-speech* 'verb))
+      ((test (equal *part-of-speech* 'verb))
        (assign *concept* *cd-form*)))))))
 
 (defword *start-question*

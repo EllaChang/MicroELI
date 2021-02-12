@@ -112,7 +112,7 @@ stack."
        (triggered nil))
       ((null request) (add-packets triggered))
     ; if keepstack is present, save the current request
-    (if (rec-search request 'keepstack)
+    (if (assoc 'keepstack request)
         (push request *kept-packets*))
     (pop-stack)
     (do-assigns request)
@@ -160,8 +160,8 @@ to the stack."
     (add-stack (req-clause 'next-packet request)))
   (write *kept-packets*)
   (dolist (request *kept-packets*)
-    (add-stack request)
-    (remove request *kept-packets*)))
+    (add-stack (list request)))
+  (setq *kept-packets* (list)))
 
   (defun feature (cd-form predicate)
     "Tests whether the CD is of the form (predicate...)."
