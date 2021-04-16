@@ -15,8 +15,7 @@
            *subject* nil
            *predicates* nil)
    (next-packet
-    ((keepstack)
-     (test (equal *part-of-speech* 'noun-phrase))
+    ((test (equal *part-of-speech* 'noun-phrase))
      (assign *subject* *cd-form*)
      (next-packet
       ((test (equal *part-of-speech* 'verb))
@@ -498,320 +497,333 @@
 
 (defword unloaded
   ((assign *part-of-speech* 'verb
-           *cd-form* '((*expel* (actor ?j-var1)
-                                (object ?j-var2))
-                       (*ptrans* (actor ?go-var1)
+           *cd-form* '((*ptrans* (actor ?go-var1)
                                  (object ?go-var2)
                                  (to go-var3)
                                  (from go-var4)))
-           j-var1 nil
-           j-var2 nil
            go-var1 *subject*
            go-var2 nil
            go-var3 nil
            go-var4 nil)
    (next-packet
     ((test (equal *part-of-speech* 'noun-phrase))
-     (assign j-var2 *cd-form*
-             go-var2 *cd-form*)
+     (assign go-var2 *cd-form*)
      (next-packet
-      ((test (equal *word* 'from))
+      ((keepstack)
+       (test (equal *word* 'from))
        (next-packet
         ((test *part-of-speech* 'noun-phrase)
-         (assign j-var1 *cd-form*
-                 go-var4 *cd-form*)
-         (next-packet
-          ((test (equal *word* 'to))
-           (next-packet
-            ((test *part-of-speech* 'noun-phrase)
-             (assign go-var3 *cd-form*))))))))
-      ((test (equal *word* 'to))
+         (assign go-var4 *cd-form*))))
+      ((keepstack)
+       (test (equal *word* 'to))
        (next-packet
         ((test *part-of-speech* 'noun-phrase)
-         (assign go-var3 *cd-form*)
-         (next-packet
-          ((test (equal *word* 'from))
-           (next-packet
-            ((test *part-of-speech* 'noun-phrase)
-             (assign j-var1 *cd-form*
-                     go-var4 *cd-form*)))))))))))))
+         (assign go-var3 *cd-form*))
+        )))))))
 
-(defword warmed
-  ((assign *part-of-speech* 'verb
-           *cd-form* '(*pbuild* (actor ?pb-var1)
-                       (a-attr ?pb-var2)
-                       (a-val ?pb-var3)
-                       (object ?pb-var4)
-                       (o-attr ?pb-var5)
-                       (o-val ?pb-var6))
-           pb-var1 *subject*
-           pb-var2 '*TEMP*
-           pb-var3 '(+1)
-           pb-var4 nil
-           pb-var5 nil
-           pb-var6 nil)
-   (next-packet
-    ((test (equal *word* 'up))
+  (defword warmed
+    ((assign *part-of-speech* 'verb
+             *cd-form* '(*pbuild* (actor ?pb-var1)
+                         (a-attr ?pb-var2)
+                         (a-val ?pb-var3)
+                         (object ?pb-var4)
+                         (o-attr ?pb-var5)
+                         (o-val ?pb-var6))
+             pb-var1 *subject*
+             pb-var2 '*TEMP*
+             pb-var3 '(+1)
+             pb-var4 nil
+             pb-var5 nil
+             pb-var6 nil)
      (next-packet
+      ((test (equal *word* 'up))
+       (next-packet
+        ((test (equal *part-of-speech* 'noun-phrase))
+         (assign pb-var2 nil
+                 pb-var3 nil
+                 pb-var4 *cd-form*
+                 pb-var5 '*TEMP*
+                 pb-var6 '(+1)))))
       ((test (equal *part-of-speech* 'noun-phrase))
        (assign pb-var2 nil
                pb-var3 nil
                pb-var4 *cd-form*
                pb-var5 '*TEMP*
-               pb-var6 '(+1)))))
-    ((test (equal *part-of-speech* 'noun-phrase))
-     (assign pb-var2 nil
-             pb-var3 nil
-             pb-var4 *cd-form*
-             pb-var5 '*TEMP*
-             pb-var6 '(+1))))))
+               pb-var6 '(+1))))))
 
-(defword flows
-  ((assign *part-of-speech* 'verb
-           *cd-form* '(*ptrans* (actor ?go-var1)
-                       (a-attr ?go-var2)
-                       (a-val ?go-var3)
-                       (object ?go-var4)
-                       (o-attr ?go-var5)
-                       (o-val ?go-var6)
-                       (from ?go-var7)
-                       (thru ?go-var8)
-                       (to ?go-var9))
-           go-var1 *subject*
-           go-var2 nil
-           go-var3 nil
-           go-var4 nil
-           go-var5 nil
-           go-var6 nil
-           go-var7 nil
-           go-var8 nil
-           go-var9 nil)
-   (next-packet
-    ((test (equal *word* 'into))
+  (defword flows
+    ((assign *part-of-speech* 'verb
+             *cd-form* '(*ptrans* (actor ?go-var1)
+                         (a-attr ?go-var2)
+                         (a-val ?go-var3)
+                         (object ?go-var4)
+                         (o-attr ?go-var5)
+                         (o-val ?go-var6)
+                         (from ?go-var7)
+                         (thru ?go-var8)
+                         (to ?go-var9))
+             go-var1 *subject*
+             go-var2 nil
+             go-var3 nil
+             go-var4 nil
+             go-var5 nil
+             go-var6 nil
+             go-var7 nil
+             go-var8 nil
+             go-var9 nil)
      (next-packet
-      ((test (equal *part-of-speech* 'noun-phrase))
-       (assign go-var9 *cd-form*)))))))
-
-(defword water
-  ((assign *part-of-speech* 'noun-phrase
-           *cd-form* '(water))))
-
-(defword streams
-  ((assign *part-of-speech* 'noun-phrase
-           *cd-form* '(streams))))
-
-(defword join
-  ((assign *part-of-speech* 'verb
-           *cd-form* '(*join* (actor ?j-var1)
-                       (a-attr ?j-var2)
-                       (a-val ?j-var3)
-                       (object ?j-var4)
-                       (o-attr ?j-var5)
-                       (o-val ?j-var6)
-                       (from ?j-var7)
-                       (to ?j-var8))
-           j-var1 *subject*
-           j-var2 '*STATE-JOIN*
-           j-var3 '(+2)
-           j-var4 *subject*
-           j-var5 '*STATE-JOIN*
-           j-var6 '(+2)
-           j-var7 *subject*
-           j-var8 *subject*)
-   (next-packet
-    ((test (equal *part-of-speech* 'noun-phrase))
-     (assign j-var4 *cd-form*
-             j-var8 *cd-form*))
-    ((test (equal *word* 'with))
-     (next-packet
-      ((text (equal *part-of-speech* 'noun-phrase))
-       (assign j-var4 *cd-form*
-               j-var8 *cd-form*))))
-    ((test (equal *word* 'in))
-     (next-packet
-      ((text (equal *part-of-speech* 'noun-phrase))
-       (assign j-var4 *cd-form*
-               j-var8 *cd-form*)))))))
-
-(defword plants
-  ((assign *part-of-speech* 'noun-phrase
-           *cd-form* '(plants))))
-
-(defword dead
-  ((test (equal *part-of-speech* 'noun-phrase))
-   (assign *part-of-speech* 'adjective
-           *predicates* '((health(dead))))))
-
-(defword erupt
-  ((assign *part-of-speech* 'verb
-           *cd-form* '(*expel* (actor ?exp-var1)
-                       (a-attr ?exp-var2)
-                       (a-val ?exp-var3)
-                       (object ?exp-var4)
-                       (o-attr ?exp-var5)
-                       (o-val ?exp-var6)
-                       (from ?exp-var7)
-                       (to ?exp-var8))
-           exp-var1 *subject*
-           exp-var2 '*STATE-JOIN*
-           exp-var3 '(-2)
-           exp-var4 nil
-           exp-var5 '*STATE-JOIN*
-           exp-var6 '(-2)
-           exp-var7 *subject*
-           exp-var8 nil)
-   (next-packet
-    ((test (equal *cd-form* 'noun-phrase))
-     (assign exp-var4 *cd-form*)))))
-
-(defword volcanoes
-  ((assign *part-of-speech* 'noun-phrase
-           *cd-form* '(valcanoes))))
-
-(defword lava
-  ((assign *part-of-speech* 'noun-phrase
-           *cd-form* '(lava))))
-
-(defword acts
-  ((assign *part-of-speech* 'verb
-           *cd-form* '(*propel* (actor ?prop-var1)
-                       (a-attr ?prop-var2)
-                       (a-val ?prop-var3)
-                       (object ?prop-var4)
-                       (o-attr ?prop-var5)
-                       (o-val ?prop-var6)
-                       (from ?prop-var7)
-                       (to ?prop-var8))
-           prop-var1 *subject*
-           prop-var2 nil
-           prop-var3 nil
-           prop-var4 nil
-           prop-var5 nil
-           prop-var6 nil
-           prop-var7 nil
-           prop-var8 nil)
-   (next-packet
-    ((test (equal *word* 'on))
-     (next-packet
-      ((test (equal *part-of-speech* 'noun-phrase))
-       (assign prop-var4 *cd-form*)))))))
-
-(defword gravity
-  ((assign *part-of-speech* 'noun-phrase
-           *cd-form* '(gravity))))
-
-(defword particles
-  ((assign *part-of-speech* 'noun-phrase
-           *cd-form* '(particles))))
-
-(defword grabs
-  ((assign *part-of-speech* 'verb
-           *cd-form* '(*atrans* (actor ?gs-var1)
-                       (a-attr ?gs-var2)
-                       (a-val ?gs-var3)
-                       (object ?gs-var4)
-                       (o-attr ?gs-var5)
-                       (o-val ?gs-var6)
-                       (with ?gs-var7))
-           gs-var1 *subject*
-           gs-var2 nil
-           gs-var3 nil
-           gs-var4 nil
-           gs-var5 nil
-           gs-var6 nil
-           gs-var7 nil)
-   (next-packet
-    ((test (equal *part-of-speech* 'noun-phrase))
-     (assign gs-var4 *cd-form*)
-     (next-packet
-      ((test (equal *word* 'with))
+      ((test (equal *word* 'into))
        (next-packet
         ((test (equal *part-of-speech* 'noun-phrase))
-         (assign gs-var7 *cd-form*)))))))))
+         (assign go-var9 *cd-form*)))))))
 
-(defword owl
-  ((assign *part-of-speech* 'noun-phrase
-           *cd-form* '(owl))))
+  (defword water
+    ((assign *part-of-speech* 'noun-phrase
+             *cd-form* '(water))))
 
-(defword rabbit
-  ((assign *part-of-speech* 'noun-phrase
-           *cd-form* '(rabbit))))
+  (defword streams
+    ((assign *part-of-speech* 'noun-phrase
+             *cd-form* '(streams))))
 
-(defword beak
-  ((assign *part-of-speech* 'noun-phrase
-           *cd-form* '(beak))))
+  (defword join
+    ((assign *part-of-speech* 'verb
+             *cd-form* '(*join* (actor ?j-var1)
+                         (a-attr ?j-var2)
+                         (a-val ?j-var3)
+                         (object ?j-var4)
+                         (o-attr ?j-var5)
+                         (o-val ?j-var6)
+                         (from ?j-var7)
+                         (to ?j-var8))
+             j-var1 *subject*
+             j-var2 '*STATE-JOIN*
+             j-var3 '(+2)
+             j-var4 *subject*
+             j-var5 '*STATE-JOIN*
+             j-var6 '(+2)
+             j-var7 *subject*
+             j-var8 *subject*)
+     (next-packet
+      ((test (equal *part-of-speech* 'noun-phrase))
+       (assign j-var4 *cd-form*
+               j-var8 *cd-form*))
+      ((test (equal *word* 'with))
+       (next-packet
+        ((text (equal *part-of-speech* 'noun-phrase))
+         (assign j-var4 *cd-form*
+                 j-var8 *cd-form*))))
+      ((test (equal *word* 'in))
+       (next-packet
+        ((text (equal *part-of-speech* 'noun-phrase))
+         (assign j-var4 *cd-form*
+                 j-var8 *cd-form*)))))))
 
-(defword moved
-  ((assign *part-of-speech* 'verb
-           *cd-form* '(*move* (actor ?mov-var1)
-                       (a-attr ?mov-var2)
-                       (a-val ?mov-var3)
-                       (object ?mov-var4)
-                       (o-attr ?mov-var5)
-                       (o-val ?mov-var6)
-                       (from ?mov-var7)
-                       (to ?mov-var8))
-           mov-var1 *subject*
-           mov-var2 nil
-           mov-var3 nil
-           mov-var4 nil
-           mov-var5 nil
-           mov-var6 nil
-           mov-var7 nil
-           mov-var8 nil)
-   (next-packet
+  (defword plants
+    ((assign *part-of-speech* 'noun-phrase
+             *cd-form* '(plants))))
+
+  (defword dead
     ((test (equal *part-of-speech* 'noun-phrase))
-     (assign mov-var4 *cd-form*)))))
+     (assign *part-of-speech* 'adjective
+             *predicates* '((health(dead))))))
 
-(defword arms
-  ((assign *part-of-speech* 'noun-phrase
-           *cd-form* '(arms))))
+  (defword erupt
+    ((assign *part-of-speech* 'verb
+             *cd-form* '(*expel* (actor ?exp-var1)
+                         (a-attr ?exp-var2)
+                         (a-val ?exp-var3)
+                         (object ?exp-var4)
+                         (o-attr ?exp-var5)
+                         (o-val ?exp-var6)
+                         (from ?exp-var7)
+                         (to ?exp-var8))
+             exp-var1 *subject*
+             exp-var2 '*STATE-JOIN*
+             exp-var3 '(-2)
+             exp-var4 nil
+             exp-var5 '*STATE-JOIN*
+             exp-var6 '(-2)
+             exp-var7 *subject*
+             exp-var8 nil)
+     (next-packet
+      ((test (equal *cd-form* 'noun-phrase))
+       (assign exp-var4 *cd-form*)))))
 
-(defword wander
-  ((assign *part-of-speech* 'verb
-           *cd-form* '(*ptrans* (actor ?go-var1)
-                       (a-attr ?go-var2)
-                       (a-val ?go-var3)
-                       (object ?go-var4)
-                       (o-attr ?go-var5)
-                       (o-val ?go-var6)
-                       (from ?go-var7)
-                       (thru ?go-var8)
-                       (to ?go-var9))
-           go-var1 *subject*
-           go-var2 nil
-           go-var3 nil
-           go-var4 nil
-           go-var5 nil
-           go-var6 nil
-           go-var7 nil
-           go-var8 nil
-           go-var9 nil)))
+  (defword volcanoes
+    ((assign *part-of-speech* 'noun-phrase
+             *cd-form* '(valcanoes))))
 
-(defword visit
-  ((assign *part-of-speech* 'verb
-           *cd-form* '(*ptrans* (actor ?go-var1)
-                       (a-attr ?go-var2)
-                       (a-val ?go-var3)
-                       (object ?go-var4)
-                       (o-attr ?go-var5)
-                       (o-val ?go-var6)
-                       (from ?go-var7)
-                       (thru ?go-var8)
-                       (to ?go-var9))
-           go-var1 *subject*
-           go-var2 nil
-           go-var3 nil
-           go-var4 nil
-           go-var5 nil
-           go-var6 nil
-           go-var7 nil
-           go-var8 nil
-           go-var9 nil)
-   (next-packet
-    ((test (equal *part-of-speech* 'noun-phrase))
-     (assign go-var4 'cd-form
-             go-var9 'cd-form)))))
+  (defword lava
+    ((assign *part-of-speech* 'noun-phrase
+             *cd-form* '(lava))))
 
+  (defword acts
+    ((assign *part-of-speech* 'verb
+             *cd-form* '(*propel* (actor ?prop-var1)
+                         (a-attr ?prop-var2)
+                         (a-val ?prop-var3)
+                         (object ?prop-var4)
+                         (o-attr ?prop-var5)
+                         (o-val ?prop-var6)
+                         (from ?prop-var7)
+                         (to ?prop-var8))
+             prop-var1 *subject*
+             prop-var2 nil
+             prop-var3 nil
+             prop-var4 nil
+             prop-var5 nil
+             prop-var6 nil
+             prop-var7 nil
+             prop-var8 nil)
+     (next-packet
+      ((test (equal *word* 'on))
+       (next-packet
+        ((test (equal *part-of-speech* 'noun-phrase))
+         (assign prop-var4 *cd-form*)))))))
 
-(provide :dict)
+  (defword gravity
+    ((assign *part-of-speech* 'noun-phrase
+             *cd-form* '(gravity))))
+
+  (defword particles
+    ((assign *part-of-speech* 'noun-phrase
+             *cd-form* '(particles))))
+
+  (defword grabs
+    ((assign *part-of-speech* 'verb
+             *cd-form* '(*atrans* (actor ?gs-var1)
+                         (a-attr ?gs-var2)
+                         (a-val ?gs-var3)
+                         (object ?gs-var4)
+                         (o-attr ?gs-var5)
+                         (o-val ?gs-var6)
+                         (with ?gs-var7))
+             gs-var1 *subject*
+             gs-var2 nil
+             gs-var3 nil
+             gs-var4 nil
+             gs-var5 nil
+             gs-var6 nil
+             gs-var7 nil)
+     (next-packet
+      ((test (equal *part-of-speech* 'noun-phrase))
+       (assign gs-var4 *cd-form*)
+       (next-packet
+        ((test (equal *word* 'with))
+         (next-packet
+          ((test (equal *part-of-speech* 'noun-phrase))
+           (assign gs-var7 *cd-form*)))))))))
+
+  (defword owl
+    ((assign *part-of-speech* 'noun-phrase
+             *cd-form* '(owl))))
+
+  (defword rabbit
+    ((assign *part-of-speech* 'noun-phrase
+             *cd-form* '(rabbit))))
+
+  (defword beak
+    ((assign *part-of-speech* 'noun-phrase
+             *cd-form* '(beak))))
+
+  (defword moved
+    ((assign *part-of-speech* 'verb
+             *cd-form* '(*move* (actor ?mov-var1)
+                         (a-attr ?mov-var2)
+                         (a-val ?mov-var3)
+                         (object ?mov-var4)
+                         (o-attr ?mov-var5)
+                         (o-val ?mov-var6)
+                         (from ?mov-var7)
+                         (to ?mov-var8))
+             mov-var1 *subject*
+             mov-var2 nil
+             mov-var3 nil
+             mov-var4 nil
+             mov-var5 nil
+             mov-var6 nil
+             mov-var7 nil
+             mov-var8 nil)
+     (next-packet
+      ((test (equal *part-of-speech* 'noun-phrase))
+       (assign mov-var4 *cd-form*)))))
+
+  (defword arms
+    ((assign *part-of-speech* 'noun-phrase
+             *cd-form* '(arms))))
+
+  (defword wander
+    ((assign *part-of-speech* 'verb
+             *cd-form* '(*ptrans* (actor ?go-var1)
+                         (a-attr ?go-var2)
+                         (a-val ?go-var3)
+                         (object ?go-var4)
+                         (o-attr ?go-var5)
+                         (o-val ?go-var6)
+                         (from ?go-var7)
+                         (thru ?go-var8)
+                         (to ?go-var9))
+             go-var1 *subject*
+             go-var2 nil
+             go-var3 nil
+             go-var4 nil
+             go-var5 nil
+             go-var6 nil
+             go-var7 nil
+             go-var8 nil
+             go-var9 nil)))
+
+  (defword visit
+    ((assign *part-of-speech* 'verb
+             *cd-form* '(*ptrans* (actor ?go-var1)
+                         (a-attr ?go-var2)
+                         (a-val ?go-var3)
+                         (object ?go-var4)
+                         (o-attr ?go-var5)
+                         (o-val ?go-var6)
+                         (from ?go-var7)
+                         (thru ?go-var8)
+                         (to ?go-var9))
+             go-var1 *subject*
+             go-var2 nil
+             go-var3 nil
+             go-var4 nil
+             go-var5 nil
+             go-var6 nil
+             go-var7 nil
+             go-var8 nil
+             go-var9 nil)
+     (next-packet
+      ((test (equal *part-of-speech* 'noun-phrase))
+       (assign go-var4 'cd-form
+               go-var9 'cd-form)))))
+
+  (defword transfer 
+    ((assign *part-of-speech* 'verb
+             *cd-form* '(*ptrans* (actor  ?go-var1)
+                         (object ?go-var2)
+                         (to     ?go-var3)
+                         (from   ?go-var4))
+             go-var1 *subject*
+             go-var2 nil  
+             go-var3 nil
+             go-var4 nil)
+     (next-packet
+      ; transport sth from somewhere to somewhere
+      ((test (equal *part-of-speech* 'noun-phrase))
+       (assign go-var2 *cd-form*)
+       (next-packet
+        ((keepstack)
+         (test (equal *word* 'from))
+         (assign go-var4 *cd-form*))
+        (next-packet
+         ((keepstack)
+          (test (equal *word* 'to))
+          (assign go-var3 *cd-form*)))))
+      ((test (equal *part-of-speech* 'noun-phrase))
+       (assign go-var2 *cd-form*)
+       (next-packet
+        ((test (equal *word* 'into))
+         (assign go-var3 *cd-form*)))))))
+
+  (provide :dict)

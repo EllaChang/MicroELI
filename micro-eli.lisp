@@ -113,7 +113,7 @@ stack."
       ((null request) (add-packets triggered))
     ; if keepstack is present, save the current request
     (if (assoc 'keepstack request)
-        (push request *kept-packets*))
+        (push (top-stack) *kept-packets*))
     (pop-stack)
     (do-assigns request)
     (push request triggered)))
@@ -156,11 +156,10 @@ of a request."
 (defun add-packets (requests)
   "Takes a list of requests and add their NEXT-PACKETs
 to the stack."
+  (dolist (packet *kept-packets*)
+    (add-stack packet))
   (dolist (request requests)
     (add-stack (req-clause 'next-packet request)))
-  (write *kept-packets*)
-  (dolist (request *kept-packets*)
-    (add-stack (list request)))
   (setq *kept-packets* (list)))
 
   (defun feature (cd-form predicate)
