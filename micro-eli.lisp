@@ -72,7 +72,9 @@ and printing the result."
   (dolist (sentence text)
     (user-trace "~2%Input is ~s~%" sentence)
     (let ((cd (parse sentence)))
-      (user-trace "~2%CD form is ~s" (cd-translate cd))))
+      (user-trace "~2%CD form is ~s" cd)
+      (user-trace "~2%BABEL-style translated CD form is ~s" (cd-translate cd))
+      ))
   (values))
 
 (defun parse (sentence)
@@ -126,7 +128,9 @@ triggered, use RESOLVE-CONFLICT to pick one."
     (let ((ls (list 'dummy)))
       (dolist (request (top-stack))
         (when (is-triggered request)
-          (push request (cdr (last ls)))))
+          (push request (cdr (last ls)))
+          (user-trace "~2%Request triggered ~s~2%" request)
+          ))
       (let ((reqs (cdr ls)))
         (cond
          ((> (list-length reqs) 1)

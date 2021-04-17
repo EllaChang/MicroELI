@@ -81,7 +81,11 @@
 
 (defword to
   ((assign *part-of-speech* 'preposition
-           *cd-form* '(to))))
+     *cd-form* '(to))))
+
+(defword from
+  ((assign *part-of-speech* 'preposition
+           *cd-form* '(from))))
 
 (defword restaurant
   ((assign *part-of-speech* 'noun-phrase
@@ -497,10 +501,10 @@
 
 (defword unloaded
   ((assign *part-of-speech* 'verb
-           *cd-form* '((*ptrans* (actor ?go-var1)
+           *cd-form* '(*ptrans* (actor ?go-var1)
                                  (object ?go-var2)
-                                 (to go-var3)
-                                 (from go-var4)))
+                                 (to ?go-var3)
+                                 (from ?go-var4))
            go-var1 *subject*
            go-var2 nil
            go-var3 nil
@@ -512,12 +516,12 @@
       ((keepstack)
        (test (equal *word* 'from))
        (next-packet
-        ((test *part-of-speech* 'noun-phrase)
+        ((test (equal *part-of-speech* 'noun-phrase))
          (assign go-var4 *cd-form*))))
       ((keepstack)
        (test (equal *word* 'to))
        (next-packet
-        ((test *part-of-speech* 'noun-phrase)
+        ((test (equal *part-of-speech* 'noun-phrase))
          (assign go-var3 *cd-form*))
         )))))))
 
